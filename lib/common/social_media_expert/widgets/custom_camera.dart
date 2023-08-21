@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:camera/camera.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:toddily_preschool/common/social_media_expert/providers/camera_provider.dart';
 
@@ -17,8 +16,7 @@ class CustomCamera extends StatefulWidget {
 class _CustomCameraState extends State<CustomCamera> {
   CameraController? _cameraController;
   late List<CameraDescription> _cameras;
-  final ImagePicker _imagePicker = ImagePicker();
-  List<XFile> _capturedImages = [];
+  double buttonSize = 28.sp;
 
   void _initializeCamera() async {
     _cameras = await availableCameras();
@@ -40,10 +38,26 @@ class _CustomCameraState extends State<CustomCamera> {
 
     try {
       final XFile capturedImage = await _cameraController!.takePicture();
-      setState(() {
-        Provider.of<CameraProvider>(context, listen: false)
-            .addImages(capturedImage);
-      });
+      setState(
+        () {
+          Provider.of<CameraProvider>(context, listen: false)
+              .addImages(capturedImage);
+
+          buttonSize = 20.sp;
+          // Simulate a delay to see the animation
+          Future.delayed(
+            const Duration(milliseconds: 300),
+            () {
+              setState(
+                () {
+                  // Reset the properties of the button after the animation
+                  buttonSize = 28.sp;
+                },
+              );
+            },
+          );
+        },
+      );
     } catch (e) {
       print(e);
     }
@@ -91,19 +105,17 @@ class _CustomCameraState extends State<CustomCamera> {
         Positioned(
           bottom: 15.h,
           left: 150.w,
-          child: InkWell(
-            onTap: _takePhoto,
-            child: CircleAvatar(
-              backgroundColor: Colors.white,
-              radius: 30.0,
-              child: CircleAvatar(
-                backgroundColor: Theme.of(context).colorScheme.secondary,
-                radius: 28.0,
-                child: Icon(
-                  Icons.camera,
-                  color: Colors.white,
-                  size: 28.sp,
-                ),
+          child: CircleAvatar(
+            backgroundColor: Theme.of(context).colorScheme.secondary,
+            radius: 30.sp,
+            child: IconButton(
+              alignment: Alignment.center,
+              splashColor: Colors.red,
+              onPressed: _takePhoto,
+              icon: Icon(
+                Icons.camera,
+                color: Colors.white,
+                size: buttonSize.sp,
               ),
             ),
           ),

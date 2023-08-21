@@ -26,7 +26,7 @@ class AppDrawer extends StatelessWidget {
               color: yellow,
             ),
             child: Container(
-                margin: EdgeInsets.all(17.sp),
+                margin: EdgeInsets.all(15.sp),
                 child: Image.asset(
                   'assets/images/ToddilyLogo.png',
                   fit: BoxFit.fill,

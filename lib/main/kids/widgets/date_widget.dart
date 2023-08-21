@@ -4,9 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DateWidget extends StatelessWidget {
   String image;
+  int index;
+  bool startAnimation;
 
   DateWidget({
     required this.image,
+    required this.index,
+    required this.startAnimation,
   });
 
   @override
@@ -15,7 +19,13 @@ class DateWidget extends StatelessWidget {
       onTap: () {
         Navigator.of(context).pushNamed('/statuses-screen');
       },
-      child: Container(
+      child: AnimatedContainer(
+        curve: Curves.easeInOut,
+        duration: Duration(
+          milliseconds: 500 + (index * 100),
+        ),
+        transform: Matrix4.translationValues(
+            startAnimation ? 0 : MediaQuery.of(context).size.width, 0, 0),
         decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.secondary,
             borderRadius: BorderRadius.circular(20.sp),

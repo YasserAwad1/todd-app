@@ -6,8 +6,14 @@ import 'package:toddily_preschool/main/events/providers/event_provider.dart';
 import 'package:toddily_preschool/main/kids/widgets/date_widget.dart';
 import 'package:toddily_preschool/main/kids/widgets/dates_screen_button.dart';
 
-class DatesScreen extends StatelessWidget {
+class DatesScreen extends StatefulWidget {
   static const routeName = '/dates-screen';
+
+  @override
+  State<DatesScreen> createState() => _DatesScreenState();
+}
+
+class _DatesScreenState extends State<DatesScreen> {
   List<String> characters = [
     'assets/images/characters/dinasour1.png',
     'assets/images/characters/dinasour2.png',
@@ -24,6 +30,18 @@ class DatesScreen extends StatelessWidget {
   ];
 
   int _currentIndex = 0;
+  bool startAnimation = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      setState(() {
+        startAnimation = true;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +77,7 @@ class DatesScreen extends StatelessWidget {
           children: [
             Expanded(
               child: GridView.builder(
+                physics: const BouncingScrollPhysics(),
                   padding: EdgeInsets.all(20.sp),
                   shrinkWrap: true,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -72,6 +91,8 @@ class DatesScreen extends StatelessWidget {
                     _currentIndex = i % characters.length;
                     return DateWidget(
                       image: characters[_currentIndex],
+                      index: i,
+                      startAnimation: startAnimation,
                     );
                   }),
             )

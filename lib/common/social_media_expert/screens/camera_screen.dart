@@ -52,8 +52,12 @@ class _CameraScreenState extends State<CameraScreen> {
                               },
                             ),
                             TextButton(
-                              child: Text('No',
-                                  style: TextStyle(color: Colors.black)),
+                              child: Text(
+                                'No',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                ),
+                              ),
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },

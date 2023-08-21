@@ -47,6 +47,7 @@ class KidsScreen extends StatelessWidget {
                 ],
               ),
               SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
                 child: Column(
                   children: [
                     SizedBox(
