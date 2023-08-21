@@ -263,58 +263,7 @@ class _ImageSelectionScreenState extends State<ImageSelectionScreen> {
         //           )),
         // )
 
-        // Column(
-        //   children: [
-        //     // Expanded(
-        //     //   child: ListView.builder(
-        //     //       shrinkWrap: true,
-        //     //       itemCount: images.length,
-        //     //       itemBuilder: (context, index) {
-        //     //         return Container(
-        //     //             child: Stack(
-        //     //           children: [
-        //     //             Image.file(
-        //     //               File(images[index].file.path),
-        //     //             ),
-        //     //             Positioned(
-        //     //               top: 0,
-        //     //               right: 0,
-        //     //               child: Container(
-        //     //                 width: 50.w,
-        //     //                 height: 50.h,
-        //     //                 decoration: BoxDecoration(
-        //     //                   color: Theme.of(context)
-        //     //                       .colorScheme
-        //     //                       .primary
-        //     //                       .withOpacity(0.7),
-        //     //                   borderRadius: BorderRadius.only(
-        //     //                     bottomLeft: Radius.circular(
-        //     //                       15.sp,
-        //     //                     ),
-        //     //                   ),
-        //     //                 ),
-        //     //                 child: IconButton(
-        //     //                   onPressed: () {
-        //     //                     setState(() {
-        //     //                       images.removeAt(index);
-        //     //                       print('**********************');
-        //     //                       print(images.length);
-        //     //                       print('**********************');
-        //     //                     });
-        //     //                   },
-        //     //                   icon: Icon(
-        //     //                     Icons.delete_outline,
-        //     //                     color: Colors.red,
-        //     //                   ),
-        //     //                 ),
-        //     //               ),
-        //     //             ),
-        //     //           ],
-        //     //         ));
-        //     //       }),
-        //     // )
-        //   ],
-        // ),
+        
         );
   }
 }

@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:toddily_preschool/classes/screens/classes_screen.dart';
-import 'package:toddily_preschool/common/screens/camera_example_home.dart';
+import 'package:toddily_preschool/common/social_media_expert/providers/camera_provider.dart';
+import 'package:toddily_preschool/common/social_media_expert/screens/camera_screen.dart';
 import 'package:toddily_preschool/common/screens/image_selection_screen.dart';
 import 'package:toddily_preschool/common/screens/roles_screen.dart';
 import 'package:toddily_preschool/common/screens/sme_images_screen.dart';
+import 'package:toddily_preschool/common/social_media_expert/screens/taken_images_screen.dart';
 import 'package:toddily_preschool/main/FAQ/screens/FAQScreen.dart';
 import 'package:toddily_preschool/main/about/screens/about_screen.dart';
 
@@ -42,6 +44,9 @@ class MyApp extends StatelessWidget {
               ChangeNotifierProvider(
                 create: (ctx) => EventProvider(),
               ),
+              ChangeNotifierProvider(
+                create: (ctx) => CameraProvider(),
+              )
             ],
             child: Builder(builder: (context) {
               return MaterialApp(
@@ -69,8 +74,9 @@ class MyApp extends StatelessWidget {
                   ImageSelectionScreen.routeName: (context) =>
                       ImageSelectionScreen(),
                   RolesScreen.routeName: (context) => RolesScreen(),
-                  smeImagesScreen.routeName : (context) => smeImagesScreen(),
-                  CameraExampleHome.routeName: (context) => CameraExampleHome(),
+                  smeImagesScreen.routeName: (context) => smeImagesScreen(),
+                  CameraScreen.routeName: (context) => CameraScreen(),
+                  TakenImagesScreen.routeName: (context) => TakenImagesScreen()
                 },
               );
             }),

@@ -13,7 +13,7 @@ class KidsWidget extends StatelessWidget {
       onTap: () {
         Provider.of<EventProvider>(context, listen: false).getRole != 2
             ? Navigator.of(context).pushNamed('/dates-screen')
-            : Navigator.of(context).pushNamed('/camera-example-home');
+            : Navigator.of(context).pushNamed('/camera-screen');
       },
       child: Center(
         child: Container(
