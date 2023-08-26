@@ -7,19 +7,39 @@ import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
 import 'package:toddily_preschool/main/events/providers/event_provider.dart';
 import 'package:toddily_preschool/main/statuses/widgets/status_widget.dart';
 
-class StatusesScreen extends StatelessWidget {
+class StatusesScreen extends StatefulWidget {
   static const routeName = '/statuses-screen';
   const StatusesScreen({super.key});
+
+  @override
+  State<StatusesScreen> createState() => _StatusesScreenState();
+}
+
+class _StatusesScreenState extends State<StatusesScreen> {
+  bool startAnimation = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      setState(() {
+        startAnimation = true;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: CustomAppBar(
-            scaffoldKey: null,
-            title: '24/MAR',
-            titleContainerWidth: 90.w,
-            withBackButton: true),
+          scaffoldKey: null,
+          title: '24/MAR',
+          titleContainerWidth: 90.w,
+          withBackButton: true,
+          withNotification: true,
+        ),
         bottomNavigationBar: Provider.of<EventProvider>(context).getRole == 1
             ? Padding(
                 padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 30.w),
@@ -45,7 +65,10 @@ class StatusesScreen extends StatelessWidget {
             ),
             Expanded(
               child: ListView.builder(
-                itemBuilder: (context, i) => StatusWidget(),
+                itemBuilder: (context, i) => StatusWidget(
+                  startAnimation: startAnimation,
+                  index: i,
+                ),
                 itemCount: 2,
                 shrinkWrap: true,
               ),

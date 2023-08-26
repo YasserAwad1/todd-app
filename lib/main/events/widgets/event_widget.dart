@@ -3,7 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toddily_preschool/main/photos/screens/photos_screen.dart';
 
 class EventWidget extends StatelessWidget {
-  const EventWidget({super.key});
+  bool startAnimation;
+  int index;
+  EventWidget({
+    required this.startAnimation,
+    required this.index,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +24,13 @@ class EventWidget extends StatelessWidget {
         //           ),
         //         ));
       },
-      child: Container(
+      child: AnimatedContainer(
+        curve: Curves.easeOutSine,
+        duration: Duration(
+          milliseconds: 500 + (index * 100),
+        ),
+        transform: Matrix4.translationValues(
+            startAnimation ? 0 : MediaQuery.of(context).size.width, 0, 0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.sp),
           boxShadow: const [

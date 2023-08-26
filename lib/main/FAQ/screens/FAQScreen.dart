@@ -15,10 +15,12 @@ class FAQScreen extends StatelessWidget {
         key: _scaffoldKey,
         drawer: AppDrawer(),
         appBar: CustomAppBar(
-            scaffoldKey: _scaffoldKey,
-            title: 'FAQs',
-            titleContainerWidth: 150.w,
-            withBackButton: false),
+          scaffoldKey: _scaffoldKey,
+          title: 'FAQs',
+          titleContainerWidth: 150.w,
+          withBackButton: false,
+          withNotification: true,
+        ),
         drawerEdgeDragWidth: 200.w,
         drawerEnableOpenDragGesture: true,
         body: Padding(

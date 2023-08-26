@@ -11,10 +11,12 @@ class MonthlyReportScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: CustomAppBar(
-            scaffoldKey: null,
-            title: 'Monthly Report',
-            titleContainerWidth: 180.w,
-            withBackButton: true),
+          scaffoldKey: null,
+          title: 'Monthly Report',
+          titleContainerWidth: 180.w,
+          withBackButton: true,
+          withNotification: true,
+        ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(

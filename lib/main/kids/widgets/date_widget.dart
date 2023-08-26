@@ -23,7 +23,7 @@ class DateWidget extends StatelessWidget {
           context,
           MyNavigator(
             screen: StatusesScreen(),
-            curves: Curves.easeOutBack,
+            curves: Curves.fastOutSlowIn,
           ),
         );
       },

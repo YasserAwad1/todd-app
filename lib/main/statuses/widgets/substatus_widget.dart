@@ -6,6 +6,13 @@ import 'package:provider/provider.dart';
 import 'package:toddily_preschool/main/events/providers/event_provider.dart';
 
 class SubstatusWidget extends StatefulWidget {
+  bool startAnimation;
+  int index;
+
+  SubstatusWidget({
+    required this.startAnimation,
+    required this.index,
+  });
   @override
   State<SubstatusWidget> createState() => _SubstatusWidgetState();
 }
@@ -21,7 +28,13 @@ class _SubstatusWidgetState extends State<SubstatusWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      curve: Curves.easeIn,
+      duration: Duration(
+        milliseconds: 500 + (widget.index * 100),
+      ),
+      transform: Matrix4.translationValues(
+          widget.startAnimation ? 0 : MediaQuery.of(context).size.width, 0, 0),
       padding:
           EdgeInsets.only(top: 10.sp, bottom: 10.sp, left: 10.sp, right: 3.sp),
       margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 15.h),

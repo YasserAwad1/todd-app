@@ -44,6 +44,7 @@ class _ImageListScreenState extends State<ImageListScreen> {
           title: isPhotosScreen ?  'Latest Photos' : widget.title!,
           titleContainerWidth: 150.w,
           withBackButton: true,
+          withNotification: true,
         ),
         body: Column(
           children: [
@@ -70,6 +71,7 @@ class _ImageListScreenState extends State<ImageListScreen> {
               color: Theme.of(context).colorScheme.secondary,
               height: 100.h,
               child: ListView.builder(
+                physics: BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 itemCount: widget.images!.length,
                 itemBuilder: (context, index) {

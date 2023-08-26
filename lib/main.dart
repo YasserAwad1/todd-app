@@ -6,12 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:toddily_preschool/classes/screens/classes_screen.dart';
 import 'package:toddily_preschool/common/social_media_expert/providers/camera_provider.dart';
 import 'package:toddily_preschool/common/social_media_expert/screens/camera_screen.dart';
-import 'package:toddily_preschool/common/screens/image_selection_screen.dart';
-import 'package:toddily_preschool/common/screens/roles_screen.dart';
-import 'package:toddily_preschool/common/screens/sme_images_screen.dart';
 import 'package:toddily_preschool/common/social_media_expert/screens/taken_images_screen.dart';
-import 'package:toddily_preschool/main/FAQ/screens/FAQScreen.dart';
-import 'package:toddily_preschool/main/about/screens/about_screen.dart';
 
 //Providers
 import 'package:toddily_preschool/main/photos/providers/photos_povider.dart';
@@ -26,6 +21,12 @@ import 'package:toddily_preschool/main/photos/screens/photos_screen.dart';
 import 'package:toddily_preschool/main/splash_screen/splash_screen.dart';
 import 'package:toddily_preschool/main/statuses/screens/statuses_screen.dart';
 import 'package:toddily_preschool/main/events/screens/events_screen.dart';
+import 'package:toddily_preschool/main/notifications/screens/notifications_screen.dart';
+import 'package:toddily_preschool/main/FAQ/screens/FAQScreen.dart';
+import 'package:toddily_preschool/main/about/screens/about_screen.dart';
+import 'package:toddily_preschool/common/screens/image_selection_screen.dart';
+import 'package:toddily_preschool/common/screens/roles_screen.dart';
+import 'package:toddily_preschool/common/screens/sme_images_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -83,7 +84,8 @@ class MyApp extends StatelessWidget {
                   RolesScreen.routeName: (context) => RolesScreen(),
                   smeImagesScreen.routeName: (context) => smeImagesScreen(),
                   CameraScreen.routeName: (context) => CameraScreen(),
-                  TakenImagesScreen.routeName: (context) => TakenImagesScreen()
+                  TakenImagesScreen.routeName: (context) => TakenImagesScreen(),
+                  NotificationsScreen.routeName: (context) => NotificationsScreen()
                 },
               );
             }),

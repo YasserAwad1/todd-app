@@ -10,15 +10,30 @@ import 'package:toddily_preschool/main/photos/providers/photos_povider.dart';
 import 'package:toddily_preschool/main/photos/widgets/image_widget.dart';
 import 'package:toddily_preschool/main/photos/widgets/list_grid_buttons.dart';
 
-class PhotosScreen extends StatelessWidget {
+class PhotosScreen extends StatefulWidget {
   static const routeName = '/photos-screen';
+
+  @override
+  State<PhotosScreen> createState() => _PhotosScreenState();
+}
+
+class _PhotosScreenState extends State<PhotosScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  bool startAnimation = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      setState(() {
+        startAnimation = true;
+      });
+    });
+  }
+
   // final String? title;
-
-  // PhotosScreen({
-  //   this.title,
-  // });
-
   @override
   Widget build(BuildContext context) {
     bool isPhotosScreen = Provider.of<PhotosProvider>(context).isPhotosScreen;
@@ -40,6 +55,7 @@ class PhotosScreen extends StatelessWidget {
           title: isPhotosScreen ? 'Latest Photos' : eventName,
           titleContainerWidth: 150.w,
           withBackButton: isPhotosScreen ? false : true,
+          withNotification: true,
         ),
         body: Column(
           children: [
@@ -66,6 +82,8 @@ class PhotosScreen extends StatelessWidget {
                           crossAxisSpacing: 10.w),
                       itemBuilder: (context, i) => ImageWidget(
                         title: eventName,
+                        startAnimation: startAnimation,
+                        index: i,
                       ),
                     )
                   : ListView.builder(
@@ -74,6 +92,8 @@ class PhotosScreen extends StatelessWidget {
                       itemCount: 5,
                       itemBuilder: (context, i) => ImageWidget(
                         title: eventName,
+                        startAnimation: startAnimation,
+                        index: i,
                       ),
                     ),
             ),

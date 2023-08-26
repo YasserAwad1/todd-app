@@ -8,13 +8,32 @@ import 'package:toddily_preschool/common/widgets/app_drawer.dart';
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
 import 'package:toddily_preschool/main/kids/widgets/kid_widget.dart';
 
-class KidsScreen extends StatelessWidget {
+class KidsScreen extends StatefulWidget {
   static const routeName = '/kids-screen';
   bool? isComingFromClassesScreen = false;
   String? classTitle;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   KidsScreen({this.isComingFromClassesScreen, this.classTitle});
+
+  @override
+  State<KidsScreen> createState() => _KidsScreenState();
+}
+
+class _KidsScreenState extends State<KidsScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  bool startAnimation = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      setState(() {
+        startAnimation = true;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +46,12 @@ class KidsScreen extends StatelessWidget {
         key: _scaffoldKey,
         appBar: CustomAppBar(
           scaffoldKey: _scaffoldKey,
-          title: isComingFromClassesScreen != null ? classTitle! : 'My Kids',
+          title: widget.isComingFromClassesScreen != null
+              ? widget.classTitle!
+              : 'My Kids',
           titleContainerWidth: 100.w,
-          withBackButton: isComingFromClassesScreen ?? false,
+          withBackButton: widget.isComingFromClassesScreen ?? false,
+          withNotification: true,
         ),
         drawer: AppDrawer(),
         body: Container(
@@ -56,8 +78,11 @@ class KidsScreen extends StatelessWidget {
                     ListView.builder(
                       physics: const ScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: 6,
-                      itemBuilder: (context, i) => KidsWidget(),
+                      itemCount: 2,
+                      itemBuilder: (context, i) => KidsWidget(
+                        startAnimation: startAnimation,
+                        index: i,
+                      ),
                     ),
                   ],
                 ),

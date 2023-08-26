@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:toddily_preschool/common/my_navigator.dart';
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
 import 'package:toddily_preschool/main/events/providers/event_provider.dart';
 import 'package:toddily_preschool/main/kids/widgets/date_widget.dart';
 import 'package:toddily_preschool/main/kids/widgets/dates_screen_button.dart';
+import 'package:toddily_preschool/main/monthly_report/screens/monthly_report_screen.dart';
 
 class DatesScreen extends StatefulWidget {
   static const routeName = '/dates-screen';
@@ -32,6 +34,12 @@ class _DatesScreenState extends State<DatesScreen> {
   int _currentIndex = 0;
   bool startAnimation = false;
 
+  var tween = Tween(begin: Offset(0.0, 1.0), end: Offset.zero).chain(
+    CurveTween(
+      curve: Curves.bounceIn,
+    ),
+  );
+
   @override
   void initState() {
     // TODO: implement initState
@@ -53,8 +61,21 @@ class _DatesScreenState extends State<DatesScreen> {
                 title: 'Monthly Report',
                 icon: Icons.health_and_safety_outlined,
                 function: () {
-                  Navigator.of(context).pushNamed(
-                    '/monthly-report-screen',
+                  Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                      transitionDuration: Duration(milliseconds: 400),
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          MonthlyReportScreen(),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          // opacity: animation,
+                          child: child,
+                        );
+                      },
+                    ),
                   );
                 },
               )
@@ -72,12 +93,13 @@ class _DatesScreenState extends State<DatesScreen> {
           title: 'Child Name',
           titleContainerWidth: 130.w,
           withBackButton: true,
+          withNotification: true,
         ),
         body: Column(
           children: [
             Expanded(
               child: GridView.builder(
-                physics: const BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   padding: EdgeInsets.all(20.sp),
                   shrinkWrap: true,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

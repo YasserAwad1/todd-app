@@ -4,8 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:toddily_preschool/main/about/widgets/custom_tile.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class DetailsList extends StatelessWidget {
+class DetailsList extends StatefulWidget {
   const DetailsList({super.key});
+
+  @override
+  State<DetailsList> createState() => _DetailsListState();
+}
+
+class _DetailsListState extends State<DetailsList> {
+  bool startAnimation = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      setState(() {
+        startAnimation = true;
+      });
+    });
+  }
 
   void openWhatsapp(
       {required BuildContext context,
@@ -69,7 +87,8 @@ class DetailsList extends StatelessWidget {
   }
 
   void _launchMapsUrl() async {
-    final url = 'https://www.google.com/maps/place/Toddily+preschool/@33.5235236,36.282528,17z/data=!3m1!4b1!4m6!3m5!1s0x1518e7cd493b9de1:0x5266b275441ca30b!8m2!3d33.5235236!4d36.2851029!16s%2Fg%2F11v3yrssd0?authuser=0&entry=ttu';
+    final url =
+        'https://www.google.com/maps/place/Toddily+preschool/@33.5235236,36.282528,17z/data=!3m1!4b1!4m6!3m5!1s0x1518e7cd493b9de1:0x5266b275441ca30b!8m2!3d33.5235236!4d36.2851029!16s%2Fg%2F11v3yrssd0?authuser=0&entry=ttu';
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(Uri.parse(url));
     } else {
@@ -79,54 +98,66 @@ class DetailsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    List<Widget> tiles = [
+      CustomTile(
+        title: 'Location',
+        subtitle: 'Al Rawda square \nClick to open in maps',
+        icon: Icons.location_on_sharp,
+        function: () async {
+          _launchMapsUrl();
+        },
+      ),
+      CustomTile(
+        title: 'Phone Numbers',
+        subtitle: '0987056446\n3333110',
+        icon: Icons.phone_android_rounded,
+      ),
+      CustomTile(
+        title: 'Open times',
+        subtitle: 'Sunday --> Tuesday\n    9 AM --> 5 PM',
+        icon: Icons.calendar_month_rounded,
+      ),
+      CustomTile(
+        title: 'WhatsApp',
+        subtitle: 'Click to chat',
+        image: 'assets/images/socialMedia/whatsappLogo.png',
+        function: () async {
+          openWhatsapp(context: context, text: '', number: '+963987056446');
+        },
+      ),
+      CustomTile(
+        title: 'Instagram',
+        subtitle: 'Click to visit page',
+        image: 'assets/images/socialMedia/instagramLogo.png',
+        function: () async {
+          launchInstagramProfile();
+        },
+      ),
+      CustomTile(
+        title: 'Facebook',
+        subtitle: 'Click to visit page',
+        image: 'assets/images/socialMedia/facebookLogo.png',
+        function: () async {
+          laucnhFacebook();
+        },
+      ),
+    ];
+
+    return ListView.builder(
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      children: [
-        CustomTile(
-          title: 'Location',
-          subtitle:
-              'Al Rawda square \nClick to open in maps',
-          icon: Icons.location_on_sharp,
-          function: () async {
-            _launchMapsUrl();
-          },
-        ),
-        CustomTile(
-          title: 'Phone Numbers',
-          subtitle: '0987056446\n3333110',
-          icon: Icons.phone_android_rounded,
-        ),
-        CustomTile(
-          title: 'Open times',
-          subtitle: 'Sunday --> Tuesday\n    9 AM --> 5 PM',
-          icon: Icons.calendar_month_rounded,
-        ),
-        CustomTile(
-          title: 'WhatsApp',
-          subtitle: 'Click to chat',
-          image: 'assets/images/socialMedia/whatsappLogo.png',
-          function: () async {
-            openWhatsapp(context: context, text: '', number: '+963987056446');
-          },
-        ),
-        CustomTile(
-          title: 'Instagram',
-          subtitle: 'Click to visit page',
-          image: 'assets/images/socialMedia/instagramLogo.png',
-          function: () async {
-            launchInstagramProfile();
-          },
-        ),
-        CustomTile(
-          title: 'Facebook',
-          subtitle: 'Click to visit page',
-          image: 'assets/images/socialMedia/facebookLogo.png',
-          function: () async {
-            laucnhFacebook();
-          },
-        ),
-      ],
+      itemCount: tiles.length,
+      itemBuilder: (context, i) {
+        return AnimatedContainer(
+          curve: Curves.easeInOut,
+          duration: Duration(
+            milliseconds: 500 + (i * 200),
+          ),
+          transform: Matrix4.translationValues(
+              startAnimation ? 0 : MediaQuery.of(context).size.width, 0, 0),
+          child: tiles[i],
+        );
+      },
     );
   }
 }

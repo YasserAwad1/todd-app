@@ -5,7 +5,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toddily_preschool/main/statuses/widgets/substatus_widget.dart';
 
 class StatusWidget extends StatelessWidget {
-  const StatusWidget({super.key});
+  bool startAnimation;
+  int index;
+
+  StatusWidget({
+    required this.startAnimation,
+    required this.index,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +19,13 @@ class StatusWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
+        AnimatedContainer(
+          curve: Curves.easeOutSine,
+          duration: Duration(
+            milliseconds: 500 + (index * 100),
+          ),
+          transform: Matrix4.translationValues(
+              startAnimation ? 0 : MediaQuery.of(context).size.width, 0, 0),
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.secondary,
             borderRadius: BorderRadius.only(
@@ -27,7 +39,9 @@ class StatusWidget extends StatelessWidget {
           padding: EdgeInsets.all(10.w),
           child: Column(
             children: [
-              SizedBox(height: 4.h,),
+              SizedBox(
+                height: 4.h,
+              ),
               Text(
                 'Drinks',
                 // textAlign: TextAlign.end,
@@ -46,10 +60,13 @@ class StatusWidget extends StatelessWidget {
             height: 155.h, //155
             child: ListView.builder(
               shrinkWrap: true,
-              // physics: NeverScrollableScrollPhysics(),
+              physics: BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
               itemCount: 2,
-              itemBuilder: (context, i) => SubstatusWidget(),
+              itemBuilder: (context, i) => SubstatusWidget(
+                startAnimation: startAnimation,
+                index: i,
+              ),
             ),
           ),
         ),

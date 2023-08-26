@@ -15,8 +15,12 @@ class ImageWidget extends StatelessWidget {
 
   final String? title;
   final bool? isPhotosScreen;
+  bool startAnimation;
+  int index;
 
   ImageWidget({
+    required this.startAnimation,
+    required this.index,
     this.title,
     this.isPhotosScreen,
   });
@@ -40,7 +44,13 @@ class ImageWidget extends StatelessWidget {
                   ),
                 ));
           },
-          child: SizedBox(
+          child: AnimatedContainer(
+            curve: Curves.easeOutSine,
+            duration: Duration(
+              milliseconds: 500 + (index * 100),
+            ),
+            transform: Matrix4.translationValues(
+                startAnimation ? 0 : MediaQuery.of(context).size.width, 0, 0),
             width: double.infinity,
             height: 150.h,
             child: Stack(

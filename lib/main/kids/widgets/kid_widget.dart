@@ -8,7 +8,12 @@ import 'package:toddily_preschool/main/kids/screens/dates_screen.dart';
 import 'package:toddily_preschool/main/kids/screens/kids_screen.dart';
 
 class KidsWidget extends StatelessWidget {
-  const KidsWidget({super.key});
+  bool startAnimation;
+  int index;
+  KidsWidget({
+    required this.startAnimation,
+    required this.index,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,15 +22,18 @@ class KidsWidget extends StatelessWidget {
         Provider.of<EventProvider>(context, listen: false).getRole != 2
             ? Navigator.push(
                 context,
-                MyNavigator(
-                  screen: DatesScreen(),
-                  curves: Curves.easeOutBack
-                ),
+                MyNavigator(screen: DatesScreen(), curves: Curves.easeOutBack),
               )
             : Navigator.of(context).pushNamed('/camera-screen');
       },
       child: Center(
-        child: Container(
+        child: AnimatedContainer(
+          curve: Curves.easeOutSine,
+          duration: Duration(
+            milliseconds: 500 + (index * 100),
+          ),
+          transform: Matrix4.translationValues(
+              startAnimation ? 0 : MediaQuery.of(context).size.width, 0, 0),
           padding: EdgeInsets.all(15.sp),
           margin: EdgeInsets.all(15.sp),
           width: 300.w,

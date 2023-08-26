@@ -26,6 +26,19 @@ class _AboutScreenState extends State<AboutScreen> {
     'assets/images/water.jpg',
   ];
 
+  bool startAnimation = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      setState(() {
+        startAnimation = true;
+      });
+    });
+  }
+
   Future<void> launchPhoneDialer(String contactNumber) async {
     final Uri _phoneUri = Uri(scheme: "tel", path: contactNumber);
     try {
@@ -119,7 +132,10 @@ class _AboutScreenState extends State<AboutScreen> {
                   SizedBox(
                     height: 10.h,
                   ),
-                  const AboutWidget(),
+                  AboutWidget(
+                    startAnimation: startAnimation,
+                    index: 1,
+                  ),
                   SizedBox(
                     height: 10.h,
                   ),
@@ -129,21 +145,21 @@ class _AboutScreenState extends State<AboutScreen> {
                   ),
                   CarouselSlider.builder(
                     itemBuilder: ((context, index, realIndex) => Container(
-                      margin: EdgeInsets.symmetric(horizontal: 15.w),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadiusDirectional.circular(
-                          20.sp,
-                        ),
-                      ),
-                      width: double.infinity,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20.sp),
-                        child: Image.asset(
-                          images[index],
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                    )),
+                          margin: EdgeInsets.symmetric(horizontal: 25.w),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadiusDirectional.circular(
+                              20.sp,
+                            ),
+                          ),
+                          width: double.infinity,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20.sp),
+                            child: Image.asset(
+                              images[index],
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        )),
                     itemCount: images.length,
                     options: CarouselOptions(
                       pauseAutoPlayOnTouch: true,

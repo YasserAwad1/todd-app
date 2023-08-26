@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:toddily_preschool/common/my_navigator.dart';
 import 'package:toddily_preschool/main/events/providers/event_provider.dart';
+import 'package:toddily_preschool/main/notifications/screens/notifications_screen.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final GlobalKey<ScaffoldState>? scaffoldKey;
@@ -23,9 +25,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       actions: [
-        if (Provider.of<EventProvider>(context).getRole == 0)
+        if (Provider.of<EventProvider>(context).getRole == 0 && withNotification!)
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MyNavigator(
+                  screen: const NotificationsScreen(),
+                  curves: Curves.ease,
+                ),
+              );
+            },
             icon: Icon(
               Icons.notifications_active_outlined,
               color: Colors.black,

@@ -2,14 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AboutWidget extends StatelessWidget {
-  const AboutWidget({super.key});
+  bool startAnimation;
+  int index;
+  AboutWidget({
+    required this.startAnimation,
+    required this.index,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       clipBehavior: Clip.none,
       children: [
-        Container(
+        AnimatedContainer(
+          curve: Curves.linear,
+          duration: Duration(
+            milliseconds: 500 + (index * 100),
+          ),
+          transform: Matrix4.translationValues(
+              startAnimation ? 0 : MediaQuery.of(context).size.width, 0, 0),
           padding: EdgeInsets.all(7.sp),
           height: 170.h,
           width: 320.w,
@@ -70,7 +81,22 @@ class AboutWidget extends StatelessWidget {
         Positioned(
           right: -43.w,
           top: 20.h,
-          child: SizedBox(
+          child: AnimatedContainer(
+            curve: Curves.easeOutSine,
+            duration: Duration(
+              milliseconds: 500 + (index * 100),
+            ),
+            transform: Matrix4.translationValues(
+              startAnimation
+                  ? 0
+                  : MediaQuery.of(context).size.width, // X translation
+              startAnimation
+                  ? 0
+                  : -MediaQuery.of(context)
+                      .size
+                      .height, // Y translation (negative value to move down)
+              0,
+            ),
             // width: 70.w,
             // height: 70.h,
             child: Image.asset(

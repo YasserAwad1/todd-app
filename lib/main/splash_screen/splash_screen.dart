@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
       _videoPlayerController!.setLooping(false);
       _videoPlayerController!.play();
     });
-    Timer(Duration(seconds: 5), () {
+    Timer(Duration(seconds: 6), () {
       // _chewieController!.pause();
       Navigator.push(
         context,

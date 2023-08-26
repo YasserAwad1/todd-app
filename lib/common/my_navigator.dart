@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class MyNavigator extends PageRouteBuilder {
   final Widget screen;
-  final Cubic curves;
+  final Curve curves;
 
   MyNavigator({required this.screen, required this.curves})
       : super(

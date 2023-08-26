@@ -25,7 +25,7 @@ class _RolesScreenState extends State<RolesScreen> {
             scaffoldKey: _scaffoldKey,
             title: 'roles screen',
             titleContainerWidth: 150.w,
-            withBackButton: false),
+            withBackButton: false, withNotification: false,),
         body: ListView(
           children: [
             TextButton(
