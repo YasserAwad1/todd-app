@@ -23,6 +23,7 @@ import 'package:toddily_preschool/main/kids/screens/dates_screen.dart';
 import 'package:toddily_preschool/main/monthly_report/screens/monthly_report_screen.dart';
 import 'package:toddily_preschool/main/photos/screens/image_list_screen.dart';
 import 'package:toddily_preschool/main/photos/screens/photos_screen.dart';
+import 'package:toddily_preschool/main/splash_screen/splash_screen.dart';
 import 'package:toddily_preschool/main/statuses/screens/statuses_screen.dart';
 import 'package:toddily_preschool/main/events/screens/events_screen.dart';
 
@@ -57,8 +58,14 @@ class MyApp extends StatelessWidget {
                     primary: Colors.grey[350],
                     secondary: const Color.fromARGB(255, 255, 207, 58),
                   ),
+                  pageTransitionsTheme: PageTransitionsTheme(
+                    builders: {
+                      TargetPlatform.android: ZoomPageTransitionsBuilder(),
+                      TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+                    },
+                  ),
                 ),
-                home: KidsScreen(),
+                home: SplashScreen(),
                 routes: {
                   KidsScreen.routeName: (context) => KidsScreen(),
                   DatesScreen.routeName: (context) => DatesScreen(),

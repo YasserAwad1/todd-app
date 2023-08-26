@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:toddily_preschool/common/my_navigator.dart';
+import 'package:toddily_preschool/main/statuses/screens/statuses_screen.dart';
 
 class DateWidget extends StatelessWidget {
   String image;
@@ -17,7 +19,13 @@ class DateWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed('/statuses-screen');
+        Navigator.push(
+          context,
+          MyNavigator(
+            screen: StatusesScreen(),
+            curves: Curves.easeOutBack,
+          ),
+        );
       },
       child: AnimatedContainer(
         curve: Curves.easeInOut,

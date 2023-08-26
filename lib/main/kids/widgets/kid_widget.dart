@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:toddily_preschool/common/my_navigator.dart';
 import 'package:toddily_preschool/main/events/providers/event_provider.dart';
+import 'package:toddily_preschool/main/kids/screens/dates_screen.dart';
+import 'package:toddily_preschool/main/kids/screens/kids_screen.dart';
 
 class KidsWidget extends StatelessWidget {
   const KidsWidget({super.key});
@@ -12,7 +15,13 @@ class KidsWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Provider.of<EventProvider>(context, listen: false).getRole != 2
-            ? Navigator.of(context).pushNamed('/dates-screen')
+            ? Navigator.push(
+                context,
+                MyNavigator(
+                  screen: DatesScreen(),
+                  curves: Curves.easeOutBack
+                ),
+              )
             : Navigator.of(context).pushNamed('/camera-screen');
       },
       child: Center(

@@ -28,6 +28,7 @@ dependencies:
   multiple_image_camera: ^0.0.1
   multi_image_capture: ^1.0.1
   video_player: ^2.7.0
+  chewie: ^1.7.0
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +57,7 @@ flutter:
     - assets/images/
     - assets/images/characters/
     - assets/images/socialMedia/
+    - assets/videos/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
