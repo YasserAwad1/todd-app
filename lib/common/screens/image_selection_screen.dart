@@ -223,16 +223,16 @@ class _ImageSelectionScreenState extends State<ImageSelectionScreen> {
             child: Container(
               height: 90.h,
               child: SingleChildScrollView(
-                physics: ScrollPhysics(),
+                physics: const ScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 child: ListView.builder(
                   controller: listViewController,
-                  physics: PageScrollPhysics(),
+                  physics: const PageScrollPhysics(),
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   itemCount: images.length,
                   itemBuilder: (context, i) => Container(
-                    margin: EdgeInsets.all(10),
+                    margin: EdgeInsets.all(10.sp),
                     width: 50.w,
                     height: 70.h,
                     color: Colors.red,

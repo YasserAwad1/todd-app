@@ -144,7 +144,7 @@ class _DetailsListState extends State<DetailsList> {
     ];
 
     return ListView.builder(
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: tiles.length,
       itemBuilder: (context, i) {

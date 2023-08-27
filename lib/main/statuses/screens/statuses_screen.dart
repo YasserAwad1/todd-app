@@ -49,7 +49,7 @@ class _StatusesScreenState extends State<StatusesScreen> {
                   ),
                   onPressed: () {},
                   child: Text(
-                    'Send Status',
+                     'Send Status',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20.sp,

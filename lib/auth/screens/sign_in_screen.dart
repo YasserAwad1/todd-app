@@ -7,7 +7,6 @@ import 'package:toddily_preschool/auth/widgets/login_button.dart';
 import 'package:toddily_preschool/auth/widgets/or_widget.dart';
 import 'package:toddily_preschool/auth/widgets/sigin_top_bar.dart';
 
-
 class SignInScreen extends StatelessWidget {
   static const routeName = '/sign-in-screen';
   const SignInScreen({super.key});
@@ -16,11 +15,12 @@ class SignInScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          body: Column(
-        children: [
-          const SigninTopBar(),
-          Expanded(
-            child: Stack(
+          body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const SigninTopBar(),
+            Stack(
+              fit: StackFit.passthrough,
               children: [
                 Positioned(
                   left: 20.w,
@@ -47,8 +47,8 @@ class SignInScreen extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  left: -5.w,
-                  bottom: 179.h,
+                  right: -5.w,
+                  bottom: 140.h,
                   child: SizedBox(
                     height: 100.h,
                     width: 120.w,
@@ -59,13 +59,13 @@ class SignInScreen extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  right: -5.w,
-                  bottom: 75.h,
+                  left: 50.w,
+                  bottom: 180.h,
                   child: SizedBox(
                     height: 100.h,
                     width: 120.w,
                     child: Image.asset(
-                      'assets/images/characters/book.png',
+                      'assets/images/birds.png',
                       // fit: BoxFit.fill,
                     ),
                   ),
@@ -116,23 +116,35 @@ class SignInScreen extends StatelessWidget {
                         SizedBox(
                           height: 20.h,
                         ),
-                        LoginButton(),
+                        const LoginButton(),
                         SizedBox(
                           height: 10.h,
                         ),
-                        OrWidget(),
+                        const OrWidget(),
                         SizedBox(
                           height: 15.h,
                         ),
-                        GuestLoginButton(),
+                        Row(
+                          children: [
+                            SizedBox(
+                              height: 100.h,
+                              width: 120.w,
+                              child: Image.asset(
+                                'assets/images/characters/book.png',
+                                // fit: BoxFit.fill,
+                              ),
+                            ),
+                            GuestLoginButton(),
+                          ],
+                        ),
                       ],
                     ),
                   ),
                 )
               ],
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       )),
     );
   }

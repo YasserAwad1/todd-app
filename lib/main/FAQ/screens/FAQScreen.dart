@@ -30,10 +30,13 @@ class FAQScreen extends StatelessWidget {
               SizedBox(
                 height: 10.h,
               ),
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: 3,
-                itemBuilder: (context, i) => MonthTileWidget(),
+              Expanded(
+                child: ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: 15,
+                  itemBuilder: (context, i) => MonthTileWidget(),
+                ),
               ),
             ],
           ),

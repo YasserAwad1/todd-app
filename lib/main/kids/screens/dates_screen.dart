@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:toddily_preschool/common/my_navigator.dart';
+import 'package:intl/intl.dart';
+
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
 import 'package:toddily_preschool/main/events/providers/event_provider.dart';
 import 'package:toddily_preschool/main/kids/widgets/date_widget.dart';
@@ -36,7 +37,7 @@ class _DatesScreenState extends State<DatesScreen> {
 
   var tween = Tween(begin: Offset(0.0, 1.0), end: Offset.zero).chain(
     CurveTween(
-      curve: Curves.bounceIn,
+      curve: Curves.easeIn,
     ),
   );
 
@@ -64,7 +65,7 @@ class _DatesScreenState extends State<DatesScreen> {
                   Navigator.push(
                     context,
                     PageRouteBuilder(
-                      transitionDuration: Duration(milliseconds: 400),
+                      transitionDuration: Duration(milliseconds: 450),
                       pageBuilder: (context, animation, secondaryAnimation) =>
                           MonthlyReportScreen(),
                       transitionsBuilder:
@@ -80,7 +81,9 @@ class _DatesScreenState extends State<DatesScreen> {
                 },
               )
             : DatesScreenButton(
-                title: 'New Status 25/3',
+                title: 'New Status ${DateFormat('dd/M').format(
+                  DateTime.now(),
+                )}',
                 icon: Icons.add,
                 function: () {
                   Navigator.of(context).pushNamed(

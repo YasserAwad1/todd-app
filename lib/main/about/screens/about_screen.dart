@@ -44,10 +44,11 @@ class _AboutScreenState extends State<AboutScreen> {
     try {
       if (await canLaunchUrl(
         _phoneUri,
-      ))
+      )) {
         await launchUrl(
           _phoneUri,
         );
+      }
     } catch (error) {
       throw ("Cannot dial");
     }
@@ -72,7 +73,7 @@ class _AboutScreenState extends State<AboutScreen> {
           onPressed: () async {
             launchPhoneDialer('+963987056446');
           },
-          child: Icon(
+          child: const Icon(
             Icons.call,
           ),
         ),
@@ -82,6 +83,7 @@ class _AboutScreenState extends State<AboutScreen> {
         drawer: AppDrawer(),
         key: _scaffoldKey,
         body: NestedScrollView(
+          physics: const BouncingScrollPhysics(),
           headerSliverBuilder:
               ((BuildContext context, bool innerBoxIsScrolled) {
             print(innerBoxIsScrolled);
@@ -94,6 +96,7 @@ class _AboutScreenState extends State<AboutScreen> {
           body: Container(
             padding: EdgeInsets.symmetric(vertical: 10.h),
             child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

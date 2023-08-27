@@ -85,18 +85,22 @@ class _SubstatusWidgetState extends State<SubstatusWidget> {
               Flexible(
                 child: SizedBox(
                   width: 110.w,
-                  child: Text(
-                    'Water',
-                    //IF DESCRIPTION IS EMPTY CENTER TEXT
-                    // textAlign: TextAlign.center,
-                    // softWrap: true,
-                    // maxLines: 2,
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontFamily: "LuckiestGuy",
-                      // fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+                  child: Row(
+                    children: [
+                      Text(
+                        'Water',
+                        //IF DESCRIPTION IS EMPTY CENTER TEXT
+                        // textAlign: TextAlign.center,
+                        // softWrap: true,
+                        // maxLines: 2,
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontFamily: "LuckiestGuy",
+                          // fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

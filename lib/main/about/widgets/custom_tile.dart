@@ -30,7 +30,9 @@ class CustomTile extends StatelessWidget {
                 size: 35.sp,
                 color: Theme.of(context).colorScheme.secondary,
               )
-            : Image.asset(image!),
+            : Image.asset(
+              image!,
+            ),
         title: Text(
           title,
           style: TextStyle(
@@ -44,7 +46,7 @@ class CustomTile extends StatelessWidget {
         subtitle: subtitle != null
             ? Text(
                 subtitle!,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.grey,
                 ),
               )

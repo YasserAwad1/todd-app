@@ -16,7 +16,7 @@ class SigninTopBar extends StatelessWidget {
               height: 130.h,
               decoration: BoxDecoration(
                   borderRadius:
-                      BorderRadius.only(bottomRight: Radius.circular(50)),
+                      const BorderRadius.only(bottomRight: Radius.circular(50)),
                   color: Theme.of(context).colorScheme.secondary),
               child: Image.asset('assets/images/ToddilyLogo.png'),
             ),

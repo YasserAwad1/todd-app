@@ -70,7 +70,8 @@ class _PhotosScreenState extends State<PhotosScreen> {
               // PUT OPTION TO DOWNLOAD IMAGES
               child: !isList
                   ? GridView.builder(
-                      itemCount: 4,
+                    physics: BouncingScrollPhysics(),
+                      itemCount: 8,
                       padding: EdgeInsets.symmetric(
                         horizontal: 6.w,
                       ),
@@ -87,6 +88,7 @@ class _PhotosScreenState extends State<PhotosScreen> {
                       ),
                     )
                   : ListView.builder(
+                    physics: BouncingScrollPhysics(),
                       padding: EdgeInsets.all(10.sp),
                       shrinkWrap: true,
                       itemCount: 5,

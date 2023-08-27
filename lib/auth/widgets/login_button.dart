@@ -18,7 +18,7 @@ class LoginButton extends StatelessWidget {
             Navigator.push(
               context,
               PageRouteBuilder(
-                transitionDuration: Duration(milliseconds: 500),
+                transitionDuration: const Duration(milliseconds: 500),
                 pageBuilder: (context, animation, secondaryAnimation) =>
                     KidsScreen(),
                 transitionsBuilder:

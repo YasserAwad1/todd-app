@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
     });
     Timer(Duration(seconds: 6), () {
       // _chewieController!.pause();
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         PageRouteBuilder(
           transitionDuration: Duration(milliseconds: 200),
@@ -95,7 +95,10 @@ class _SplashScreenState extends State<SplashScreen> {
                 aspectRatio: _videoPlayerController!.value.aspectRatio,
                 child: VideoPlayer(_videoPlayerController!),
               )
-            : CircularProgressIndicator(),
+            : Center(
+                child: CircularProgressIndicator(
+                color: Theme.of(context).colorScheme.secondary,
+              )),
       ),
     );
   }

@@ -40,6 +40,7 @@ class _KidsScreenState extends State<KidsScreen> {
     // var args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     return SafeArea(
       child: Scaffold(
+        // backgroundColor: Color.fromARGB(255, 3, 1, 116),
         extendBodyBehindAppBar: false,
         drawerEnableOpenDragGesture: true,
         drawerEdgeDragWidth: 200.w,
