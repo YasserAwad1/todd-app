@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:toddily_preschool/common/widgets/app_drawer.dart';
+import 'package:toddily_preschool/common/drawer/app_drawer.dart';
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
 import 'package:toddily_preschool/main/monthly_report/widgets/month_tile_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FAQScreen extends StatelessWidget {
   static const routeName = '/FAQ-screen';
@@ -16,10 +17,11 @@ class FAQScreen extends StatelessWidget {
         drawer: AppDrawer(),
         appBar: CustomAppBar(
           scaffoldKey: _scaffoldKey,
-          title: 'FAQs',
+          title: AppLocalizations.of(context)!.faqs,
           titleContainerWidth: 150.w,
           withBackButton: false,
           withNotification: true,
+          stayEnglish: true,
         ),
         drawerEdgeDragWidth: 200.w,
         drawerEnableOpenDragGesture: true,

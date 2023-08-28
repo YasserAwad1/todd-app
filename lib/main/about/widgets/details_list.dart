@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:flutter/material.dart';
 import 'package:toddily_preschool/main/about/widgets/custom_tile.dart';
@@ -89,7 +90,11 @@ class _DetailsListState extends State<DetailsList> {
   void _launchMapsUrl() async {
     final url =
         'https://www.google.com/maps/place/Toddily+preschool/@33.5235236,36.282528,17z/data=!3m1!4b1!4m6!3m5!1s0x1518e7cd493b9de1:0x5266b275441ca30b!8m2!3d33.5235236!4d36.2851029!16s%2Fg%2F11v3yrssd0?authuser=0&entry=ttu';
-    if (await canLaunchUrl(Uri.parse(url))) {
+    if (await canLaunchUrl(
+      Uri.parse(
+        url,
+      ),
+    )) {
       await launchUrl(Uri.parse(url));
     } else {
       throw 'Could not launch $url';
@@ -99,43 +104,51 @@ class _DetailsListState extends State<DetailsList> {
   @override
   Widget build(BuildContext context) {
     List<Widget> tiles = [
+      //LOCATION
       CustomTile(
-        title: 'Location',
-        subtitle: 'Al Rawda square \nClick to open in maps',
+        title: AppLocalizations.of(context)!.location,
+        subtitle:
+            '${AppLocalizations.of(context)!.todLocation}\n${AppLocalizations.of(context)!.openInMaps}',
         icon: Icons.location_on_sharp,
         function: () async {
           _launchMapsUrl();
         },
       ),
+      //PHONE NUMBERS
       CustomTile(
-        title: 'Phone Numbers',
+        title: AppLocalizations.of(context)!.phonenums,
         subtitle: '0987056446\n3333110',
         icon: Icons.phone_android_rounded,
       ),
+      //OPEN TIMES
       CustomTile(
-        title: 'Open times',
-        subtitle: 'Sunday --> Tuesday\n    9 AM --> 5 PM',
+        title: AppLocalizations.of(context)!.openTimes,
+        subtitle:
+            '  ${AppLocalizations.of(context)!.openDays}\n${AppLocalizations.of(context)!.openHours}',
         icon: Icons.calendar_month_rounded,
       ),
+      //WHATSAPP
       CustomTile(
-        title: 'WhatsApp',
-        subtitle: 'Click to chat',
+        title: AppLocalizations.of(context)!.whatsapp,
+        subtitle: AppLocalizations.of(context)!.clickToChat,
         image: 'assets/images/socialMedia/whatsappLogo.png',
         function: () async {
           openWhatsapp(context: context, text: '', number: '+963987056446');
         },
       ),
+      //INSTAGRAM
       CustomTile(
-        title: 'Instagram',
-        subtitle: 'Click to visit page',
+        title: AppLocalizations.of(context)!.instagram,
+        subtitle: AppLocalizations.of(context)!.clickToVisitPage,
         image: 'assets/images/socialMedia/instagramLogo.png',
         function: () async {
           launchInstagramProfile();
         },
       ),
+      //FACEBOOK
       CustomTile(
-        title: 'Facebook',
-        subtitle: 'Click to visit page',
+        title: AppLocalizations.of(context)!.facebook,
+        subtitle: AppLocalizations.of(context)!.clickToVisitPage,
         image: 'assets/images/socialMedia/facebookLogo.png',
         function: () async {
           laucnhFacebook();

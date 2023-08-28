@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:toddily_preschool/common/social_media_expert/providers/camera_provider.dart';
+import 'package:toddily_preschool/social_media_expert/providers/camera_provider.dart';
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
 import 'package:toddily_preschool/main/kids/widgets/dates_screen_button.dart';
 

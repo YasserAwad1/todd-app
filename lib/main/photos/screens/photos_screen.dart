@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'package:toddily_preschool/common/widgets/app_drawer.dart';
+import 'package:toddily_preschool/common/drawer/app_drawer.dart';
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
 import 'package:toddily_preschool/main/events/providers/event_provider.dart';
 import 'package:toddily_preschool/main/photos/providers/photos_povider.dart';
@@ -52,10 +53,10 @@ class _PhotosScreenState extends State<PhotosScreen> {
         key: _scaffoldKey,
         appBar: CustomAppBar(
           scaffoldKey: _scaffoldKey,
-          title: isPhotosScreen ? 'Latest Photos' : eventName,
+          title: isPhotosScreen ? AppLocalizations.of(context)!.latestPhotos : eventName,
           titleContainerWidth: 150.w,
           withBackButton: isPhotosScreen ? false : true,
-          withNotification: true,
+          stayEnglish: isPhotosScreen ? true : false,
         ),
         body: Column(
           children: [

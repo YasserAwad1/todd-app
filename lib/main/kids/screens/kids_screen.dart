@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 
 //packages
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 //widgets
-import 'package:toddily_preschool/common/widgets/app_drawer.dart';
+import 'package:toddily_preschool/common/drawer/app_drawer.dart';
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
 import 'package:toddily_preschool/main/kids/widgets/kid_widget.dart';
 
@@ -49,10 +50,10 @@ class _KidsScreenState extends State<KidsScreen> {
           scaffoldKey: _scaffoldKey,
           title: widget.isComingFromClassesScreen != null
               ? widget.classTitle!
-              : 'My Kids',
+              : AppLocalizations.of(context)!.kids,
           titleContainerWidth: 100.w,
           withBackButton: widget.isComingFromClassesScreen ?? false,
-          withNotification: true,
+          stayEnglish: true,
         ),
         drawer: AppDrawer(),
         body: Container(

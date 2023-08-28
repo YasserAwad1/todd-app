@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NotificationsScreen extends StatefulWidget {
   static const routeName = '/notifications-screen';
@@ -19,10 +20,11 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       child: Scaffold(
         appBar: CustomAppBar(
           scaffoldKey: _scaffoldKey,
-          title: 'Notifications',
+          title: AppLocalizations.of(context)!.notifications,
           titleContainerWidth: 150.w,
           withBackButton: true,
           withNotification: false,
+          stayEnglish: true,
         ),
         body: Center(
           child: Text('noti screen'),

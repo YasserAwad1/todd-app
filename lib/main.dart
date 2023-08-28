@@ -1,12 +1,22 @@
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 //packages
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:toddily_preschool/classes/screens/classes_screen.dart';
-import 'package:toddily_preschool/common/social_media_expert/providers/camera_provider.dart';
-import 'package:toddily_preschool/common/social_media_expert/screens/camera_screen.dart';
-import 'package:toddily_preschool/common/social_media_expert/screens/taken_images_screen.dart';
+import 'package:toddily_preschool/auth/screens/sign_in_screen.dart';
+import 'package:toddily_preschool/main/classes/screens/classes_screen.dart';
+import 'package:toddily_preschool/common/providers/language_provider.dart';
+import 'package:toddily_preschool/social_media_expert/providers/camera_provider.dart';
+import 'package:toddily_preschool/social_media_expert/screens/camera_screen.dart';
+import 'package:toddily_preschool/social_media_expert/screens/taken_images_screen.dart';
+
+//language
+import 'l10n/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+// import 'package:flutter_localizations/flutter_localizations.dart';
 
 //Providers
 import 'package:toddily_preschool/main/photos/providers/photos_povider.dart';
@@ -33,6 +43,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  
+
   const MyApp({super.key});
 
   @override
@@ -48,23 +60,41 @@ class MyApp extends StatelessWidget {
               ),
               ChangeNotifierProvider(
                 create: (ctx) => CameraProvider(),
+              ),
+              ChangeNotifierProvider<LanguageProvider>(
+                create: (ctx) => LanguageProvider(),
               )
             ],
             child: Builder(builder: (context) {
               return MaterialApp(
                 title: 'Toddily Preschool',
                 debugShowCheckedModeBanner: false,
+                localizationsDelegates: const [
+                  AppLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                ],
+                locale: Provider.of<LanguageProvider>(context).currentLocale,
+                // // localizationsDelegates: const [
+                // //   AppLocalizations.delegate,
+                // //   GlobalMaterialLocalizations.delegate,
+                // //   GlobalWidgetsLocalizations.delegate,
+                // //   GlobalCupertinoLocalizations.delegate,
+                // // ],
+                supportedLocales: L10n.all,
                 theme: ThemeData(
                   colorScheme: ColorScheme.fromSwatch().copyWith(
                     primary: Colors.grey[350],
                     secondary: const Color.fromARGB(255, 255, 207, 58),
                   ),
-                  pageTransitionsTheme: PageTransitionsTheme(
-                    builders: {
-                      TargetPlatform.android: ZoomPageTransitionsBuilder(),
-                      TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-                    },
-                  ),
+                  // fontFamily: "LuckiestGuy"
+                  // pageTransitionsTheme: PageTransitionsTheme(
+                  //   builders: {
+                  //     TargetPlatform.android: ZoomPageTransitionsBuilder(),
+                  //     TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+                  //   },
+                  // ),
                 ),
                 home: SplashScreen(),
                 routes: {
@@ -85,7 +115,8 @@ class MyApp extends StatelessWidget {
                   smeImagesScreen.routeName: (context) => smeImagesScreen(),
                   CameraScreen.routeName: (context) => CameraScreen(),
                   TakenImagesScreen.routeName: (context) => TakenImagesScreen(),
-                  NotificationsScreen.routeName: (context) => NotificationsScreen()
+                  NotificationsScreen.routeName: (context) =>
+                      NotificationsScreen()
                 },
               );
             }),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:camera/camera.dart';
 import 'package:provider/provider.dart';
-import 'package:toddily_preschool/common/social_media_expert/providers/camera_provider.dart';
+import 'package:toddily_preschool/social_media_expert/providers/camera_provider.dart';
 
 class CustomCamera extends StatefulWidget {
   const CustomCamera({super.key});

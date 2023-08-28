@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OrWidget extends StatelessWidget {
   const OrWidget({super.key});
@@ -22,7 +23,7 @@ class OrWidget extends StatelessWidget {
           width: 10.w,
         ),
         Text(
-          'OR',
+          AppLocalizations.of(context)!.or,
           style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Theme.of(context).colorScheme.secondary),

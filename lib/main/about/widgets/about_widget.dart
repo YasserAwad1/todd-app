@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AboutWidget extends StatelessWidget {
   bool startAnimation;
   int index;
-  AboutWidget({
-    required this.startAnimation,
-    required this.index,
-  });
+  bool isArabic;
+
+  AboutWidget(
+      {required this.startAnimation,
+      required this.index,
+      required this.isArabic});
 
   @override
   Widget build(BuildContext context) {
@@ -34,25 +37,28 @@ class AboutWidget extends StatelessWidget {
                 offset: Offset(6, 7),
               ),
             ],
-            borderRadius: const BorderRadius.only(
-              topRight: Radius.circular(100),
-              bottomRight: Radius.circular(100),
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(isArabic ? 0 : 100),
+              bottomRight: Radius.circular(isArabic ? 0 : 100),
+              topLeft: Radius.circular(isArabic ? 100 : 0),
+              bottomLeft: Radius.circular(isArabic ? 100 : 0),
             ),
             // shape: BoxShape.circle,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 5.h,
-              ),
+              if (!isArabic)
+                SizedBox(
+                  height: 5.h,
+                ),
               Text(
-                'About Toddily Preschool',
+                AppLocalizations.of(context)!.aboutToddilyps,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20.sp,
                   color: Colors.white,
-                  fontFamily: "LuckiestGuy",
+                  fontFamily: isArabic ? "Lalezar": "LuckiestGuy",
                 ),
               ),
               SizedBox(
@@ -63,13 +69,16 @@ class AboutWidget extends StatelessWidget {
                   SizedBox(
                     width: 280.w,
                     child: Text(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua,Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-                      maxLines: 7,
+                      isArabic
+                          ? 'لوريم ايبسوم هو نموذج افتراضي يوضع في التصاميم لتعرض على العميل ليتصور طريقه وضع النصوص بالتصاميم سواء كانت تصاميم مطبوعه ... بروشور او فلاير على سبيل المثال ... او نماذج مواقع انترنت ...'
+                          : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua,Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+                      maxLines: isArabic ? 4 : 7,
                       softWrap: true,
                       style: TextStyle(
                         fontSize: 16.sp,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
+                        
                       ),
                     ),
                   ),
@@ -79,8 +88,11 @@ class AboutWidget extends StatelessWidget {
           ),
         ),
         Positioned(
-          right: -43.w,
+          right: isArabic ? null : -43.w,
           top: 20.h,
+          left: isArabic ? -43 : null,
+          // left: 1,
+          // left: isArabic ? -43 : 0,
           child: AnimatedContainer(
             curve: Curves.easeOutSine,
             duration: Duration(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:toddily_preschool/common/my_navigator.dart';
+import 'package:toddily_preschool/common/providers/language_provider.dart';
 import 'package:toddily_preschool/main/events/providers/event_provider.dart';
 import 'package:toddily_preschool/main/notifications/screens/notifications_screen.dart';
 
@@ -11,21 +12,25 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final double titleContainerWidth;
   final bool withBackButton;
-  bool? withNotification = true;
+  final bool stayEnglish;
+  final bool withNotification;
 
   CustomAppBar({
     required this.scaffoldKey,
     required this.title,
     required this.titleContainerWidth,
     required this.withBackButton,
-    this.withNotification,
+    this.withNotification = true,
+    this.stayEnglish = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    bool isArabic = Provider.of<LanguageProvider>(context).isArabic();
     return AppBar(
       actions: [
-        if (Provider.of<EventProvider>(context).getRole == 0 && withNotification!)
+        if (Provider.of<EventProvider>(context).getRole == 0 &&
+            withNotification)
           IconButton(
             onPressed: () {
               Navigator.push(
@@ -45,7 +50,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ],
       leading: !withBackButton
           ? Padding(
-              padding: EdgeInsets.only(top: 7.h, left: 10.w),
+              padding: EdgeInsets.only(
+                top: 7.h,
+                left: isArabic ? 0 : 10.w,
+                right: isArabic ? 10.w : 0,
+              ),
               child: CircleAvatar(
                 backgroundColor: Theme.of(context).colorScheme.secondary,
                 child: IconButton(
@@ -64,7 +73,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             )
           : Padding(
-              padding: EdgeInsets.only(top: 7.h, left: 6.w),
+              padding: EdgeInsets.only(
+                top: 7.h,
+                left: isArabic ? 0 : 6.w,
+                right: isArabic ? 6.w : 0,
+              ),
               child: TextButton(
                 style: TextButton.styleFrom(
                   backgroundColor: Theme.of(context).colorScheme.primary,
@@ -77,8 +90,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: const Icon(
-                  Icons.arrow_back_ios_new,
+                child: Icon(
+                  isArabic
+                      ? Icons.arrow_back_ios_rounded
+                      : Icons.arrow_back_ios_new,
                   color: Colors.black,
                 ),
               ),
@@ -97,14 +112,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: Column(
             children: [
               SizedBox(
-                height: 13.h,
+                height: isArabic && stayEnglish ? 5.h : 13.h,
               ),
               Text(
                 title,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontFamily: "LuckiestGuy",
-                ),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontFamily:
+                        isArabic && stayEnglish ? "Lalezar" : "LuckiestGuy",
+                    fontSize: isArabic && stayEnglish ? 22 : 20),
               ),
             ],
           ),

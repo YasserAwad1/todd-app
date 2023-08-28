@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -49,9 +50,10 @@ class _ListGridButtonsState extends State<ListGridButtons> {
               Icons.list,
               color: Colors.white,
             ),
-            label: const Text(
-              'List',
-              style: TextStyle(
+            //  LIST
+            label: Text(
+              AppLocalizations.of(context)!.list,
+              style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
@@ -87,9 +89,10 @@ class _ListGridButtonsState extends State<ListGridButtons> {
               Icons.grid_on,
               color: Colors.white,
             ),
-            label: const Text(
-              'Grid',
-              style: TextStyle(
+            //  LIST
+            label: Text(
+              AppLocalizations.of(context)!.grid,
+              style: const TextStyle(
                 color: Colors.white,
               ),
             ),

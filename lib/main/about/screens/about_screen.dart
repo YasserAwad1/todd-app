@@ -1,7 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:toddily_preschool/common/widgets/app_drawer.dart';
+import 'package:provider/provider.dart';
+import 'package:toddily_preschool/common/providers/language_provider.dart';
+import 'package:toddily_preschool/common/drawer/app_drawer.dart';
 import 'package:toddily_preschool/main/about/widgets/about_top_bar.dart';
 import 'package:toddily_preschool/main/about/widgets/about_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -67,6 +69,8 @@ class _AboutScreenState extends State<AboutScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isArabic = Provider.of<LanguageProvider>(context).isArabic();
+
     return SafeArea(
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
@@ -100,44 +104,13 @@ class _AboutScreenState extends State<AboutScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Container(
-                  //   height: 40.h,
-                  //   width: 205.w,
-                  //   padding: EdgeInsets.all(5.sp),
-                  //   decoration: BoxDecoration(
-                  //     color: Theme.of(context).colorScheme.secondary,
-                  //     boxShadow: const [
-                  //       BoxShadow(
-                  //         color: Colors.grey,
-                  //         spreadRadius: 0.9,
-                  //         blurRadius: 10,
-                  //         offset: Offset(6, 7),
-                  //       ),
-                  //     ],
-                  //     borderRadius: BorderRadius.only(
-                  //         // topRight: isArabic ? Radius.zero : Radius.circular(10.sp.sp),
-                  //         // bottomRight: isArabic ? Radius.zero : Radius.circular(10.sp.sp),
-                  //         // topLeft: isArabic ? Radius.circular(10.sp.sp) : Radius.zero,
-                  //         // bottomLeft: isArabic ? Radius.circular(10.sp.sp) : Radius.zero,
-                  //         bottomRight: Radius.circular(10.sp),
-                  //         topRight: Radius.circular(10.sp)),
-                  //   ),
-                  //   child: Center(
-                  //     child: Text(
-                  //       'About Toddily Preschool',
-                  // style: TextStyle(
-                  //     fontWeight: FontWeight.bold,
-                  //     fontSize: 17.sp,
-                  //     color: Colors.white),
-                  //     ),
-                  //   ),
-                  // ),
                   SizedBox(
                     height: 10.h,
                   ),
                   AboutWidget(
                     startAnimation: startAnimation,
                     index: 1,
+                    isArabic: isArabic,
                   ),
                   SizedBox(
                     height: 10.h,

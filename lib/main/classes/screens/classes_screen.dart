@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:toddily_preschool/classes/widgets/class_widget.dart';
-import 'package:toddily_preschool/common/widgets/app_drawer.dart';
+import 'package:toddily_preschool/main/classes/widgets/class_widget.dart';
+import 'package:toddily_preschool/common/drawer/app_drawer.dart';
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
 
 class ClassesScreen extends StatelessWidget {
@@ -28,7 +28,7 @@ class ClassesScreen extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  Spacer(),
+                  const Spacer(),
                   Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: 5.w, vertical: 3.h),

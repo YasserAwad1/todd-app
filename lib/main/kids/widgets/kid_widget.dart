@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:toddily_preschool/common/my_navigator.dart';
+import 'package:toddily_preschool/common/providers/language_provider.dart';
 import 'package:toddily_preschool/main/events/providers/event_provider.dart';
 import 'package:toddily_preschool/main/kids/screens/dates_screen.dart';
 import 'package:toddily_preschool/main/kids/screens/kids_screen.dart';
@@ -17,6 +18,8 @@ class KidsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isArabic = Provider.of<LanguageProvider>(context).isArabic();
+
     return GestureDetector(
       onTap: () {
         Provider.of<EventProvider>(context, listen: false).getRole != 2
@@ -99,20 +102,22 @@ class KidsWidget extends StatelessWidget {
                   SizedBox(
                     height: 20.h,
                   ),
-                  Text(
-                    '1 unread status',
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      color: Colors.white,
-                    ),
-                  )
+                  // Text(
+                  //   '1 unread status',
+                  //   style: TextStyle(
+                  //     fontSize: 14.sp,
+                  //     color: Colors.white,
+                  //   ),
+                  // )
                 ],
               ),
               SizedBox(
                 width: 35.w,
               ),
               Icon(
-                Icons.arrow_circle_right_outlined,
+                isArabic
+                    ? Icons.arrow_circle_left_outlined
+                    : Icons.arrow_circle_right_outlined,
                 color: Colors.white,
                 size: 35.sp,
               )

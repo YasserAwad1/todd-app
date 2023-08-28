@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
 import 'package:toddily_preschool/main/photos/providers/photos_povider.dart';
@@ -41,10 +42,12 @@ class _ImageListScreenState extends State<ImageListScreen> {
       child: Scaffold(
         appBar: CustomAppBar(
           scaffoldKey: null,
-          title: isPhotosScreen ?  'Latest Photos' : widget.title!,
+          title: isPhotosScreen
+              ? AppLocalizations.of(context)!.latestPhotos
+              : widget.title!,
           titleContainerWidth: 150.w,
           withBackButton: true,
-          withNotification: true,
+          stayEnglish: isPhotosScreen ? true : false,
         ),
         body: Column(
           children: [
@@ -71,7 +74,7 @@ class _ImageListScreenState extends State<ImageListScreen> {
               color: Theme.of(context).colorScheme.secondary,
               height: 100.h,
               child: ListView.builder(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 itemCount: widget.images!.length,
                 itemBuilder: (context, index) {
@@ -79,9 +82,11 @@ class _ImageListScreenState extends State<ImageListScreen> {
                     padding: EdgeInsets.all(8.0.sp),
                     child: GestureDetector(
                       onTap: () {
-                        _pageController.animateToPage(index,
-                            duration: const Duration(milliseconds: 500),
-                            curve: Curves.easeInOut);
+                        _pageController.animateToPage(
+                          index,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeInOut,
+                        );
                       },
                       child: SizedBox(
                         width: 80.w,

@@ -1,0 +1,123 @@
+{
+    "language": "Language",
+    "@language":{
+        "description": "The current Language"
+    },
+    "kids": "Kids",
+    "@kids":{
+        "description": "none"
+    },
+    "latestPhotos": "Latest Photos",
+    "@latestPhotos":{
+        "description": "none"
+    },
+    "events": "Events",
+    "@events":{
+        "description": "none"
+    },
+    "aboutToddilyps": "About Toddily Preschool",
+    "@aboutToddilyps":{
+        "description": "none"
+    },
+    "faqs": "Frequently Asked Questions",
+    "@faqs":{
+        "description": "none"
+    },
+    "classes": "Classes",
+    "@classes":{
+        "description": "none"
+    },
+    "notifications": "Notifications",
+    "@notifications":{
+        "description": "none"
+    },
+    "monthlyReport": "Monlthy Report",
+    "@monthlyReport":{
+        "description": "none"
+    },
+    "list": "List",
+    "@list":{
+        "description": "none"
+    },
+    "grid": "Grid",
+    "@grid":{
+        "description": "none"
+    },
+    "location": "Location",
+    "@location":{
+        "description": "none"
+    },
+    "phonenums": "Phone Numbers",
+    "@phonenums":{
+        "description": "none"
+    },
+    "openTimes": "Open Times",
+    "@openTimes":{
+        "description": "none"
+    },
+    "whatsapp": "WHATSAPP",
+    "@whatsapp":{
+        "description": "none"
+    },
+    "facebook": "FACEBOOK",
+    "@facebook":{
+        "description": "none"
+    },
+    "instagram": "INSTAGRAM",
+    "@instagram":{
+        "description": "none"
+    },
+    "todLocation": "Al Rawda Square",
+    "@todLocation":{
+        "description": "none"
+    },
+    "openInMaps": "Click To Open In Google Maps",
+    "@openInMaps":{
+        "description": "none"
+    },
+    "openDays": "Sunday --> Tuesday",
+    "@openDays":{
+        "description": "none"
+    },
+    "openHours": "9 AM --> 5 PM",
+    "@openHours":{
+        "description": "none"
+    },
+    "clickToChat": "Click To Chat",
+    "@clickToChat":{
+        "description": "none"
+    },
+    "clickToVisitPage": "Click To Visit Page",
+    "@clickToVisitPage":{
+        "description": "none"
+    },
+    "logout": "Logout",
+    "@logout":{
+        "description": "none"
+    },
+    "login": "Login",
+    "@login":{
+        "description": "none"
+    },
+    "loginToYourAccount": "Login To Your Account",
+    "@loginToYourAccount":{
+        "description": "none"
+    },
+    "loginAsAGuest": "Login As A Guest",
+    "@loginAsAGuest":{
+        "description": "none"
+    },
+    "or": "Or",
+    "@or":{
+        "description": "none"
+    },
+    "userName": "Username",
+    "@userName":{
+        "description": "none"
+    },
+    "password": "Password",
+    "@password":{
+        "description": "none"
+    }
+
+}

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:toddily_preschool/common/widgets/app_drawer.dart';
+import 'package:toddily_preschool/common/drawer/app_drawer.dart';
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
 import 'package:toddily_preschool/main/events/widgets/event_widget.dart';
 import 'package:toddily_preschool/main/photos/providers/photos_povider.dart';
@@ -39,10 +40,10 @@ class _EventsScreenState extends State<EventsScreen> {
         key: _scaffoldKey,
         appBar: CustomAppBar(
           scaffoldKey: _scaffoldKey,
-          title: 'Events',
+          title: AppLocalizations.of(context)!.events,
           titleContainerWidth: 100.w,
           withBackButton: false,
-          withNotification: true,
+          stayEnglish: true,
         ),
         body: Column(
           children: [

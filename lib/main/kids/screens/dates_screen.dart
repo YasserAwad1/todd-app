@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
 import 'package:toddily_preschool/main/events/providers/event_provider.dart';
@@ -59,7 +60,7 @@ class _DatesScreenState extends State<DatesScreen> {
         extendBody: true,
         bottomNavigationBar: Provider.of<EventProvider>(context).getRole == 0
             ? DatesScreenButton(
-                title: 'Monthly Report',
+                title: AppLocalizations.of(context)!.monthlyReport,
                 icon: Icons.health_and_safety_outlined,
                 function: () {
                   Navigator.push(
@@ -96,7 +97,6 @@ class _DatesScreenState extends State<DatesScreen> {
           title: 'Child Name',
           titleContainerWidth: 130.w,
           withBackButton: true,
-          withNotification: true,
         ),
         body: Column(
           children: [

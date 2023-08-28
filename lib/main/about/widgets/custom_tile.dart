@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:toddily_preschool/common/providers/language_provider.dart';
 
 class CustomTile extends StatelessWidget {
   String title;
@@ -18,6 +20,8 @@ class CustomTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isArabic = Provider.of<LanguageProvider>(context).isArabic();
+
     return Card(
       margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
       elevation: 5,
@@ -39,7 +43,7 @@ class CustomTile extends StatelessWidget {
             fontWeight: FontWeight.bold,
             fontSize: 20.sp,
             color: Theme.of(context).colorScheme.secondary,
-            fontFamily: "LuckiestGuy",
+            fontFamily: isArabic ? "Lalezar" :"LuckiestGuy",
           ),
         ),
         // isThreeLine: true,

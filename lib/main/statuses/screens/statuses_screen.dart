@@ -38,7 +38,6 @@ class _StatusesScreenState extends State<StatusesScreen> {
           title: '24/MAR',
           titleContainerWidth: 90.w,
           withBackButton: true,
-          withNotification: true,
         ),
         bottomNavigationBar: Provider.of<EventProvider>(context).getRole == 1
             ? Padding(
@@ -58,22 +57,26 @@ class _StatusesScreenState extends State<StatusesScreen> {
                 ),
               )
             : null,
-        body: Column(
-          children: [
-            SizedBox(
-              height: 20.h,
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemBuilder: (context, i) => StatusWidget(
-                  startAnimation: startAnimation,
-                  index: i,
-                ),
-                itemCount: 2,
-                shrinkWrap: true,
+        body: Localizations.override(
+          context: context,
+          locale: const Locale('en'),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 20.h,
               ),
-            ),
-          ],
+              Expanded(
+                child: ListView.builder(
+                  itemBuilder: (context, i) => StatusWidget(
+                    startAnimation: startAnimation,
+                    index: i,
+                  ),
+                  itemCount: 2,
+                  shrinkWrap: true,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

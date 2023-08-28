@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toddily_preschool/main/kids/screens/kids_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginButton extends StatelessWidget {
-  const LoginButton({super.key});
+  bool isArabic;
+  LoginButton({
+    required this.isArabic,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +36,12 @@ class LoginButton extends StatelessWidget {
             );
           },
           child: Text(
-            'Login',
+            AppLocalizations.of(context)!.login,
             style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
-                fontFamily: "LuckiestGuy",
-                fontSize: 30.sp),
+                fontFamily: isArabic ? "Lalezar" : "LuckiestGuy",
+                fontSize: isArabic ? 27.sp : 30.sp),
           )),
     );
   }

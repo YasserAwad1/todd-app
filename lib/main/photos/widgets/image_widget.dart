@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:toddily_preschool/common/providers/language_provider.dart';
 import 'package:toddily_preschool/main/photos/screens/image_list_screen.dart';
 
 class ImageWidget extends StatelessWidget {
@@ -27,13 +29,12 @@ class ImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isArabic = Provider.of<LanguageProvider>(context).isArabic();
+
     return Padding(
         padding: EdgeInsets.only(top: 8.sp),
         child: GestureDetector(
           onTap: () {
-            // Navigator.of(context).pushNamed('image-list-screen', arguments: {
-            //   'images': images,
-            // });
             Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -65,18 +66,17 @@ class ImageWidget extends StatelessWidget {
                 ),
                 Positioned(
                   top: 0,
-                  right: 0,
+                  right: isArabic ? null : 0,
+                  left: isArabic ? 0 : null,
                   child: Container(
                     width: 40.w,
                     decoration: BoxDecoration(
                       color: Colors.white.withOpacity(0.85),
                       borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(
-                          10.sp,
-                        ),
-                        topRight: Radius.circular(
-                          15.sp,
-                        ),
+                        bottomLeft: Radius.circular(isArabic ? 0 : 10.sp),
+                        topRight: Radius.circular(isArabic ? 0 : 15.sp),
+                        bottomRight: Radius.circular(isArabic ? 10.sp : 0),
+                        topLeft: Radius.circular(isArabic ? 15.sp : 0),
                       ),
                     ),
                     child: TextButton(

@@ -5,9 +5,9 @@ import 'package:camera/camera.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:toddily_preschool/common/social_media_expert/providers/camera_provider.dart';
-import 'package:toddily_preschool/common/social_media_expert/widgets/custom_camera.dart';
-import 'package:toddily_preschool/common/social_media_expert/widgets/taken_images_list.dart';
+import 'package:toddily_preschool/social_media_expert/providers/camera_provider.dart';
+import 'package:toddily_preschool/social_media_expert/widgets/custom_camera.dart';
+import 'package:toddily_preschool/social_media_expert/widgets/taken_images_list.dart';
 
 class CameraScreen extends StatefulWidget {
   static const routeName = '/camera-screen';
