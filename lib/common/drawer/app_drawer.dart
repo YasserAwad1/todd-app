@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:toddily_preschool/auth/providers/auth_provider.dart';
+import 'package:toddily_preschool/auth/screens/sign_in_screen.dart';
+import 'package:toddily_preschool/common/drawer/logout_button.dart';
+import 'package:toddily_preschool/common/my_navigator.dart';
 
 import 'package:toddily_preschool/common/providers/language_provider.dart';
 import 'package:toddily_preschool/common/drawer/LanguageButtons.dart';
@@ -10,7 +14,14 @@ import 'package:toddily_preschool/main/events/providers/event_provider.dart';
 import 'package:toddily_preschool/main/photos/providers/photos_povider.dart';
 import 'package:toddily_preschool/main/photos/screens/photos_screen.dart';
 
-class AppDrawer extends StatelessWidget {
+class AppDrawer extends StatefulWidget {
+  @override
+  State<AppDrawer> createState() => _AppDrawerState();
+}
+
+class _AppDrawerState extends State<AppDrawer> {
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     Color yellow = Theme.of(context).colorScheme.secondary;
@@ -38,7 +49,7 @@ class AppDrawer extends StatelessWidget {
                 )),
           ),
           //CLASSES TILE FOR DOCTOR AND SOCIAL MEDIA EXPERT
-          if (Provider.of<EventProvider>(context).getRole == 2)
+          if (Provider.of<AuthProvider>(context).forClasses())
             Column(
               children: [
                 ListTile(
@@ -57,7 +68,7 @@ class AppDrawer extends StatelessWidget {
                         AppLocalizations.of(context)!.classes,
                         style: TextStyle(
                             fontFamily: isArabic ? "Lalezar" : "LuckiestGuy",
-                            fontSize: isArabic ? 18 : 13.sp),
+                            fontSize: isArabic ? 18 : 14.sp),
                       ),
                     ],
                   ),
@@ -79,41 +90,46 @@ class AppDrawer extends StatelessWidget {
               ],
             ),
           //KIDS TILE
-          ListTile(
-            leading: Icon(
-              Icons.person_outline_rounded,
-              color: yellow,
-              size: 26.sp,
-            ),
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          if (!Provider.of<AuthProvider>(context).forClasses())
+            Column(
               children: [
-                SizedBox(
-                  height: 4.h,
+                ListTile(
+                  leading: Icon(
+                    Icons.person_outline_rounded,
+                    color: yellow,
+                    size: 26.sp,
+                  ),
+                  title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 4.h,
+                      ),
+                      Text(
+                        AppLocalizations.of(context)!.kids,
+                        style: TextStyle(
+                            fontFamily: isArabic ? "Lalezar" : "LuckiestGuy",
+                            fontSize: isArabic ? 18 : 14.sp),
+                      ),
+                    ],
+                  ),
+                  splashColor: yellow.withOpacity(0.9),
+                  onTap: () async {
+                    Navigator.pop(context);
+                    await Future.delayed(
+                        const Duration(milliseconds: 50)); // wait some time
+                    Navigator.pushReplacementNamed(
+                      context,
+                      '/kids-screen',
+                    );
+                  },
                 ),
-                Text(
-                  AppLocalizations.of(context)!.kids,
-                  style: TextStyle(
-                      fontFamily: isArabic ? "Lalezar" : "LuckiestGuy",
-                      fontSize: isArabic ? 18 : 13.sp),
+                Divider(
+                  color: yellow,
+                  thickness: 0.3.h,
                 ),
               ],
             ),
-            splashColor: yellow.withOpacity(0.9),
-            onTap: () async {
-              Navigator.pop(context);
-              await Future.delayed(
-                  const Duration(milliseconds: 50)); // wait some time
-              Navigator.pushReplacementNamed(
-                context,
-                '/kids-screen',
-              );
-            },
-          ),
-          Divider(
-            color: yellow,
-            thickness: 0.3.h,
-          ),
 
           //LATEST PHOTOS TILE
           ListTile(
@@ -132,7 +148,7 @@ class AppDrawer extends StatelessWidget {
                   AppLocalizations.of(context)!.latestPhotos,
                   style: TextStyle(
                       fontFamily: isArabic ? "Lalezar" : "LuckiestGuy",
-                      fontSize: isArabic ? 18 : 13.sp),
+                      fontSize: isArabic ? 18 : 14.sp),
                 ),
               ],
             ),
@@ -172,7 +188,7 @@ class AppDrawer extends StatelessWidget {
                   AppLocalizations.of(context)!.events,
                   style: TextStyle(
                       fontFamily: isArabic ? "Lalezar" : "LuckiestGuy",
-                      fontSize: isArabic ? 18 : 13.sp),
+                      fontSize: isArabic ? 18 : 14.sp),
                 ),
               ],
             ),
@@ -211,7 +227,7 @@ class AppDrawer extends StatelessWidget {
                   AppLocalizations.of(context)!.aboutToddilyps,
                   style: TextStyle(
                       fontFamily: isArabic ? "Lalezar" : "LuckiestGuy",
-                      fontSize: isArabic ? 18 : 13.sp),
+                      fontSize: isArabic ? 18 : 14.sp),
                 ),
               ],
             ),
@@ -242,7 +258,7 @@ class AppDrawer extends StatelessWidget {
               AppLocalizations.of(context)!.faqs,
               style: TextStyle(
                   fontFamily: isArabic ? "Lalezar" : "LuckiestGuy",
-                  fontSize: isArabic ? 18 : 13.sp),
+                  fontSize: isArabic ? 18 : 14.sp),
             ),
             splashColor: yellow.withOpacity(0.9),
             onTap: () {
@@ -257,31 +273,31 @@ class AppDrawer extends StatelessWidget {
             color: yellow,
             thickness: 0.3.h,
           ),
-          ListTile(
-            leading: Icon(
-              Icons.help_outline,
-              color: yellow,
-              size: 26.sp,
-            ),
-            title: const Text(
-              'Roles',
-              style: TextStyle(
-                fontFamily: "LuckiestGuy",
-              ),
-            ),
-            splashColor: yellow.withOpacity(0.9),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.pushReplacementNamed(
-                context,
-                '/roles-screen',
-              );
-            },
-          ),
-          Divider(
-            color: yellow,
-            thickness: 0.3.h,
-          ),
+          // ListTile(
+          //   leading: Icon(
+          //     Icons.help_outline,
+          //     color: yellow,
+          //     size: 26.sp,
+          //   ),
+          //   title: const Text(
+          //     'Roles',
+          //     style: TextStyle(
+          //       fontFamily: "LuckiestGuy",
+          //     ),
+          //   ),
+          //   splashColor: yellow.withOpacity(0.9),
+          //   onTap: () {
+          //     Navigator.pop(context);
+          //     Navigator.pushReplacementNamed(
+          //       context,
+          //       '/roles-screen',
+          //     );
+          //   },
+          // ),
+          // Divider(
+          //   color: yellow,
+          //   thickness: 0.3.h,
+          // ),
 
           SizedBox(
             height: 10.h,
@@ -291,37 +307,10 @@ class AppDrawer extends StatelessWidget {
           LanguageButtons(
             isArabic: isArabic,
           ),
-          Padding(
-            padding: EdgeInsets.all(15.sp),
-            child: TextButton.icon(
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.red,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(
-                    20.sp,
-                  ),
-                ),
-              ),
-              onPressed: () {},
-              icon: const Icon(
-                Icons.logout,
-                color: Colors.white,
-              ),
-              label: Column(
-                children: [
-                  SizedBox(
-                    height: 3.h,
-                  ),
-                  Text(
-                    AppLocalizations.of(context)!.logout,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: isArabic ? "Lalezar" : "LuckiestGuy",
-                        fontSize: isArabic ? 18.sp : 20.sp),
-                  ),
-                ],
-              ),
-            ),
+          //LOGOUT
+          logoutButton(
+            isArabic: isArabic,
+            isLoading: isLoading,
           ),
         ],
       ),

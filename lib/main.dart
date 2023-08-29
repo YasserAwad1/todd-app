@@ -1,12 +1,12 @@
-import 'dart:ui' as ui;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 //packages
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:toddily_preschool/auth/providers/auth_provider.dart';
 import 'package:toddily_preschool/auth/screens/sign_in_screen.dart';
+import 'package:toddily_preschool/locator.dart';
 import 'package:toddily_preschool/main/classes/screens/classes_screen.dart';
 import 'package:toddily_preschool/common/providers/language_provider.dart';
 import 'package:toddily_preschool/social_media_expert/providers/camera_provider.dart';
@@ -39,12 +39,11 @@ import 'package:toddily_preschool/common/screens/roles_screen.dart';
 import 'package:toddily_preschool/common/screens/sme_images_screen.dart';
 
 void main() {
+  setUp();
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  
-
   const MyApp({super.key});
 
   @override
@@ -52,6 +51,9 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       builder: ((context, child) => MultiProvider(
             providers: [
+              ChangeNotifierProvider(
+                create: (ctx) => AuthProvider(),
+              ),
               ChangeNotifierProvider(
                 create: (ctx) => PhotosProvider(),
               ),
@@ -63,7 +65,8 @@ class MyApp extends StatelessWidget {
               ),
               ChangeNotifierProvider<LanguageProvider>(
                 create: (ctx) => LanguageProvider(),
-              )
+              ),
+              
             ],
             child: Builder(builder: (context) {
               return MaterialApp(

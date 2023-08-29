@@ -2,12 +2,32 @@ import 'package:flutter/material.dart';
 
 class CustomTextFormFeild extends StatelessWidget {
   final String labelText;
-  const CustomTextFormFeild({required this.labelText});
+  final TextEditingController controller;
+  final TextInputAction textinputAction;
+  CustomTextFormFeild({
+    required this.labelText,
+    required this.controller,
+    required this.textinputAction,
+  });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      // validator: (value) {
+      //   if (value!.isEmpty) {
+      //     return 'This Feild Is Required';
+      //   }
+      //   return null;
+      // },
+      cursorColor: Theme.of(context).colorScheme.secondary,
+      textInputAction: textinputAction,
+      controller: controller,
       decoration: InputDecoration(
+        errorBorder: const OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.red,
+          ),
+        ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: Theme.of(context).colorScheme.secondary,

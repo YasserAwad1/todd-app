@@ -1,6 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:toddily_preschool/auth/providers/auth_provider.dart';
 import 'package:toddily_preschool/auth/screens/sign_in_screen.dart';
+import 'package:toddily_preschool/main/classes/screens/classes_screen.dart';
+import 'package:toddily_preschool/main/kids/screens/kids_screen.dart';
 import 'package:video_player/video_player.dart';
 // import 'package:chewie/chewie.dart';
 
@@ -25,14 +29,27 @@ class _SplashScreenState extends State<SplashScreen> {
       _videoPlayerController!.setLooping(false);
       _videoPlayerController!.play();
     });
-    Timer(Duration(seconds: 6), () {
-      // _chewieController!.pause();
+    Timer(const Duration(seconds: 6), () async {
+      bool isTokenValid =
+          await Provider.of<AuthProvider>(context, listen: false)
+              .isTokenValid();
+      // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
         context,
         PageRouteBuilder(
-          transitionDuration: Duration(milliseconds: 200),
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              SignInScreen(),
+          transitionDuration: const Duration(milliseconds: 200),
+          pageBuilder: (context, animation, secondaryAnimation) {
+            if (isTokenValid) {
+              if (Provider.of<AuthProvider>(context, listen: false)
+                  .forClasses()) {
+                return ClassesScreen();
+              } else {
+                return KidsScreen();
+              }
+            } else {
+              return SignInScreen();
+            }
+          },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return FadeTransition(
               opacity: animation,
@@ -44,36 +61,11 @@ class _SplashScreenState extends State<SplashScreen> {
     });
   }
 
-  // @override
-  // void dispose() {
-  //   _videoPlayerController!.dispose();
-  //   _chewieController!.dispose();
-  //   super.dispose();
-  // }
-
   @override
   void dispose() {
     _videoPlayerController!.dispose();
     super.dispose();
   }
-
-  // Future<void> initializeVideoPlayer() async {
-  //   _videoPlayerController = VideoPlayerController.asset(
-  //       'assets/videos/toddilyIntro.mp4'); // Replace with your actual video path
-  //   await _videoPlayerController!.initialize();
-  //   _chewieController = ChewieController(
-  //     videoPlayerController: _videoPlayerController!,
-  //     autoPlay: true,
-  //     looping: false,
-  //     allowFullScreen: true,
-  //     aspectRatio: 16 / 9,
-  //     placeholder: Container(
-  //       width: double.infinity,
-  //       height: double.infinity,
-  //     ), // Customize the placeholder while video is loading
-  //   );
-  //   setState(() {});
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -83,15 +75,7 @@ class _SplashScreenState extends State<SplashScreen> {
         extendBodyBehindAppBar: true,
         backgroundColor: Theme.of(context).colorScheme.secondary,
         body: _videoPlayerController!.value.isInitialized
-            ?
-            // Container(
-            //   color: Theme.of(context).colorScheme.secondary,
-            //   // margin: EdgeInsets.all(20.sp),
-            //     width: double.infinity,
-            //     height: double.infinity,
-            //     child: VideoPlayer(_videoPlayerController!),
-            //   )
-            AspectRatio(
+            ? AspectRatio(
                 aspectRatio: _videoPlayerController!.value.aspectRatio,
                 child: VideoPlayer(_videoPlayerController!),
               )

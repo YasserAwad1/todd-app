@@ -19,7 +19,10 @@ class LanguageButtons extends StatelessWidget {
             children: [
               Text(
                 '${AppLocalizations.of(context)!.language}  ',
-                style: TextStyle(fontSize: 18.sp),
+                style: TextStyle(
+                  fontSize: 18.sp,
+                  fontFamily: isArabic ? "Lalezar" : "LuckiestGuy",
+                ),
               ),
               const Icon(Icons.language_rounded)
             ],

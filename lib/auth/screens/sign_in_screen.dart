@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:toddily_preschool/auth/providers/auth_provider.dart';
 
 import 'package:toddily_preschool/auth/widgets/custom_textformfeild.dart';
 import 'package:toddily_preschool/auth/widgets/guest_login_button.dart';
@@ -9,10 +10,22 @@ import 'package:toddily_preschool/auth/widgets/login_button.dart';
 import 'package:toddily_preschool/auth/widgets/or_widget.dart';
 import 'package:toddily_preschool/auth/widgets/sigin_top_bar.dart';
 import 'package:toddily_preschool/common/providers/language_provider.dart';
+import 'package:toddily_preschool/main/kids/screens/kids_screen.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
   static const routeName = '/sign-in-screen';
-  const SignInScreen({super.key});
+
+  SignInScreen({super.key});
+
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
+  final TextEditingController userNameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  // static final _formKey = GlobalKey<FormState>();
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -100,24 +113,34 @@ class SignInScreen extends StatelessWidget {
                 SingleChildScrollView(
                   physics: const NeverScrollableScrollPhysics(),
                   child: Padding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: EdgeInsets.all(20.0.sp),
                     child: Column(
                       children: [
                         SizedBox(
                           height: 110.h,
                         ),
                         CustomTextFormFeild(
-                            labelText: AppLocalizations.of(context)!.userName),
+                          labelText: AppLocalizations.of(context)!.userName,
+                          controller: userNameController,
+                          textinputAction: TextInputAction.next,
+                        ),
                         SizedBox(
                           height: 20.h,
                         ),
                         CustomTextFormFeild(
-                            labelText: AppLocalizations.of(context)!.password),
+                          labelText: AppLocalizations.of(context)!.password,
+                          controller: passwordController,
+                          textinputAction: TextInputAction.done,
+                        ),
                         SizedBox(
                           height: 20.h,
                         ),
                         LoginButton(
                           isArabic: isArabic,
+                          isLoading: isLoading,
+                          ctx: context,
+                          userName: userNameController.text,
+                          password: passwordController.text,
                         ),
                         SizedBox(
                           height: 10.h,
