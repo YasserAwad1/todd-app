@@ -3,7 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AboutTopBar extends StatelessWidget {
   var scaffoldKey;
-  AboutTopBar({required this.scaffoldKey});
+  bool isArabic;
+  AboutTopBar({required this.scaffoldKey, required this.isArabic});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,11 @@ class AboutTopBar extends StatelessWidget {
       ),
       backgroundColor: Colors.white,
       leading: Padding(
-        padding: EdgeInsets.only(top: 7.h, left: 10.w),
+        padding: EdgeInsets.only(
+          top: 7.h,
+          left: isArabic ? 0 : 10.w,
+          right: isArabic ? 10.w : 0,
+        ),
         child: CircleAvatar(
           backgroundColor: Theme.of(context).colorScheme.secondary,
           child: IconButton(

@@ -25,13 +25,15 @@ class _logoutButtonState extends State<logoutButton> {
     return Padding(
       padding: EdgeInsets.all(15.sp),
       child: widget.isLoading
-          ? Platform.isAndroid
-              ? CircularProgressIndicator(
-                  color: Theme.of(context).colorScheme.secondary,
-                )
-              : CupertinoActivityIndicator(
-                  color: Theme.of(context).colorScheme.secondary,
-                )
+          ? Center(
+              child: Platform.isAndroid
+                  ? CircularProgressIndicator(
+                      color: Theme.of(context).colorScheme.secondary,
+                    )
+                  : CupertinoActivityIndicator(
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+            )
           : TextButton.icon(
               style: TextButton.styleFrom(
                 backgroundColor: Colors.red,

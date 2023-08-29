@@ -2,19 +2,45 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:toddily_preschool/auth/providers/auth_provider.dart';
+import 'package:toddily_preschool/common/constants/end_points.dart';
 import 'package:toddily_preschool/common/my_navigator.dart';
 import 'package:toddily_preschool/common/providers/language_provider.dart';
 import 'package:toddily_preschool/main/events/providers/event_provider.dart';
 import 'package:toddily_preschool/main/kids/screens/dates_screen.dart';
 import 'package:toddily_preschool/main/kids/screens/kids_screen.dart';
+import 'package:toddily_preschool/models/kids/kid_model.dart';
 
 class KidsWidget extends StatelessWidget {
   bool startAnimation;
   int index;
+  KidModel kid;
+  String classTitle;
+
   KidsWidget({
     required this.startAnimation,
     required this.index,
+    required this.kid,
+    required this.classTitle,
   });
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///IF KID DIDNT HAVE PHOTO CHOOSE PHOTO 
+  ////
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///////////////////////////////////////////////////////////////////////////////////////////////
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +48,15 @@ class KidsWidget extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        Provider.of<EventProvider>(context, listen: false).getRole != 2
+        Provider.of<AuthProvider>(context, listen: false).forDatesScreen()
             ? Navigator.push(
                 context,
                 MyNavigator(screen: DatesScreen(), curves: Curves.easeOutBack),
               )
-            : Navigator.of(context).pushNamed('/camera-screen');
+            : Provider.of<AuthProvider>(context, listen: false).roleName ==
+                    'social'
+                ? Navigator.of(context).pushNamed('/camera-screen')
+                : Navigator.of(context).pushNamed('/mothly-report-screen');
       },
       child: Center(
         child: AnimatedContainer(
@@ -61,8 +90,8 @@ class KidsWidget extends StatelessWidget {
                 width: 90.w,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(5.sp),
-                  child: Image.asset(
-                    'assets/images/avatar2.jpg',
+                  child: Image.network(
+                    '${Endpoints.baseUrl}${kid.image}',
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -77,7 +106,7 @@ class KidsWidget extends StatelessWidget {
                   SizedBox(
                     width: 100.w,
                     child: Text(
-                      'Fateh Jamal Al Deen ',
+                      kid.name,
                       overflow: TextOverflow.ellipsis,
                       // textAlign: TextAlign.justify,
                       // softWrap: true,
@@ -92,7 +121,7 @@ class KidsWidget extends StatelessWidget {
                     height: 4.h,
                   ),
                   Text(
-                    'Child Class',
+                    classTitle,
                     textAlign: TextAlign.start,
                     style: TextStyle(
                       fontSize: 16.sp,

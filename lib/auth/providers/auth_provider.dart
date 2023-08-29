@@ -38,8 +38,18 @@ class AuthProvider with ChangeNotifier {
     return roleName!;
   }
 
-  bool forClasses() {
+  bool forClassesScreen() {
     if (roleName == 'admin' || roleName == 'social' || roleName == 'doctor') {
+      return true;
+    }
+    return false;
+  }
+
+  bool forDatesScreen() {
+    if (roleName == 'admin' ||
+        roleName == 'social' ||
+        roleName == 'parent' ||
+        roleName == 'extra') {
       return true;
     }
     return false;

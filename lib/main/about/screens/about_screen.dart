@@ -94,6 +94,7 @@ class _AboutScreenState extends State<AboutScreen> {
             return <Widget>[
               AboutTopBar(
                 scaffoldKey: _scaffoldKey,
+                isArabic: isArabic,
               ),
             ];
           }),

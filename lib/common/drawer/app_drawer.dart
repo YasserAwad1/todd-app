@@ -49,7 +49,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 )),
           ),
           //CLASSES TILE FOR DOCTOR AND SOCIAL MEDIA EXPERT
-          if (Provider.of<AuthProvider>(context).forClasses())
+          if (Provider.of<AuthProvider>(context).forClassesScreen())
             Column(
               children: [
                 ListTile(
@@ -90,7 +90,7 @@ class _AppDrawerState extends State<AppDrawer> {
               ],
             ),
           //KIDS TILE
-          if (!Provider.of<AuthProvider>(context).forClasses())
+          if (!Provider.of<AuthProvider>(context).forClassesScreen())
             Column(
               children: [
                 ListTile(

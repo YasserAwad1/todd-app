@@ -8,8 +8,7 @@ import 'package:toddily_preschool/auth/providers/auth_provider.dart';
 import 'package:toddily_preschool/auth/screens/sign_in_screen.dart';
 import 'package:toddily_preschool/locator.dart';
 import 'package:toddily_preschool/main/classes/screens/classes_screen.dart';
-import 'package:toddily_preschool/common/providers/language_provider.dart';
-import 'package:toddily_preschool/social_media_expert/providers/camera_provider.dart';
+import 'package:toddily_preschool/main/statuses/providers/status_provider.dart';
 import 'package:toddily_preschool/social_media_expert/screens/camera_screen.dart';
 import 'package:toddily_preschool/social_media_expert/screens/taken_images_screen.dart';
 
@@ -21,6 +20,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 //Providers
 import 'package:toddily_preschool/main/photos/providers/photos_povider.dart';
 import 'package:toddily_preschool/main/events/providers/event_provider.dart';
+import 'package:toddily_preschool/main/classes/providers/class_provider.dart';
+import 'package:toddily_preschool/social_media_expert/providers/camera_provider.dart';
+import 'package:toddily_preschool/common/providers/language_provider.dart';
 
 //screens
 import 'package:toddily_preschool/main/kids/screens/kids_screen.dart';
@@ -66,7 +68,12 @@ class MyApp extends StatelessWidget {
               ChangeNotifierProvider<LanguageProvider>(
                 create: (ctx) => LanguageProvider(),
               ),
-              
+              ChangeNotifierProvider(
+                create: (ctx) => ClassProvider(),
+              ),
+              ChangeNotifierProvider(
+                create: (ctx) => StatusProvider(),
+              )
             ],
             child: Builder(builder: (context) {
               return MaterialApp(

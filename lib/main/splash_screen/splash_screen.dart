@@ -41,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
           pageBuilder: (context, animation, secondaryAnimation) {
             if (isTokenValid) {
               if (Provider.of<AuthProvider>(context, listen: false)
-                  .forClasses()) {
+                  .forClassesScreen()) {
                 return ClassesScreen();
               } else {
                 return KidsScreen();
