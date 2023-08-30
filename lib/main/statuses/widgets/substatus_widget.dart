@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:marquee/marquee.dart';
 import 'package:provider/provider.dart';
+import 'package:toddily_preschool/auth/providers/auth_provider.dart';
 import 'package:toddily_preschool/main/events/providers/event_provider.dart';
 
 class SubstatusWidget extends StatefulWidget {
@@ -40,7 +41,7 @@ class _SubstatusWidgetState extends State<SubstatusWidget> {
       margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 15.h),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.sp),
-        color: Provider.of<EventProvider>(context).getRole == 0
+        color: Provider.of<AuthProvider>(context).roleName == 'teacher'
             ? Theme.of(context).colorScheme.secondary
             : isSelected
                 ? Theme.of(context).colorScheme.secondary
@@ -110,7 +111,7 @@ class _SubstatusWidgetState extends State<SubstatusWidget> {
               Flexible(
                 child: SizedBox(
                   width: 110.w,
-                  child: Provider.of<EventProvider>(context).getRole == 0
+                  child: Provider.of<AuthProvider>(context).roleName == 'parent'
                       ? Marquee(
                           text:
                               'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',

@@ -1,11 +1,16 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:toddily_preschool/common/drawer/app_drawer.dart';
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
+import 'package:toddily_preschool/main/events/providers/event_provider.dart';
 import 'package:toddily_preschool/main/events/widgets/event_widget.dart';
 import 'package:toddily_preschool/main/photos/providers/photos_povider.dart';
+import 'package:toddily_preschool/models/events/event_model.dart';
 
 class EventsScreen extends StatefulWidget {
   static const routeName = '/events-screen';
@@ -18,11 +23,14 @@ class _EventsScreenState extends State<EventsScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   bool startAnimation = false;
+  var _eventFuture;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    _eventFuture =
+        Provider.of<EventProvider>(context, listen: false).getEvents();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {
         startAnimation = true;
@@ -51,21 +59,38 @@ class _EventsScreenState extends State<EventsScreen> {
               height: 10.h,
             ),
             Expanded(
-              child: GridView.builder(
-                padding: EdgeInsets.all(12.sp),
-                shrinkWrap: true,
-                itemCount: 4,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 1.2.sp,
-                  mainAxisSpacing: 15.h,
-                  crossAxisSpacing: 20.w,
-                ),
-                itemBuilder: (context, i) => EventWidget(
-                  startAnimation: startAnimation,
-                  index: i,
-                ),
-              ),
+              child: FutureBuilder(
+                  future: _eventFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: Platform.isIOS
+                            ? const CupertinoActivityIndicator()
+                            : CircularProgressIndicator(
+                                color: Theme.of(context).colorScheme.secondary,
+                              ),
+                      );
+                    }
+                    List<EventModel> events =
+                        Provider.of<EventProvider>(context, listen: false)
+                            .events;
+                    return GridView.builder(
+                      padding: EdgeInsets.all(12.sp),
+                      shrinkWrap: true,
+                      itemCount: events.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 1.2.sp,
+                        mainAxisSpacing: 15.h,
+                        crossAxisSpacing: 20.w,
+                      ),
+                      itemBuilder: (context, i) => EventWidget(
+                        startAnimation: startAnimation,
+                        index: i,
+                        event: events[i],
+                      ),
+                    );
+                  }),
             ),
           ],
         ),

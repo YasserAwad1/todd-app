@@ -8,6 +8,8 @@ import 'package:toddily_preschool/main/classes/providers/class_provider.dart';
 import 'package:toddily_preschool/main/classes/widgets/class_widget.dart';
 import 'package:toddily_preschool/common/drawer/app_drawer.dart';
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
+import 'package:toddily_preschool/main/events/providers/event_provider.dart';
+import 'package:toddily_preschool/main/photos/providers/photos_povider.dart';
 import 'package:toddily_preschool/main/statuses/providers/status_provider.dart';
 import 'package:toddily_preschool/models/classes/class_model.dart';
 
@@ -44,8 +46,8 @@ class _ClassesScreenState extends State<ClassesScreen> {
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            await Provider.of<StatusProvider>(context, listen: false)
-                .getStatuses();
+            await Provider.of<PhotosProvider>(context, listen: false)
+                .getPhotos();
           },
         ),
         drawer: AppDrawer(),

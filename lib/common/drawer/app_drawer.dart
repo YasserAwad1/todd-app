@@ -153,17 +153,24 @@ class _AppDrawerState extends State<AppDrawer> {
               ],
             ),
             splashColor: yellow.withOpacity(0.9),
-            onTap: () {
+            onTap: () async {
               Provider.of<PhotosProvider>(context, listen: false)
                   .triggerPhotosScreen();
+              await Provider.of<PhotosProvider>(context, listen: false)
+                  .getPhotos();
               // Navigator.pop(context);
               // await Future.delayed(
               //     const Duration(milliseconds: 50)); // wait some time
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PhotosScreen(),
-                  ));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PhotosScreen(
+                    latestPhotos:
+                        Provider.of<PhotosProvider>(context, listen: false)
+                            .photos,
+                  ),
+                ),
+              );
             },
           ),
           Divider(

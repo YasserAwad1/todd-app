@@ -121,7 +121,7 @@ class MyApp extends StatelessWidget {
                   ClassesScreen.routeName: (context) => ClassesScreen(),
                   ImageSelectionScreen.routeName: (context) =>
                       ImageSelectionScreen(),
-                  RolesScreen.routeName: (context) => RolesScreen(),
+                  // RolesScreen.routeName: (context) => RolesScreen(),
                   smeImagesScreen.routeName: (context) => smeImagesScreen(),
                   CameraScreen.routeName: (context) => CameraScreen(),
                   TakenImagesScreen.routeName: (context) => TakenImagesScreen(),

@@ -1,20 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:toddily_preschool/main/events/service/event_service.dart';
+import 'package:toddily_preschool/models/events/event_model.dart';
 
 class EventProvider with ChangeNotifier {
-  String eventName = '';
-  int role = 0;
+  EventService _service = EventService();
+  List<EventModel> events = [];
 
-  String getEventNameById() {
-    eventName = 'Event Name';
-    return eventName;
-  }
-
-  int get getRole {
-    return role;
-  }
-
-  setRole(int roleNum) {
-    role = roleNum;
-    print(role);
+  getEvents() async {
+    events = await _service.getEvents();
   }
 }

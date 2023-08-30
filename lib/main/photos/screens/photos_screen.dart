@@ -10,9 +10,14 @@ import 'package:toddily_preschool/main/events/providers/event_provider.dart';
 import 'package:toddily_preschool/main/photos/providers/photos_povider.dart';
 import 'package:toddily_preschool/main/photos/widgets/image_widget.dart';
 import 'package:toddily_preschool/main/photos/widgets/list_grid_buttons.dart';
+import 'package:toddily_preschool/models/events/event_model.dart';
+import 'package:toddily_preschool/models/latestPhotos/photo_model.dart';
 
 class PhotosScreen extends StatefulWidget {
   static const routeName = '/photos-screen';
+  EventModel? event;
+  List<PhotoModel>? latestPhotos;
+  PhotosScreen({this.event, this.latestPhotos});
 
   @override
   State<PhotosScreen> createState() => _PhotosScreenState();
@@ -39,7 +44,7 @@ class _PhotosScreenState extends State<PhotosScreen> {
   Widget build(BuildContext context) {
     bool isPhotosScreen = Provider.of<PhotosProvider>(context).isPhotosScreen;
     bool isList = Provider.of<PhotosProvider>(context).isList;
-    String eventName = Provider.of<EventProvider>(context).getEventNameById();
+    // String eventName = Provider.of<EventProvider>(context).getEventNameById();
 
     //////EVENT TITLE HERE IS CAUSING A PROBLEM //////
     ///I RESOLVED THE PROBLEM USING PROVIDER BUT I WANT TO WAIT FOR THE BACKEND TO SEE IF THE
@@ -53,8 +58,10 @@ class _PhotosScreenState extends State<PhotosScreen> {
         key: _scaffoldKey,
         appBar: CustomAppBar(
           scaffoldKey: _scaffoldKey,
-          title: isPhotosScreen ? AppLocalizations.of(context)!.latestPhotos : eventName,
-          titleContainerWidth: 150.w,
+          title: isPhotosScreen
+              ? AppLocalizations.of(context)!.latestPhotos
+              : widget.event!.name,
+          titleContainerWidth: 170.w,
           withBackButton: isPhotosScreen ? false : true,
           stayEnglish: isPhotosScreen ? true : false,
         ),
@@ -71,8 +78,10 @@ class _PhotosScreenState extends State<PhotosScreen> {
               // PUT OPTION TO DOWNLOAD IMAGES
               child: !isList
                   ? GridView.builder(
-                    physics: BouncingScrollPhysics(),
-                      itemCount: 8,
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: isPhotosScreen
+                          ? widget.latestPhotos!.length
+                          : widget.event!.event_images.length,
                       padding: EdgeInsets.symmetric(
                         horizontal: 6.w,
                       ),
@@ -83,20 +92,30 @@ class _PhotosScreenState extends State<PhotosScreen> {
                           mainAxisSpacing: 10.h,
                           crossAxisSpacing: 10.w),
                       itemBuilder: (context, i) => ImageWidget(
-                        title: eventName,
+                        title: isPhotosScreen ? '' : widget.event!.name,
                         startAnimation: startAnimation,
                         index: i,
+                        eventImages: widget.event!.event_images,
+                        eventImage: widget.event!.event_images[i],
+                        isPhotosScreen: isPhotosScreen,
+                        latestSinglePhoto: widget.latestPhotos![i],
                       ),
                     )
                   : ListView.builder(
-                    physics: BouncingScrollPhysics(),
+                      physics: const BouncingScrollPhysics(),
                       padding: EdgeInsets.all(10.sp),
                       shrinkWrap: true,
-                      itemCount: 5,
+                      itemCount: isPhotosScreen
+                          ? widget.latestPhotos!.length
+                          : widget.event!.event_images.length,
                       itemBuilder: (context, i) => ImageWidget(
-                        title: eventName,
+                        title: isPhotosScreen ? '' : widget.event!.name,
                         startAnimation: startAnimation,
                         index: i,
+                        eventImages: isPhotosScreen ? [] : widget.event!.event_images,
+                        eventImage: isPhotosScreen ? null : widget.event!.event_images[i],
+                        isPhotosScreen: isPhotosScreen,
+                        latestSinglePhoto: widget.latestPhotos![i],
                       ),
                     ),
             ),

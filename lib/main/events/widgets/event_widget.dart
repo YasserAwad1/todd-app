@@ -1,28 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:toddily_preschool/common/constants/end_points.dart';
+import 'package:toddily_preschool/common/my_navigator.dart';
+import 'package:toddily_preschool/main/photos/providers/photos_povider.dart';
 import 'package:toddily_preschool/main/photos/screens/photos_screen.dart';
+import 'package:toddily_preschool/models/events/event_model.dart';
 
 class EventWidget extends StatelessWidget {
   bool startAnimation;
   int index;
-  EventWidget({
-    required this.startAnimation,
-    required this.index,
-  });
+  EventModel event;
+  EventWidget(
+      {required this.startAnimation, required this.index, required this.event});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed('/photos-screen');
-        //KEEP FOR TITLE PROBLEM IN PHOTOS SCREEN FOR EVENTS
-        // Navigator.push(
-        //         context,
-        //         MaterialPageRoute(
-        //           builder: (context) => PhotosScreen(
-        //             title: 'Event Name',
-        //           ),
-        //         ));
+        Provider.of<PhotosProvider>(context, listen: false)
+            .triggerEventsScreen();
+        Navigator.push(
+          context,
+          MyNavigator(
+            screen: PhotosScreen(event: event),
+            curves: Curves.bounceIn,
+          ),
+        );
       },
       child: AnimatedContainer(
         curve: Curves.easeOutSine,
@@ -50,8 +54,8 @@ class EventWidget extends StatelessWidget {
                   topLeft: Radius.circular(15.sp),
                   topRight: Radius.circular(15.sp),
                 ),
-                child: Image.asset(
-                  'assets/images/todd.jpg',
+                child: Image.network(
+                  '${Endpoints.baseUrl}${event.image_cover}',
                   fit: BoxFit.fill,
                   width: double.infinity.w,
                 ),
@@ -62,11 +66,12 @@ class EventWidget extends StatelessWidget {
               height: 30.h,
               child: Center(
                 child: Text(
-                  'Animals Days',
+                  event.name,
                   style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.sp),
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18.sp,
+                  ),
                 ),
               ),
             ),

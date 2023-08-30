@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:toddily_preschool/common/constants/end_points.dart';
 import 'package:toddily_preschool/common/providers/language_provider.dart';
 import 'package:toddily_preschool/main/photos/screens/image_list_screen.dart';
+import 'package:toddily_preschool/models/events/event_images_model.dart';
+import 'package:toddily_preschool/models/latestPhotos/photo_model.dart';
 
 class ImageWidget extends StatelessWidget {
   List<String> images = [
@@ -16,16 +19,21 @@ class ImageWidget extends StatelessWidget {
   ];
 
   final String? title;
-  final bool? isPhotosScreen;
+  final bool isPhotosScreen;
   bool startAnimation;
   int index;
+  EventImagesModel? eventImage;
+  PhotoModel? latestSinglePhoto;
+  List<EventImagesModel>? eventImages;
 
-  ImageWidget({
-    required this.startAnimation,
-    required this.index,
-    this.title,
-    this.isPhotosScreen,
-  });
+  ImageWidget(
+      {required this.startAnimation,
+      required this.index,
+      this.title,
+      required this.isPhotosScreen,
+      this.eventImages,
+      this.eventImage,
+      this.latestSinglePhoto});
 
   @override
   Widget build(BuildContext context) {
@@ -59,9 +67,11 @@ class ImageWidget extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(15.sp),
-                  child: Image.asset(
-                    'assets/images/todd.jpg',
-                    fit: BoxFit.fill,
+                  child: Image.network(
+                    isPhotosScreen
+                        ? '${Endpoints.baseUrl}${latestSinglePhoto!.image_url}'
+                        : '${Endpoints.baseUrl}${eventImage!.src}',
+                    fit: BoxFit.contain,
                   ),
                 ),
                 Positioned(
