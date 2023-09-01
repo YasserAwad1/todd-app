@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 import 'package:toddily_preschool/common/constants/end_points.dart';
 import 'package:toddily_preschool/common/my_navigator.dart';
-import 'package:toddily_preschool/main/photos/providers/photos_povider.dart';
-import 'package:toddily_preschool/main/photos/screens/photos_screen.dart';
+import 'package:toddily_preschool/main/events/screens/event_photos_screen.dart';
 import 'package:toddily_preschool/models/events/event_model.dart';
 
 class EventWidget extends StatelessWidget {
@@ -18,12 +16,10 @@ class EventWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Provider.of<PhotosProvider>(context, listen: false)
-            .triggerEventsScreen();
         Navigator.push(
           context,
           MyNavigator(
-            screen: PhotosScreen(event: event),
+            screen: EventPhotosScreen(event: event),
             curves: Curves.bounceIn,
           ),
         );
@@ -34,7 +30,10 @@ class EventWidget extends StatelessWidget {
           milliseconds: 500 + (index * 100),
         ),
         transform: Matrix4.translationValues(
-            startAnimation ? 0 : MediaQuery.of(context).size.width, 0, 0),
+          startAnimation ? 0 : MediaQuery.of(context).size.width,
+          0,
+          0,
+        ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.sp),
           boxShadow: const [

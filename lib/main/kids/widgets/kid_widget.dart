@@ -45,6 +45,7 @@ class KidsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isArabic = Provider.of<LanguageProvider>(context).isArabic();
+    print(kid.image);
 
     return GestureDetector(
       onTap: () {
@@ -108,6 +109,7 @@ class KidsWidget extends StatelessWidget {
                     child: Text(
                       kid.name,
                       overflow: TextOverflow.ellipsis,
+                      // textAlign: TextAlign.left,
                       // textAlign: TextAlign.justify,
                       // softWrap: true,
                       maxLines: 2,

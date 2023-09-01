@@ -9,8 +9,8 @@ import 'package:toddily_preschool/common/drawer/app_drawer.dart';
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
 import 'package:toddily_preschool/main/events/providers/event_provider.dart';
 import 'package:toddily_preschool/main/events/widgets/event_widget.dart';
-import 'package:toddily_preschool/main/photos/providers/photos_povider.dart';
 import 'package:toddily_preschool/models/events/event_model.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 class EventsScreen extends StatefulWidget {
   static const routeName = '/events-screen';
@@ -38,6 +38,15 @@ class _EventsScreenState extends State<EventsScreen> {
     });
   }
 
+  Future<void> _refreshData() async {
+    print('refreshing');
+    await Provider.of<EventProvider>(context, listen: false).getEvents();
+
+    setState(() {
+      // Update your data variables
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -53,46 +62,55 @@ class _EventsScreenState extends State<EventsScreen> {
           withBackButton: false,
           stayEnglish: true,
         ),
-        body: Column(
-          children: [
-            SizedBox(
-              height: 10.h,
-            ),
-            Expanded(
-              child: FutureBuilder(
-                  future: _eventFuture,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(
-                        child: Platform.isIOS
-                            ? const CupertinoActivityIndicator()
-                            : CircularProgressIndicator(
-                                color: Theme.of(context).colorScheme.secondary,
-                              ),
+        body: LiquidPullToRefresh(
+          onRefresh: () {
+            return _refreshData();
+          },
+          showChildOpacityTransition: false,
+          animSpeedFactor: 4,
+          color: Theme.of(context).colorScheme.secondary,
+          child: Column(
+            children: [
+              SizedBox(
+                height: 10.h,
+              ),
+              Expanded(
+                child: FutureBuilder(
+                    future: _eventFuture,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: Platform.isIOS
+                              ? const CupertinoActivityIndicator()
+                              : CircularProgressIndicator(
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                ),
+                        );
+                      }
+                      List<EventModel> events =
+                          Provider.of<EventProvider>(context, listen: false)
+                              .events;
+                      return GridView.builder(
+                        padding: EdgeInsets.all(12.sp),
+                        shrinkWrap: true,
+                        itemCount: events.length,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 1.2.sp,
+                          mainAxisSpacing: 15.h,
+                          crossAxisSpacing: 20.w,
+                        ),
+                        itemBuilder: (context, i) => EventWidget(
+                          startAnimation: startAnimation,
+                          index: i,
+                          event: events[i],
+                        ),
                       );
-                    }
-                    List<EventModel> events =
-                        Provider.of<EventProvider>(context, listen: false)
-                            .events;
-                    return GridView.builder(
-                      padding: EdgeInsets.all(12.sp),
-                      shrinkWrap: true,
-                      itemCount: events.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 1.2.sp,
-                        mainAxisSpacing: 15.h,
-                        crossAxisSpacing: 20.w,
-                      ),
-                      itemBuilder: (context, i) => EventWidget(
-                        startAnimation: startAnimation,
-                        index: i,
-                        event: events[i],
-                      ),
-                    );
-                  }),
-            ),
-          ],
+                    }),
+              ),
+            ],
+          ),
         ),
       ),
     );

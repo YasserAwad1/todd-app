@@ -3,7 +3,10 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:provider/provider.dart';
+import 'package:toddily_preschool/common/widgets/error_widget.dart';
+import 'package:toddily_preschool/main/FAQ/provider/qa_provider.dart';
 import 'package:toddily_preschool/main/classes/providers/class_provider.dart';
 import 'package:toddily_preschool/main/classes/widgets/class_widget.dart';
 import 'package:toddily_preschool/common/drawer/app_drawer.dart';
@@ -12,6 +15,7 @@ import 'package:toddily_preschool/main/events/providers/event_provider.dart';
 import 'package:toddily_preschool/main/photos/providers/photos_povider.dart';
 import 'package:toddily_preschool/main/statuses/providers/status_provider.dart';
 import 'package:toddily_preschool/models/classes/class_model.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ClassesScreen extends StatefulWidget {
   static const routeName = '/classes-screen';
@@ -25,6 +29,7 @@ class _ClassesScreenState extends State<ClassesScreen> {
 
   bool startAnimation = false;
   var _classesFuture;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -39,6 +44,18 @@ class _ClassesScreenState extends State<ClassesScreen> {
     });
   }
 
+  Future<void> _refreshData() async {
+    print('refreshing');
+    setState(() {
+      isLoading = true;
+    });
+    await Provider.of<ClassProvider>(context, listen: false).getClasses();
+
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var yellow = Theme.of(context).colorScheme.secondary;
@@ -46,63 +63,81 @@ class _ClassesScreenState extends State<ClassesScreen> {
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            await Provider.of<PhotosProvider>(context, listen: false)
-                .getPhotos();
+            _refreshData();
           },
         ),
         drawer: AppDrawer(),
         key: _scaffoldKey,
         appBar: CustomAppBar(
           scaffoldKey: _scaffoldKey,
-          title: 'classes',
+          title: AppLocalizations.of(context)!.classes,
           titleContainerWidth: 100.w,
           withBackButton: false,
+          stayEnglish: true,
         ),
         drawerEnableOpenDragGesture: true,
         drawerEdgeDragWidth: 200.w,
-        body: Container(
-          child: Stack(
-            fit: StackFit.loose,
-            children: [
-              Column(
+        body: RefreshIndicator(
+          onRefresh: () {
+            return _refreshData();
+          },
+          child: LiquidPullToRefresh(
+            onRefresh: () {
+              return _refreshData();
+            },
+            child: Container(
+              child: Stack(
+                fit: StackFit.loose,
                 children: [
-                  const Spacer(),
-                  Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 5.w, vertical: 3.h),
-                    child: Image.asset('assets/images/kids.png'),
+                  Column(
+                    children: [
+                      const Spacer(),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 5.w, vertical: 3.h),
+                        child: Image.asset('assets/images/kids.png'),
+                      ),
+                    ],
                   ),
+                  FutureBuilder(
+                      future: _classesFuture,
+                      builder: (context, snapshot) {
+                        if (Provider.of<ClassProvider>(context, listen: false)
+                            .hasError) {
+                          print(
+                              'a;lsdfjaskjdfhalskdfhaslk jhadskjfh aklsdjfh alsdkjfh aklhj ');
+                          return CustomErrorWidget();
+                        }
+                        var classes =
+                            Provider.of<ClassProvider>(context, listen: false)
+                                .classes;
+                        if (snapshot.connectionState ==
+                                ConnectionState.waiting ||
+                            isLoading) {
+                          return Center(
+                            child: Platform.isAndroid
+                                ? CircularProgressIndicator(
+                                    color: yellow,
+                                  )
+                                : CupertinoActivityIndicator(
+                                    color: yellow,
+                                  ),
+                          );
+                        }
+                        return ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: classes.length,
+                          itemBuilder: (context, i) => ClassWidget(
+                            startAnimation: startAnimation,
+                            index: i,
+                            classModel: classes[i],
+                          ),
+                        );
+                      }),
                 ],
               ),
-              FutureBuilder(
-                  future: _classesFuture,
-                  builder: (context, snapshot) {
-                    var classes =
-                        Provider.of<ClassProvider>(context, listen: false)
-                            .classes;
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(
-                        child: Platform.isAndroid
-                            ? CircularProgressIndicator(
-                                color: yellow,
-                              )
-                            : CupertinoActivityIndicator(
-                                color: yellow,
-                              ),
-                      );
-                    }
-                    return ListView.builder(
-                      physics: const ScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: classes.length,
-                      itemBuilder: (context, i) => ClassWidget(
-                        startAnimation: startAnimation,
-                        index: i,
-                        classModel: classes[i],
-                      ),
-                    );
-                  }),
-            ],
+            ),
           ),
         ),
       ),

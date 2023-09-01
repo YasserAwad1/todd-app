@@ -21,7 +21,7 @@ class StatusService {
         },
       );
 
-      if (response.statusCode == 202) {
+      if (response.statusCode < 300) {
         final jsonResponse = jsonDecode(response.body);
         print('****************status RESPONSE************');
         print(jsonResponse[0]);
@@ -36,6 +36,29 @@ class StatusService {
       } else {
         print('error');
         return [];
+      }
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
+
+  Future<bool> sendStatus(int childId, List<StatusModel> statuses) async {
+    try {
+      final url = Uri.parse(Endpoints.sendStatus);
+      final response = await http.post(url, headers: {
+        "Accept": "application/json",
+        'Authorization': 'Bearer $token'
+      }, body: {
+        "child_id": childId,
+        "status": jsonEncode(
+          statuses.map((status) => status.toJson()).toList(),
+        )
+      });
+      if (response.statusCode < 300) {
+        return true;
+      } else {
+        return false;
       }
     } catch (e) {
       print(e);

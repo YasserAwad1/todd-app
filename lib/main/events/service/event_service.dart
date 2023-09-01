@@ -13,7 +13,7 @@ class EventService {
         "Accept": "application/json",
       });
 
-      if (response.statusCode == 200) {
+      if (response.statusCode < 300) {
         final jsonResponse = jsonDecode(response.body);
         print(jsonResponse);
         final events = (jsonResponse['events'] as List)
@@ -32,4 +32,17 @@ class EventService {
       rethrow;
     }
   }
+
+  // Future<EventModel> getEventById(int eventId) async {
+  //   try {
+  //     final url = Uri.parse('${Endpoints.eventById}/$eventId');
+  //     final response = await http.get(url, headers: {
+  //       "Accept": "application/json",
+  //     });
+  //     print(response.body);
+  //   } catch (e) {
+  //     print(e);
+  //     rethrow;
+  //   }
+  // }
 }

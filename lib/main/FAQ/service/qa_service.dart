@@ -1,27 +1,28 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:toddily_preschool/common/constants/end_points.dart';
-import 'package:toddily_preschool/models/latestPhotos/photo_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:toddily_preschool/models/Q&A/qa_list.dart';
+import 'package:toddily_preschool/models/Q&A/qa_model.dart';
 
-class PhotosService {
-  Future<List<PhotoModel>> getPhotos() async {
+class QAService {
+  Future<List<QaModel>> getQA() async {
     try {
-      final url = Uri.parse(Endpoints.photos);
+      final url = Uri.parse(Endpoints.qa);
       final response = await http.get(url, headers: {
         "Accept": "application/json",
       });
 
       if (response.statusCode < 300) {
         final jsonResponse = jsonDecode(response.body);
-        print(jsonResponse);
-        final photos = (jsonResponse['posts'] as List)
+        print(jsonResponse['qa']);
+        final qas = (jsonResponse['qa'] as List)
             .map(
-              (e) => PhotoModel.fromJson(e),
+              (e) => QaModel.fromJson(e),
             )
             .toList();
-        return photos;
+        print(qas);
+        return qas;
       } else {
         return [];
       }

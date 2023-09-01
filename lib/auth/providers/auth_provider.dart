@@ -1,5 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:toddily_preschool/auth/service/auth_service.dart';
 import 'package:toddily_preschool/common/constants/end_points.dart';
 import 'package:toddily_preschool/common/local/local_repo.dart';
@@ -8,6 +9,7 @@ import 'package:toddily_preschool/locator.dart';
 class AuthProvider with ChangeNotifier {
   AuthService _service = AuthService();
   String? roleName;
+  bool isGuest = false;
 
   login(String userName, String password) async {
     try {
@@ -38,8 +40,19 @@ class AuthProvider with ChangeNotifier {
     return roleName!;
   }
 
-  bool forClassesScreen() {
-    if (roleName == 'admin' || roleName == 'social' || roleName == 'doctor') {
+  bool classesTile() {
+    if (roleName == 'admin' ||
+        roleName == 'social' ||
+        roleName == 'doctor' ) {
+      return true;
+    }
+    return false;
+  }
+
+  bool kidsTile(){
+    if (roleName == 'teacher' ||
+        roleName == 'parent' ||
+        roleName == 'extra' ) {
       return true;
     }
     return false;
@@ -49,10 +62,19 @@ class AuthProvider with ChangeNotifier {
     if (roleName == 'admin' ||
         roleName == 'social' ||
         roleName == 'parent' ||
-        roleName == 'extra') {
+        roleName == 'extra' ||
+        roleName == 'teacher') {
       return true;
     }
     return false;
+  }
+
+  setGuest() {
+    locator.get<LocalRepo>().saveRole('guest');
+    locator.get<LocalRepo>().varRole('guest');
+    roleName = 'guest';
+    isGuest = true;
+    notifyListeners();
   }
 
   Future<bool> isTokenValid() async {
@@ -69,7 +91,7 @@ class AuthProvider with ChangeNotifier {
     );
 
     // Check the response status code
-    if (response.statusCode != 200 || checkToken == null) {
+    if (response.statusCode >= 300 || checkToken == null) {
       return false;
     } else {
       return true;

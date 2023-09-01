@@ -7,6 +7,8 @@ import 'package:toddily_preschool/models/classes/class_model.dart';
 
 class ClassService {
   var token = locator.get<LocalRepo>().token;
+  String? message;
+  bool hasError = false;
 
   Future<List<ClassModel>> getClasses() async {
     try {
@@ -14,24 +16,36 @@ class ClassService {
 
       final response = await http.get(url, headers: {
         "Accept": "application/json",
-        'Authorization': 'Bearer $token'
+        'Authorization': 'Beare $token'
       });
+
+
+      print('******************classes***************');
+      print(response.statusCode);
+      print(jsonDecode(response.body));
+      print('******************classes***************');
 
       // print(jsonDecode(response.body));
 
-      if (response.statusCode == 202) {
+      if (response.statusCode < 300) {
         final jsonResponse = jsonDecode(response.body);
+        
         final classes = (jsonResponse as List)
             .map(
               (e) => ClassModel.fromJson(e),
             )
             .toList();
+        hasError = false;
 
         return classes;
       } else {
-        return [];
+        message = 'Something Went wrong, please try again.';
+        hasError = true;
+        throw Exception('error in getting classes');
       }
     } catch (e) {
+      message = 'Something Went wrong, please try again.';
+      hasError = true;
       print(e);
       rethrow;
     }
@@ -46,7 +60,7 @@ class ClassService {
         'Authorization': 'Bearer $token'
       });
 
-      if (response.statusCode == 200) {
+      if (response.statusCode < 300) {
         final jsonResponse = jsonDecode(response.body);
         final classById = ClassModel.fromJson(jsonResponse['class']);
 

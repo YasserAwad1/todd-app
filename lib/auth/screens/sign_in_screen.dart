@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:toddily_preschool/auth/providers/auth_provider.dart';
 
 import 'package:toddily_preschool/auth/widgets/custom_textformfeild.dart';
 import 'package:toddily_preschool/auth/widgets/guest_login_button.dart';
@@ -10,7 +10,7 @@ import 'package:toddily_preschool/auth/widgets/login_button.dart';
 import 'package:toddily_preschool/auth/widgets/or_widget.dart';
 import 'package:toddily_preschool/auth/widgets/sigin_top_bar.dart';
 import 'package:toddily_preschool/common/providers/language_provider.dart';
-import 'package:toddily_preschool/main/kids/screens/kids_screen.dart';
+
 
 class SignInScreen extends StatefulWidget {
   static const routeName = '/sign-in-screen';
@@ -123,6 +123,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           labelText: AppLocalizations.of(context)!.userName,
                           controller: userNameController,
                           textinputAction: TextInputAction.next,
+                          inputType: TextInputType.emailAddress,
                         ),
                         SizedBox(
                           height: 20.h,
@@ -131,6 +132,8 @@ class _SignInScreenState extends State<SignInScreen> {
                           labelText: AppLocalizations.of(context)!.password,
                           controller: passwordController,
                           textinputAction: TextInputAction.done,
+                          inputType: TextInputType.visiblePassword,
+                          isObscure: true,
                         ),
                         SizedBox(
                           height: 20.h,

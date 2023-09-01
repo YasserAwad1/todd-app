@@ -6,23 +6,9 @@ class PhotosProvider with ChangeNotifier {
   PhotosService _service = PhotosService();
   List<PhotoModel> photos = [];
   bool isList = true;
-  bool isPhotosScreen = false;
-  bool isEventsScreen = false;
 
   changeListGridView() {
     isList = !isList;
-    notifyListeners();
-  }
-
-  triggerPhotosScreen() {
-    isPhotosScreen = true;
-    isEventsScreen = false;
-    notifyListeners();
-  }
-
-  triggerEventsScreen() {
-    isEventsScreen = true;
-    isPhotosScreen = false;
     notifyListeners();
   }
 

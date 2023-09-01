@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:toddily_preschool/auth/providers/auth_provider.dart';
 
 //widgets
 import 'package:toddily_preschool/common/drawer/app_drawer.dart';
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
-import 'package:toddily_preschool/main/classes/providers/class_provider.dart';
 import 'package:toddily_preschool/main/kids/widgets/kid_widget.dart';
-import 'package:toddily_preschool/models/classes/class_model.dart';
 import 'package:toddily_preschool/models/kids/kid_model.dart';
 
 class KidsScreen extends StatefulWidget {
@@ -42,6 +42,8 @@ class _KidsScreenState extends State<KidsScreen> {
       parent_id: 3,
       classRoom_id: 1);
   // var _classFuture;
+
+  
 
   @override
   void initState() {

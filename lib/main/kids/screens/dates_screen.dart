@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:toddily_preschool/auth/providers/auth_provider.dart';
 
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
+import 'package:toddily_preschool/main/classes/providers/class_provider.dart';
 import 'package:toddily_preschool/main/events/providers/event_provider.dart';
 import 'package:toddily_preschool/main/kids/widgets/date_widget.dart';
 import 'package:toddily_preschool/main/kids/widgets/dates_screen_button.dart';
@@ -54,6 +56,13 @@ class _DatesScreenState extends State<DatesScreen> {
     });
   }
 
+  Future<void> _refreshData() async {
+    print('refreshing');
+    await Provider.of<ClassProvider>(context, listen: false).getClasses();
+
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -84,7 +93,7 @@ class _DatesScreenState extends State<DatesScreen> {
                 },
               )
             : DatesScreenButton(
-                title: 'New Status ${DateFormat('dd/M').format(
+                title: 'New Status ${DateFormat('d/M').format(
                   DateTime.now(),
                 )}',
                 icon: Icons.add,
@@ -100,30 +109,38 @@ class _DatesScreenState extends State<DatesScreen> {
           titleContainerWidth: 130.w,
           withBackButton: true,
         ),
-        body: Column(
-          children: [
-            Expanded(
-              child: GridView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.all(20.sp),
-                  shrinkWrap: true,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 20.w,
-                    childAspectRatio: 1.15.sp,
-                    mainAxisSpacing: 15.h,
-                  ),
-                  itemCount: 20,
-                  itemBuilder: (context, i) {
-                    _currentIndex = i % characters.length;
-                    return DateWidget(
-                      image: characters[_currentIndex],
-                      index: i,
-                      startAnimation: startAnimation,
-                    );
-                  }),
-            )
-          ],
+        body: LiquidPullToRefresh(
+          onRefresh: () {
+            return _refreshData();
+          },
+          showChildOpacityTransition: false,
+          animSpeedFactor: 4,
+          color: Theme.of(context).colorScheme.secondary,
+          child: Column(
+            children: [
+              Expanded(
+                child: GridView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.all(20.sp),
+                    shrinkWrap: true,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 20.w,
+                      childAspectRatio: 1.15.sp,
+                      mainAxisSpacing: 15.h,
+                    ),
+                    itemCount: 20,
+                    itemBuilder: (context, i) {
+                      _currentIndex = i % characters.length;
+                      return DateWidget(
+                        image: characters[_currentIndex],
+                        index: i,
+                        startAnimation: startAnimation,
+                      );
+                    }),
+              )
+            ],
+          ),
         ),
       ),
     );

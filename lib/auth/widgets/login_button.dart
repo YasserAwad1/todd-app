@@ -71,7 +71,7 @@ class _LoginButtonState extends State<LoginButton> {
                     PageRouteBuilder(
                       transitionDuration: const Duration(milliseconds: 500),
                       pageBuilder: (ctx, animation, secondaryAnimation) {
-                        if (Provider.of<AuthProvider>(context).forClassesScreen()) {
+                        if (Provider.of<AuthProvider>(context).classesTile()) {
                           return ClassesScreen();
                         } else {
                           return KidsScreen();

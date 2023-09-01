@@ -1,40 +1,29 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:toddily_preschool/common/constants/end_points.dart';
 import 'package:toddily_preschool/common/providers/language_provider.dart';
-import 'package:toddily_preschool/main/photos/screens/image_list_screen.dart';
-import 'package:toddily_preschool/models/events/event_images_model.dart';
-import 'package:toddily_preschool/models/latestPhotos/photo_model.dart';
+import 'package:toddily_preschool/main/events/screens/event_images_list_screen.dart';
+import 'package:toddily_preschool/models/events/event_model.dart';
 
-class ImageWidget extends StatelessWidget {
-  // List<String> images = [
-  //   'assets/images/todd.jpg',
-  //   'assets/images/avatar2.jpg',
-  //   'assets/images/water.jpg',
-  //   'assets/images/todd.jpg',
-  //   'assets/images/avatar2.jpg',
-  //   'assets/images/water.jpg',
-  // ];
-
-  final String? title;
+class EventImageWidget extends StatelessWidget {
+  String image;
   bool startAnimation;
   int index;
-  String image;
-  List<PhotoModel> images;
-
-  ImageWidget({
-    required this.startAnimation,
-    required this.index,
-    this.title,
+  String eventName;
+  EventImageWidget({
     required this.image,
-    required this.images
+    required this.index,
+    required this.startAnimation,
+    required this.eventName
   });
 
   @override
   Widget build(BuildContext context) {
     bool isArabic = Provider.of<LanguageProvider>(context).isArabic();
+    print('****************************************************************');
+    print(image);
+    print('****************************************************************');
 
     return Padding(
       padding: EdgeInsets.only(top: 8.sp),
@@ -43,10 +32,9 @@ class ImageWidget extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ImageListScreen(
-                images: images,
+              builder: (context) => EventImagesListScreen(
                 sentIndex: index,
-                title: title,
+                eventName: eventName,
               ),
             ),
           );
@@ -66,7 +54,7 @@ class ImageWidget extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(15.sp),
                 child: Image.network(
-                  '${Endpoints.baseUrl}${image}',
+                   '${Endpoints.baseUrl}$image',
                   fit: BoxFit.contain,
                 ),
               ),

@@ -4,10 +4,14 @@ class CustomTextFormFeild extends StatelessWidget {
   final String labelText;
   final TextEditingController controller;
   final TextInputAction textinputAction;
+  final TextInputType inputType;
+  bool? isObscure;
   CustomTextFormFeild({
     required this.labelText,
     required this.controller,
     required this.textinputAction,
+    required this.inputType,
+    this.isObscure = false
   });
 
   @override
@@ -19,6 +23,8 @@ class CustomTextFormFeild extends StatelessWidget {
       //   }
       //   return null;
       // },
+      obscureText: isObscure!,
+      keyboardType: inputType,
       cursorColor: Theme.of(context).colorScheme.secondary,
       textInputAction: textinputAction,
       controller: controller,

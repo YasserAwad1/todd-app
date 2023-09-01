@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:toddily_preschool/auth/providers/auth_provider.dart';
 import 'package:toddily_preschool/auth/screens/sign_in_screen.dart';
+import 'package:toddily_preschool/common/local/local_repo.dart';
+import 'package:toddily_preschool/locator.dart';
+import 'package:toddily_preschool/main/about/screens/about_screen.dart';
 import 'package:toddily_preschool/main/classes/screens/classes_screen.dart';
 import 'package:toddily_preschool/main/kids/screens/kids_screen.dart';
 import 'package:video_player/video_player.dart';
-// import 'package:chewie/chewie.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -39,9 +42,12 @@ class _SplashScreenState extends State<SplashScreen> {
         PageRouteBuilder(
           transitionDuration: const Duration(milliseconds: 200),
           pageBuilder: (context, animation, secondaryAnimation) {
+            if (locator.get<LocalRepo>().role == 'guest') {
+              return AboutScreen();
+            }
             if (isTokenValid) {
               if (Provider.of<AuthProvider>(context, listen: false)
-                  .forClassesScreen()) {
+                  .classesTile()) {
                 return ClassesScreen();
               } else {
                 return KidsScreen();

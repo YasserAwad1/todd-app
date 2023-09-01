@@ -4,14 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:toddily_preschool/auth/providers/auth_provider.dart';
-import 'package:toddily_preschool/auth/screens/sign_in_screen.dart';
 import 'package:toddily_preschool/common/drawer/logout_button.dart';
-import 'package:toddily_preschool/common/my_navigator.dart';
 
 import 'package:toddily_preschool/common/providers/language_provider.dart';
 import 'package:toddily_preschool/common/drawer/LanguageButtons.dart';
-import 'package:toddily_preschool/main/events/providers/event_provider.dart';
-import 'package:toddily_preschool/main/photos/providers/photos_povider.dart';
 import 'package:toddily_preschool/main/photos/screens/photos_screen.dart';
 
 class AppDrawer extends StatefulWidget {
@@ -49,7 +45,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 )),
           ),
           //CLASSES TILE FOR DOCTOR AND SOCIAL MEDIA EXPERT
-          if (Provider.of<AuthProvider>(context).forClassesScreen())
+          if (Provider.of<AuthProvider>(context).classesTile())
             Column(
               children: [
                 ListTile(
@@ -90,7 +86,7 @@ class _AppDrawerState extends State<AppDrawer> {
               ],
             ),
           //KIDS TILE
-          if (!Provider.of<AuthProvider>(context).forClassesScreen())
+          if (Provider.of<AuthProvider>(context).kidsTile())
             Column(
               children: [
                 ListTile(
@@ -154,21 +150,13 @@ class _AppDrawerState extends State<AppDrawer> {
             ),
             splashColor: yellow.withOpacity(0.9),
             onTap: () async {
-              Provider.of<PhotosProvider>(context, listen: false)
-                  .triggerPhotosScreen();
-              await Provider.of<PhotosProvider>(context, listen: false)
-                  .getPhotos();
               // Navigator.pop(context);
               // await Future.delayed(
               //     const Duration(milliseconds: 50)); // wait some time
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => PhotosScreen(
-                    latestPhotos:
-                        Provider.of<PhotosProvider>(context, listen: false)
-                            .photos,
-                  ),
+                  builder: (context) => PhotosScreen(),
                 ),
               );
             },
@@ -201,8 +189,6 @@ class _AppDrawerState extends State<AppDrawer> {
             ),
             splashColor: yellow.withOpacity(0.9),
             onTap: () {
-              Provider.of<PhotosProvider>(context, listen: false)
-                  .triggerEventsScreen();
               Navigator.pop(context);
               // await Future.delayed(
               //     const Duration(milliseconds: 50)); // wait some time

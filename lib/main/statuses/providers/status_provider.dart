@@ -9,5 +9,9 @@ class StatusProvider with ChangeNotifier {
   getStatuses() async {
     await _service.getStatuses();
   }
+
+  sendStatus(int childId, List<StatusModel> statusList) async {
+    await _service.sendStatus(childId, statusList);
+  }
   
 }

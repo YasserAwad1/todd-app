@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:toddily_preschool/common/constants/end_points.dart';
 
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
 import 'package:toddily_preschool/main/photos/providers/photos_povider.dart';
+import 'package:toddily_preschool/models/latestPhotos/photo_model.dart';
 
 class ImageListScreen extends StatefulWidget {
   static const routeName = 'image-list-screen';
-  final List<String>? images;
+  List<PhotoModel>? images;
   int? sentIndex;
   final String? title;
 
@@ -36,18 +38,15 @@ class _ImageListScreenState extends State<ImageListScreen> {
   Widget build(BuildContext context) {
     // final arguments = (ModalRoute.of(context)?.settings.arguments ??
     //     <String, dynamic>{}) as Map;
-    bool isPhotosScreen = Provider.of<PhotosProvider>(context).isPhotosScreen;
 
     return SafeArea(
       child: Scaffold(
         appBar: CustomAppBar(
           scaffoldKey: null,
-          title: isPhotosScreen
-              ? AppLocalizations.of(context)!.latestPhotos
-              : widget.title!,
+          title: AppLocalizations.of(context)!.latestPhotos,
           titleContainerWidth: 150.w,
           withBackButton: true,
-          stayEnglish: isPhotosScreen ? true : false,
+          stayEnglish: true,
         ),
         body: Column(
           children: [
@@ -57,8 +56,8 @@ class _ImageListScreenState extends State<ImageListScreen> {
                 itemCount: widget.images!.length,
                 itemBuilder: (context, index) {
                   return Center(
-                    child: Image.asset(
-                      widget.images![index],
+                    child: Image.network(
+                      '${Endpoints.baseUrl}${widget.images![index].image_url}',
                       fit: BoxFit.contain,
                     ),
                   );
@@ -92,8 +91,8 @@ class _ImageListScreenState extends State<ImageListScreen> {
                         width: 80.w,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(15.sp),
-                          child: Image.asset(
-                            widget.images![index],
+                          child: Image.network(
+                            '${Endpoints.baseUrl}${widget.images![index].image_url}',
                             fit: BoxFit.cover,
                           ),
                         ),

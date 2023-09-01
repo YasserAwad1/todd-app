@@ -5,8 +5,8 @@ class Endpoints {
   static const statuses = '$baseUrl/api/status';
   static const events = '$baseUrl/api/events';
   static const photos = '$baseUrl/api/post';
-  
-
-  // static const kids = '$baseUrl/api/'
+  static const qa = '$baseUrl/api/question-answer';
+  static const sendStatus = '$baseUrl/api/child-status';
+  static const eventById = '$baseUrl//api/events';
 
 }

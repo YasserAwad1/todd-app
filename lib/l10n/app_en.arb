@@ -19,7 +19,7 @@
     "@aboutToddilyps":{
         "description": "none"
     },
-    "faqs": "Frequently Asked Questions",
+    "faqs": "FAQs",
     "@faqs":{
         "description": "none"
     },
@@ -117,6 +117,14 @@
     },
     "password": "Password",
     "@password":{
+        "description": "none"
+    },
+    "error": "Looks like an error occured",
+    "@error":{
+        "description": "none"
+    },
+    "checkInternet": "Check your internet connection and try again",
+    "@checkInternet":{
         "description": "none"
     }
 

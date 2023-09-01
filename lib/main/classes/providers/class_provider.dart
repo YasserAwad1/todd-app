@@ -6,11 +6,16 @@ class ClassProvider with ChangeNotifier {
   final ClassService _service = ClassService();
   List<ClassModel> classes = [];
   ClassModel? classById;
+  String? message;
+  bool hasError = false;
 
   getClasses() async {
     try {
       classes = await _service.getClasses();
+      hasError = _service.hasError;
     } catch (e) {
+      message = _service.message;
+      hasError = _service.hasError;
       print(e);
       rethrow;
     }
@@ -24,5 +29,4 @@ class ClassProvider with ChangeNotifier {
       rethrow;
     }
   }
-  
 }

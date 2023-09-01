@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:toddily_preschool/auth/providers/auth_provider.dart';
+import 'package:toddily_preschool/main/about/screens/about_screen.dart';
 
 class GuestLoginButton extends StatelessWidget {
   bool isArabic;
@@ -11,7 +14,25 @@ class GuestLoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {},
+      onPressed: () {
+        Provider.of<AuthProvider>(context, listen: false).setGuest();
+        Navigator.pushReplacement(
+          context,
+          PageRouteBuilder(
+            transitionDuration: const Duration(milliseconds: 500),
+            pageBuilder: (ctx, animation, secondaryAnimation) {
+              return AboutScreen();
+            },
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return FadeTransition(
+                opacity: animation,
+                child: child,
+              );
+            },
+          ),
+        );
+      },
       child: Text(
         AppLocalizations.of(context)!.loginAsAGuest,
         style: TextStyle(
