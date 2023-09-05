@@ -11,6 +11,7 @@ import 'package:toddily_preschool/common/user/provider/user_provider.dart';
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
 import 'package:toddily_preschool/main/monthly_report/providers/report_provider.dart';
 import 'package:toddily_preschool/main/monthly_report/screens/send_report_screen.dart';
+import 'package:toddily_preschool/main/monthly_report/widgets/custom_expandable_tile.dart';
 import 'package:toddily_preschool/main/monthly_report/widgets/month_tile_widget.dart';
 import 'package:toddily_preschool/models/kids/kid_model.dart';
 import 'package:toddily_preschool/models/report/report_model.dart';
@@ -77,8 +78,8 @@ class _MonthlyReportScreenState extends State<MonthlyReportScreen> {
                 label: Text(
                     'Send report for ${DateFormat.MMMM().format(DateTime.now())}'))
             : null,
-        body: LiquidPullToRefresh(
-          showChildOpacityTransition: false,
+        body: 
+        LiquidPullToRefresh(
           animSpeedFactor: 4,
           color: Theme.of(context).colorScheme.secondary,
           onRefresh: () {
@@ -112,7 +113,7 @@ class _MonthlyReportScreenState extends State<MonthlyReportScreen> {
                           physics: BouncingScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: reports.length,
-                          itemBuilder: (context, i) => MonthTileWidget(
+                          itemBuilder: (context, i) => CustomExpandableTile(
                             report: reports[i],
                           ),
                         ),

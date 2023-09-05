@@ -6,6 +6,7 @@ import 'package:toddily_preschool/models/Q&A/qa_list.dart';
 import 'package:toddily_preschool/models/Q&A/qa_model.dart';
 
 class QAService {
+  bool hasError = false;
   Future<List<QaModel>> getQA() async {
     try {
       final url = Uri.parse(Endpoints.qa);
@@ -22,12 +23,15 @@ class QAService {
             )
             .toList();
         print(qas);
+        hasError = false;
         return qas;
       } else {
-        return [];
+        hasError = true;
+        throw Exception('Erro in getting FAQs');
       }
     } catch (e) {
       print(e);
+      hasError = true;
       rethrow;
     }
   }

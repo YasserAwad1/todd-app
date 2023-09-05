@@ -46,7 +46,7 @@ class _DatesScreenState extends State<DatesScreen> {
   bool startAnimation = false;
   var _datesFuture;
 
-  var tween = Tween(begin: Offset(0.0, 1.0), end: Offset.zero).chain(
+  var tween = Tween(begin: const Offset(0.0, 1.0), end: Offset.zero).chain(
     CurveTween(
       curve: Curves.easeIn,
     ),
@@ -56,8 +56,8 @@ class _DatesScreenState extends State<DatesScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _datesFuture =
-        Provider.of<DatesProvider>(context, listen: false).getDatesByChildId(widget.kid!.id!);
+    _datesFuture = Provider.of<DatesProvider>(context, listen: false)
+        .getDatesByChildId(widget.kid!.id!);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {
         startAnimation = true;
@@ -77,7 +77,7 @@ class _DatesScreenState extends State<DatesScreen> {
     return SafeArea(
       child: Scaffold(
         extendBody: true,
-        bottomNavigationBar: Provider.of<UserProvider>(context).roleId == 5
+        bottomNavigationBar: Provider.of<UserProvider>(context).reportButton()
             ? DatesScreenButton(
                 title: AppLocalizations.of(context)!.monthlyReport,
                 icon: Icons.health_and_safety_outlined,
@@ -87,7 +87,9 @@ class _DatesScreenState extends State<DatesScreen> {
                     PageRouteBuilder(
                       transitionDuration: Duration(milliseconds: 450),
                       pageBuilder: (context, animation, secondaryAnimation) =>
-                          MonthlyReportScreen(),
+                          MonthlyReportScreen(
+                        kid: widget.kid,
+                      ),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {
                         return SlideTransition(

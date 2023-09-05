@@ -7,14 +7,21 @@ class EventProvider with ChangeNotifier {
   EventService _service = EventService();
   List<EventModel> events = [];
   List<EventImagesModel> eventImages = [];
+  bool hasError = false;
 
   getEvents() async {
-    events = await _service.getEvents();
+    try {
+      events = await _service.getEvents();
+      hasError = _service.hasError;
+    } catch (e) {
+      print(e);
+      hasError = _service.hasError;
+      rethrow;
+    }
   }
 
   // getEventById(int id){
   //   eventImages =
 
   // }
-
 }

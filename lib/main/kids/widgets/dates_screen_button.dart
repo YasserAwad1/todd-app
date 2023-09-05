@@ -18,6 +18,7 @@ class DatesScreenButton extends StatelessWidget {
       child: TextButton.icon(
         style: TextButton.styleFrom(
           backgroundColor: Colors.white.withOpacity(0.9),
+          elevation: 30
         ),
         onPressed: function,
         icon: Icon(

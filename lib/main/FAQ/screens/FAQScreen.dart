@@ -6,9 +6,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:provider/provider.dart';
 import 'package:toddily_preschool/common/drawer/app_drawer.dart';
+import 'package:toddily_preschool/common/providers/language_provider.dart';
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
+import 'package:toddily_preschool/common/widgets/error_widget.dart';
 import 'package:toddily_preschool/main/FAQ/provider/qa_provider.dart';
 import 'package:toddily_preschool/main/FAQ/widgets/faq_tile.dart';
+import 'package:toddily_preschool/main/FAQ/widgets/slimy_card.dart';
 import 'package:toddily_preschool/main/monthly_report/widgets/month_tile_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -60,42 +63,55 @@ class _FAQScreenState extends State<FAQScreen> {
           locale: const Locale('en'),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 10.h,
-                ),
-                Expanded(
-                  child: FutureBuilder(
-                      future: _qaFuture,
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return Center(
-                            child: Platform.isIOS
-                                ? CupertinoActivityIndicator()
-                                : CircularProgressIndicator(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .secondary,
-                                  ),
+            child: LiquidPullToRefresh(
+              onRefresh: () {
+                return _refreshData();
+              },
+              animSpeedFactor: 4,
+              color: Theme.of(context).colorScheme.secondary,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: FutureBuilder(
+                        future: _qaFuture,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(
+                              child: Platform.isIOS
+                                  ? CupertinoActivityIndicator()
+                                  : CircularProgressIndicator(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                    ),
+                            );
+                          }
+                          if (Provider.of<QaProvider>(context, listen: false)
+                              .hasError) {
+                            return Localizations.override(
+                                context: context,
+                                locale: Provider.of<LanguageProvider>(context,
+                                        listen: false)
+                                    .getCurrentLocal(),
+                                child: const CustomErrorWidget());
+                          }
+                          final qaList =
+                              Provider.of<QaProvider>(context, listen: false)
+                                  .qaList;
+                          return ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: qaList.length,
+                            itemBuilder: (context, i) => CustomSlimyCard(
+                              question: qaList[i].question,
+                              answer: qaList[i].answer,
+                            ),
                           );
-                        }
-                        final qaList =
-                            Provider.of<QaProvider>(context, listen: false)
-                                .qaList;
-                        return ListView.builder(
-                          physics: const BouncingScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: qaList.length,
-                          itemBuilder: (context, i) => QATile(
-                            question: qaList[i].question,
-                            answer: qaList[i].answer,
-                          ),
-                        );
-                      }),
-                ),
-              ],
+                        }),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

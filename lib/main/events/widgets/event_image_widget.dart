@@ -10,13 +10,12 @@ class EventImageWidget extends StatelessWidget {
   String image;
   bool startAnimation;
   int index;
-  String eventName;
-  EventImageWidget({
-    required this.image,
-    required this.index,
-    required this.startAnimation,
-    required this.eventName
-  });
+  EventModel? event;
+  EventImageWidget(
+      {required this.image,
+      required this.index,
+      required this.startAnimation,
+      required this.event});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +33,7 @@ class EventImageWidget extends StatelessWidget {
             MaterialPageRoute(
               builder: (context) => EventImagesListScreen(
                 sentIndex: index,
-                eventName: eventName,
+                event: event!,
               ),
             ),
           );
@@ -54,7 +53,7 @@ class EventImageWidget extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(15.sp),
                 child: Image.network(
-                   '${Endpoints.baseUrl}$image',
+                  '${Endpoints.baseUrl}$image',
                   fit: BoxFit.contain,
                 ),
               ),

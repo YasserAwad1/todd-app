@@ -5,6 +5,8 @@ import 'package:toddily_preschool/models/events/event_model.dart';
 import 'package:http/http.dart' as http;
 
 class EventService {
+  bool hasError = false;
+
   Future<List<EventModel>> getEvents() async {
     try {
       final url = Uri.parse(Endpoints.events);
@@ -22,13 +24,16 @@ class EventService {
             )
             .toList();
         print(events);
+        hasError = false;
 
         return events;
       } else {
-        return [];
+        hasError = true;
+        throw Exception('Error in getting events');
       }
     } catch (e) {
       print(e);
+      hasError = true;
       rethrow;
     }
   }

@@ -79,7 +79,7 @@ class _EventPhotosScreenState extends State<EventPhotosScreen> {
                         image: widget.event!.event_images[i].src,
                         index: i,
                         startAnimation: startAnimation,
-                        eventName: widget.event!.name,
+                        event: widget.event!,
                       ),
                     )
                   : ListView.builder(
@@ -90,7 +90,7 @@ class _EventPhotosScreenState extends State<EventPhotosScreen> {
                       itemBuilder: (context, i) => EventImageWidget(
                         image: widget.event!.event_images[i].src,
                         index: i,
-                        eventName: widget.event!.name,
+                        event: widget.event!,
                         startAnimation: startAnimation,
                       ),
                     ),

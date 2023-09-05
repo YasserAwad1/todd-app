@@ -1,5 +1,9 @@
-import 'package:flutter/material.dart';
+import 'dart:typed_data';
 
+import 'package:flutter/material.dart';
+import 'dart:io';
+
+import 'package:http/http.dart' as http;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:toddily_preschool/common/constants/end_points.dart';
@@ -7,6 +11,8 @@ import 'package:toddily_preschool/common/providers/language_provider.dart';
 import 'package:toddily_preschool/main/photos/screens/image_list_screen.dart';
 import 'package:toddily_preschool/models/events/event_images_model.dart';
 import 'package:toddily_preschool/models/latestPhotos/photo_model.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 
 class ImageWidget extends StatelessWidget {
   // List<String> images = [
@@ -24,13 +30,41 @@ class ImageWidget extends StatelessWidget {
   String image;
   List<PhotoModel> images;
 
-  ImageWidget({
-    required this.startAnimation,
-    required this.index,
-    this.title,
-    required this.image,
-    required this.images
-  });
+  ImageWidget(
+      {required this.startAnimation,
+      required this.index,
+      this.title,
+      required this.image,
+      required this.images});
+
+//   Future<bool> downloadImage(String imageUrl) async {
+//   var response = await http.get(Uri.parse(imageUrl));
+
+//   if (response.statusCode == 200) {
+//     final directory = await getExternalStorageDirectory(); // Get the external storage directory
+//     final imagePath = '${directory!.path}/image.jpg'; // Specify the image file path
+
+//     File(imagePath).writeAsBytes(response.bodyBytes); // Save the image file locally
+
+//     print('Image downloaded successfully');
+//   } else {
+//     print('Failed to download image. Status code: ${response.statusCode}');
+//   }
+// }
+
+  Future<bool> downloadAndSaveImage(String imageUrl) async {
+    var response = await http.get(Uri.parse('${Endpoints.baseUrl}$imageUrl'));
+
+    if (response.statusCode == 200) {
+      Uint8List bytes = response.bodyBytes;
+      await ImageGallerySaver.saveImage(bytes);
+      print('Image saved to gallery');
+      return true;
+    } else {
+      print('Failed to download image. Status code: ${response.statusCode}');
+      return false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +91,10 @@ class ImageWidget extends StatelessWidget {
             milliseconds: 500 + (index * 100),
           ),
           transform: Matrix4.translationValues(
-              startAnimation ? 0 : MediaQuery.of(context).size.width, 0, 0),
+            startAnimation ? 0 : MediaQuery.of(context).size.width,
+            0,
+            0,
+          ),
           width: double.infinity,
           height: 150.h,
           child: Stack(
@@ -66,7 +103,7 @@ class ImageWidget extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(15.sp),
                 child: Image.network(
-                  '${Endpoints.baseUrl}${image}',
+                  '${Endpoints.baseUrl}$image',
                   fit: BoxFit.contain,
                 ),
               ),
@@ -86,7 +123,21 @@ class ImageWidget extends StatelessWidget {
                     ),
                   ),
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      bool savedImage = await downloadAndSaveImage(image);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: savedImage
+                              ? Colors.green.shade400
+                              : Colors.red.shade300,
+                          content: Text(
+                            savedImage
+                                ? 'Image saved to gallery'
+                                : 'Error occured in donwload photo',
+                          ),
+                        ),
+                      );
+                    },
                     child: Icon(
                       Icons.download,
                       color: Theme.of(context).colorScheme.secondary,

@@ -18,4 +18,8 @@ class LanguageProvider with ChangeNotifier {
   bool isArabic() {
     return _currentLocale!.languageCode == 'ar';
   }
+
+  Locale? getCurrentLocal() {
+    return _currentLocale;
+  }
 }

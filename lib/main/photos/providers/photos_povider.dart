@@ -6,6 +6,7 @@ class PhotosProvider with ChangeNotifier {
   PhotosService _service = PhotosService();
   List<PhotoModel> photos = [];
   bool isList = true;
+  bool hasError = false;
 
   changeListGridView() {
     isList = !isList;
@@ -13,6 +14,13 @@ class PhotosProvider with ChangeNotifier {
   }
 
   getPhotos() async {
-    photos = await _service.getPhotos();
+    try {
+      photos = await _service.getPhotos();
+      hasError = _service.hasError;
+    } catch (e) {
+      hasError = _service.hasError;
+      print(e);
+      rethrow;
+    }
   }
 }

@@ -6,6 +6,8 @@ import 'package:toddily_preschool/models/latestPhotos/photo_model.dart';
 import 'package:http/http.dart' as http;
 
 class PhotosService {
+  bool hasError = false;
+
   Future<List<PhotoModel>> getPhotos() async {
     try {
       final url = Uri.parse(Endpoints.photos);
@@ -21,12 +23,15 @@ class PhotosService {
               (e) => PhotoModel.fromJson(e),
             )
             .toList();
+            hasError = false;
         return photos;
       } else {
-        return [];
+        hasError = true;
+        throw Exception('Error in getting photos');
       }
     } catch (e) {
       print(e);
+      hasError = true;
       rethrow;
     }
   }

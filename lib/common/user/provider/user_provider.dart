@@ -59,4 +59,11 @@ class UserProvider with ChangeNotifier {
     }
     return false;
   }
+
+  bool reportButton() {
+    if (currentUser!.role_id == 1 || currentUser!.role_id == 5) {
+      return true;
+    }
+    return false;
+  }
 }
