@@ -1,0 +1,22 @@
+import 'package:flutter/material.dart';
+import 'package:toddily_preschool/main/monthly_report/service/report_service.dart';
+import 'package:toddily_preschool/models/report/report_model.dart';
+
+class ReportProvider with ChangeNotifier {
+  ReportService _service = ReportService();
+  List<ReportModel> reports = [];
+
+  getChildReport(int childId) async {
+    reports = await _service.getChildReports(childId);
+  }
+
+  sendReport(int childId, String description) async {
+    try {
+      bool success = await _service.sendReport(childId.toString(), description);
+      return success;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+}

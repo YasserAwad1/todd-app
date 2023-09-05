@@ -6,9 +6,11 @@ import 'package:toddily_preschool/auth/providers/auth_provider.dart';
 import 'package:toddily_preschool/common/constants/end_points.dart';
 import 'package:toddily_preschool/common/my_navigator.dart';
 import 'package:toddily_preschool/common/providers/language_provider.dart';
+import 'package:toddily_preschool/common/user/provider/user_provider.dart';
 import 'package:toddily_preschool/main/events/providers/event_provider.dart';
 import 'package:toddily_preschool/main/kids/screens/dates_screen.dart';
 import 'package:toddily_preschool/main/kids/screens/kids_screen.dart';
+import 'package:toddily_preschool/main/monthly_report/screens/monthly_report_screen.dart';
 import 'package:toddily_preschool/models/kids/kid_model.dart';
 
 class KidsWidget extends StatelessWidget {
@@ -33,7 +35,7 @@ class KidsWidget extends StatelessWidget {
   ///
   ///
   ///
-  ///IF KID DIDNT HAVE PHOTO CHOOSE PHOTO 
+  ///IF KID DIDNT HAVE PHOTO CHOOSE PHOTO
   ////
   ///
   ///
@@ -49,15 +51,26 @@ class KidsWidget extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        Provider.of<AuthProvider>(context, listen: false).forDatesScreen()
+        Provider.of<UserProvider>(context, listen: false).forDatesScreen()
             ? Navigator.push(
                 context,
-                MyNavigator(screen: DatesScreen(), curves: Curves.easeOutBack),
+                MyNavigator(
+                    screen: DatesScreen(
+                      kid: kid,
+                    ),
+                    curves: Curves.easeOutBack),
               )
-            : Provider.of<AuthProvider>(context, listen: false).roleName ==
-                    'social'
+            : Provider.of<UserProvider>(context, listen: false)
+                        .getUserRoleId() ==
+                    4
                 ? Navigator.of(context).pushNamed('/camera-screen')
-                : Navigator.of(context).pushNamed('/mothly-report-screen');
+                : Navigator.push(
+                    context,
+                    MyNavigator(
+                      screen: MonthlyReportScreen(kid: kid),
+                      curves: Curves.easeInOutQuart,
+                    ),
+                  );
       },
       child: Center(
         child: AnimatedContainer(

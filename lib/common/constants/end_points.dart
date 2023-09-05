@@ -8,5 +8,9 @@ class Endpoints {
   static const qa = '$baseUrl/api/question-answer';
   static const sendStatus = '$baseUrl/api/child-status';
   static const eventById = '$baseUrl//api/events';
+  static const currentUser = '$baseUrl/api/current-user';
+  static const dates = '$baseUrl/api/status-dates';
+  static const getChildReports = '$baseUrl/api/get_child_reports';
+  static const sendReport = '$baseUrl/api/reports';
 
 }

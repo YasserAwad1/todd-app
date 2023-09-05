@@ -24,12 +24,15 @@ class CustomErrorWidget extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            Text(
-              AppLocalizations.of(context)!.error,
-              style: TextStyle(
-                  fontSize: isArabic ? 30.sp : 25.sp,
-                  fontFamily: isArabic ? "Lalezar" : "LuckiestGuy",
-                  color: Theme.of(context).colorScheme.secondary),
+            Center(
+              child: Text(
+                AppLocalizations.of(context)!.error,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: isArabic ? 30.sp : 24.sp,
+                    fontFamily: isArabic ? "Lalezar" : "LuckiestGuy",
+                    color: Theme.of(context).colorScheme.secondary),
+              ),
             ),
             SizedBox(
               height: 2.h,

@@ -8,15 +8,37 @@ class DateWidget extends StatelessWidget {
   String image;
   int index;
   bool startAnimation;
+  String sentDate;
 
-  DateWidget({
-    required this.image,
-    required this.index,
-    required this.startAnimation,
-  });
+  DateWidget(
+      {required this.image,
+      required this.index,
+      required this.startAnimation,
+      required this.sentDate});
 
   @override
   Widget build(BuildContext context) {
+    DateTime date = DateTime.parse(sentDate);
+
+    String day = date.day.toString();
+    String month = date.month.toString();
+
+    List<String> monthAbbreviations = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec'
+    ];
+    String monthAbbreviation = monthAbbreviations[int.parse(month) - 1];
+
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -75,7 +97,7 @@ class DateWidget extends StatelessWidget {
                   height: 15.h,
                 ),
                 Text(
-                  '24',
+                  day,
                   style: TextStyle(
                     fontSize: 50.sp,
                     fontWeight: FontWeight.bold,
@@ -84,9 +106,9 @@ class DateWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'MAR',
+                  monthAbbreviation,
                   style: TextStyle(
-                    fontSize: 25.sp,
+                    fontSize: 30.sp,
                     // fontWeight: FontWeight.bold,
                     color: Colors.white,
                     fontFamily: "LuckiestGuy",

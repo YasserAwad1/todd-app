@@ -11,7 +11,6 @@ import 'package:toddily_preschool/auth/widgets/or_widget.dart';
 import 'package:toddily_preschool/auth/widgets/sigin_top_bar.dart';
 import 'package:toddily_preschool/common/providers/language_provider.dart';
 
-
 class SignInScreen extends StatefulWidget {
   static const routeName = '/sign-in-screen';
 

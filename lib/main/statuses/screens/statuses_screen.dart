@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:toddily_preschool/auth/providers/auth_provider.dart';
+import 'package:toddily_preschool/common/user/provider/user_provider.dart';
 
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
 import 'package:toddily_preschool/main/events/providers/event_provider.dart';
@@ -40,7 +41,7 @@ class _StatusesScreenState extends State<StatusesScreen> {
           titleContainerWidth: 90.w,
           withBackButton: true,
         ),
-        bottomNavigationBar: Provider.of<AuthProvider>(context).roleName == 'teacher'
+        bottomNavigationBar: Provider.of<UserProvider>(context).roleId == 2
             ? Padding(
                 padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 30.w),
                 child: TextButton(

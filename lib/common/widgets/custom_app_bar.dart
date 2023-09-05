@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:toddily_preschool/auth/providers/auth_provider.dart';
 import 'package:toddily_preschool/common/my_navigator.dart';
 import 'package:toddily_preschool/common/providers/language_provider.dart';
+import 'package:toddily_preschool/common/user/provider/user_provider.dart';
 import 'package:toddily_preschool/main/events/providers/event_provider.dart';
 import 'package:toddily_preschool/main/notifications/screens/notifications_screen.dart';
 
@@ -30,7 +31,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     bool isArabic = Provider.of<LanguageProvider>(context).isArabic();
     return AppBar(
       actions: [
-        if (Provider.of<AuthProvider>(context).roleName == 'parent' &&
+        if (Provider.of<UserProvider>(context).roleId == 5 &&
             withNotification)
           IconButton(
             onPressed: () {

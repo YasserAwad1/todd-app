@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:toddily_preschool/auth/providers/auth_provider.dart';
+import 'package:toddily_preschool/common/user/provider/user_provider.dart';
 import 'package:toddily_preschool/main/classes/screens/classes_screen.dart';
 import 'package:toddily_preschool/main/kids/screens/kids_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -62,6 +63,8 @@ class _LoginButtonState extends State<LoginButton> {
                   widget.password,
                 );
                 if (success!) {
+                  await Provider.of<UserProvider>(context, listen: false)
+                      .getCurrentUser();
                   setState(() {
                     widget.isLoading = false;
                   });
@@ -71,7 +74,7 @@ class _LoginButtonState extends State<LoginButton> {
                     PageRouteBuilder(
                       transitionDuration: const Duration(milliseconds: 500),
                       pageBuilder: (ctx, animation, secondaryAnimation) {
-                        if (Provider.of<AuthProvider>(context).classesTile()) {
+                        if (Provider.of<UserProvider>(context).classesTile()) {
                           return ClassesScreen();
                         } else {
                           return KidsScreen();

@@ -6,11 +6,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:toddily_preschool/auth/providers/auth_provider.dart';
 import 'package:toddily_preschool/auth/screens/sign_in_screen.dart';
+import 'package:toddily_preschool/common/user/provider/user_provider.dart';
 import 'package:toddily_preschool/locator.dart';
 import 'package:toddily_preschool/main/FAQ/provider/qa_provider.dart';
 import 'package:toddily_preschool/main/classes/screens/classes_screen.dart';
 import 'package:toddily_preschool/main/events/screens/event_images_list_screen.dart';
 import 'package:toddily_preschool/main/events/screens/event_photos_screen.dart';
+import 'package:toddily_preschool/main/kids/providers/dates_provider.dart';
+import 'package:toddily_preschool/main/monthly_report/providers/report_provider.dart';
+import 'package:toddily_preschool/main/monthly_report/screens/send_report_screen.dart';
 import 'package:toddily_preschool/main/statuses/providers/status_provider.dart';
 import 'package:toddily_preschool/social_media_expert/screens/camera_screen.dart';
 import 'package:toddily_preschool/social_media_expert/screens/taken_images_screen.dart';
@@ -79,6 +83,15 @@ class MyApp extends StatelessWidget {
               ),
               ChangeNotifierProvider(
                 create: (ctx) => QaProvider(),
+              ),
+              ChangeNotifierProvider(
+                create: (ctx) => UserProvider(),
+              ),
+              ChangeNotifierProvider(
+                create: (ctx) => DatesProvider(),
+              ),
+              ChangeNotifierProvider(
+                create: (ctx) => ReportProvider(),
               )
             ],
             child: Builder(builder: (context) {
@@ -135,7 +148,8 @@ class MyApp extends StatelessWidget {
                       NotificationsScreen(),
                   EventPhotosScreen.routeName: (context) => EventPhotosScreen(),
                   EventImagesListScreen.routeName: (context) =>
-                      EventImagesListScreen()
+                      EventImagesListScreen(),
+                  SendReportScreen.routeName: (context) => SendReportScreen()
                 },
               );
             }),

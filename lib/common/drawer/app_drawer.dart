@@ -8,6 +8,7 @@ import 'package:toddily_preschool/common/drawer/logout_button.dart';
 
 import 'package:toddily_preschool/common/providers/language_provider.dart';
 import 'package:toddily_preschool/common/drawer/LanguageButtons.dart';
+import 'package:toddily_preschool/common/user/provider/user_provider.dart';
 import 'package:toddily_preschool/main/photos/screens/photos_screen.dart';
 
 class AppDrawer extends StatefulWidget {
@@ -45,7 +46,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 )),
           ),
           //CLASSES TILE FOR DOCTOR AND SOCIAL MEDIA EXPERT
-          if (Provider.of<AuthProvider>(context).classesTile())
+          if (Provider.of<UserProvider>(context).classesTile())
             Column(
               children: [
                 ListTile(
@@ -86,7 +87,7 @@ class _AppDrawerState extends State<AppDrawer> {
               ],
             ),
           //KIDS TILE
-          if (Provider.of<AuthProvider>(context).kidsTile())
+          if (Provider.of<UserProvider>(context).kidsTile())
             Column(
               children: [
                 ListTile(

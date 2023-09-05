@@ -16,7 +16,7 @@ class ClassService {
 
       final response = await http.get(url, headers: {
         "Accept": "application/json",
-        'Authorization': 'Beare $token'
+        'Authorization': 'Bearer 13|laravel_sanctum_s19MFcKzBOkuKd0ww6hFFYLBbiS3UX9y8X0EDpLM0a9b7b70'
       });
 
 

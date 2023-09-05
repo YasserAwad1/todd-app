@@ -5,15 +5,21 @@ import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:toddily_preschool/auth/providers/auth_provider.dart';
+import 'package:toddily_preschool/common/user/provider/user_provider.dart';
 
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
 import 'package:toddily_preschool/main/classes/providers/class_provider.dart';
 import 'package:toddily_preschool/main/events/providers/event_provider.dart';
+import 'package:toddily_preschool/main/kids/providers/dates_provider.dart';
 import 'package:toddily_preschool/main/kids/widgets/date_widget.dart';
 import 'package:toddily_preschool/main/kids/widgets/dates_screen_button.dart';
 import 'package:toddily_preschool/main/monthly_report/screens/monthly_report_screen.dart';
+import 'package:toddily_preschool/models/dates/date_model.dart';
+import 'package:toddily_preschool/models/kids/kid_model.dart';
 
 class DatesScreen extends StatefulWidget {
+  KidModel? kid;
+  DatesScreen({this.kid});
   static const routeName = '/dates-screen';
 
   @override
@@ -38,6 +44,7 @@ class _DatesScreenState extends State<DatesScreen> {
 
   int _currentIndex = 0;
   bool startAnimation = false;
+  var _datesFuture;
 
   var tween = Tween(begin: Offset(0.0, 1.0), end: Offset.zero).chain(
     CurveTween(
@@ -49,6 +56,8 @@ class _DatesScreenState extends State<DatesScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    _datesFuture =
+        Provider.of<DatesProvider>(context, listen: false).getDatesByChildId(widget.kid!.id!);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {
         startAnimation = true;
@@ -68,8 +77,7 @@ class _DatesScreenState extends State<DatesScreen> {
     return SafeArea(
       child: Scaffold(
         extendBody: true,
-        bottomNavigationBar: Provider.of<AuthProvider>(context).roleName ==
-                'parent'
+        bottomNavigationBar: Provider.of<UserProvider>(context).roleId == 5
             ? DatesScreenButton(
                 title: AppLocalizations.of(context)!.monthlyReport,
                 icon: Icons.health_and_safety_outlined,
@@ -92,20 +100,22 @@ class _DatesScreenState extends State<DatesScreen> {
                   );
                 },
               )
-            : DatesScreenButton(
-                title: 'New Status ${DateFormat('d/M').format(
-                  DateTime.now(),
-                )}',
-                icon: Icons.add,
-                function: () {
-                  Navigator.of(context).pushNamed(
-                    '/statuses-screen',
-                  );
-                },
-              ),
+            : Provider.of<UserProvider>(context).roleId == 2
+                ? DatesScreenButton(
+                    title: 'New Status ${DateFormat('d/M').format(
+                      DateTime.now(),
+                    )}',
+                    icon: Icons.add,
+                    function: () {
+                      Navigator.of(context).pushNamed(
+                        '/statuses-screen',
+                      );
+                    },
+                  )
+                : null,
         appBar: CustomAppBar(
           scaffoldKey: null,
-          title: 'Child Name',
+          title: widget.kid!.name,
           titleContainerWidth: 130.w,
           withBackButton: true,
         ),
@@ -118,27 +128,39 @@ class _DatesScreenState extends State<DatesScreen> {
           color: Theme.of(context).colorScheme.secondary,
           child: Column(
             children: [
-              Expanded(
-                child: GridView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.all(20.sp),
-                    shrinkWrap: true,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 20.w,
-                      childAspectRatio: 1.15.sp,
-                      mainAxisSpacing: 15.h,
-                    ),
-                    itemCount: 20,
-                    itemBuilder: (context, i) {
-                      _currentIndex = i % characters.length;
-                      return DateWidget(
-                        image: characters[_currentIndex],
-                        index: i,
-                        startAnimation: startAnimation,
-                      );
-                    }),
-              )
+              FutureBuilder(
+                  future: _datesFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator();
+                    }
+                    List<DateModel> dates =
+                        Provider.of<DatesProvider>(context, listen: false)
+                            .dates;
+                    return Expanded(
+                      child: GridView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          padding: EdgeInsets.all(20.sp),
+                          shrinkWrap: true,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 20.w,
+                            childAspectRatio: 1.15.sp,
+                            mainAxisSpacing: 15.h,
+                          ),
+                          itemCount: dates.length,
+                          itemBuilder: (context, i) {
+                            _currentIndex = i % characters.length;
+                            return DateWidget(
+                              image: characters[_currentIndex],
+                              index: i,
+                              startAnimation: startAnimation,
+                              sentDate: dates[i].date,
+                            );
+                          }),
+                    );
+                  })
             ],
           ),
         ),

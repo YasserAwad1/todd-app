@@ -8,8 +8,8 @@ import 'package:toddily_preschool/locator.dart';
 
 class AuthProvider with ChangeNotifier {
   AuthService _service = AuthService();
-  String? roleName;
-  bool isGuest = false;
+  // String? roleName;
+  // bool isGuest = false;
 
   login(String userName, String password) async {
     try {
@@ -20,10 +20,10 @@ class AuthProvider with ChangeNotifier {
       print(success);
       if (success) {
         locator.get<LocalRepo>().saveToken(_service.token!);
-        locator.get<LocalRepo>().saveRole(_service.role!);
+        // locator.get<LocalRepo>().saveRole(_service.role!);
         locator.get<LocalRepo>().vartoken(_service.token!);
-        locator.get<LocalRepo>().varRole(_service.role!);
-        roleName = locator.get<LocalRepo>().role;
+        // locator.get<LocalRepo>().varRole(_service.role!);
+        // roleName = locator.get<LocalRepo>().role;
         return true;
       }
       return false;
@@ -36,54 +36,54 @@ class AuthProvider with ChangeNotifier {
   //   roleName = locator.get<LocalRepo>().role;
   // }
 
-  String getUserRole() {
-    return roleName!;
-  }
+  // String getUserRole() {
+  //   return roleName!;
+  // }
 
-  bool classesTile() {
-    if (roleName == 'admin' ||
-        roleName == 'social' ||
-        roleName == 'doctor' ) {
-      return true;
-    }
-    return false;
-  }
+  // bool classesTile() {
+  //   if (roleName == 'admin' ||
+  //       roleName == 'social' ||
+  //       roleName == 'doctor' ) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
-  bool kidsTile(){
-    if (roleName == 'teacher' ||
-        roleName == 'parent' ||
-        roleName == 'extra' ) {
-      return true;
-    }
-    return false;
-  }
+  // bool kidsTile(){
+  //   if (roleName == 'teacher' ||
+  //       roleName == 'parent' ||
+  //       roleName == 'extra' ) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
-  bool forDatesScreen() {
-    if (roleName == 'admin' ||
-        roleName == 'social' ||
-        roleName == 'parent' ||
-        roleName == 'extra' ||
-        roleName == 'teacher') {
-      return true;
-    }
-    return false;
-  }
+  // bool forDatesScreen() {
+  //   if (roleName == 'admin' ||
+  //       roleName == 'social' ||
+  //       roleName == 'parent' ||
+  //       roleName == 'extra' ||
+  //       roleName == 'teacher') {
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
-  setGuest() {
-    locator.get<LocalRepo>().saveRole('guest');
-    locator.get<LocalRepo>().varRole('guest');
-    roleName = 'guest';
-    isGuest = true;
-    notifyListeners();
-  }
+  // setGuest() {
+  //   locator.get<LocalRepo>().saveRole('guest');
+  //   locator.get<LocalRepo>().varRole('guest');
+  //   roleName = 'guest';
+  //   isGuest = true;
+  //   notifyListeners();
+  // }
 
   Future<bool> isTokenValid() async {
     // Make the HTTP request to the token validation endpoint
     var checkToken = await locator.get<LocalRepo>().getToken();
-    roleName = await locator.get<LocalRepo>().getRole();
+    // roleName = await locator.get<LocalRepo>().getRole();
     print('*************check TOken***********');
     print(checkToken);
-    print(roleName);
+    // print(roleName);
     print('*************check TOken***********');
     final response = await http.get(
       Uri.parse(Endpoints.baseUrl),

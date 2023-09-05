@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:toddily_preschool/auth/providers/auth_provider.dart';
+import 'package:toddily_preschool/common/user/provider/user_provider.dart';
 import 'package:toddily_preschool/main/about/screens/about_screen.dart';
 
 class GuestLoginButton extends StatelessWidget {
@@ -15,7 +16,7 @@ class GuestLoginButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
-        Provider.of<AuthProvider>(context, listen: false).setGuest();
+        Provider.of<UserProvider>(context, listen: false).assignGuest();
         Navigator.pushReplacement(
           context,
           PageRouteBuilder(

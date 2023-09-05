@@ -4,10 +4,12 @@ import 'package:provider/provider.dart';
 import 'package:toddily_preschool/auth/providers/auth_provider.dart';
 import 'package:toddily_preschool/auth/screens/sign_in_screen.dart';
 import 'package:toddily_preschool/common/local/local_repo.dart';
+import 'package:toddily_preschool/common/user/provider/user_provider.dart';
 import 'package:toddily_preschool/locator.dart';
 import 'package:toddily_preschool/main/about/screens/about_screen.dart';
 import 'package:toddily_preschool/main/classes/screens/classes_screen.dart';
 import 'package:toddily_preschool/main/kids/screens/kids_screen.dart';
+import 'package:toddily_preschool/models/user/user_model.dart';
 import 'package:video_player/video_player.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
@@ -19,6 +21,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   VideoPlayerController? _videoPlayerController;
   // ChewieController? _chewieController;
+  var _userFuture;
 
   @override
   void initState() {
@@ -36,6 +39,12 @@ class _SplashScreenState extends State<SplashScreen> {
       bool isTokenValid =
           await Provider.of<AuthProvider>(context, listen: false)
               .isTokenValid();
+      if (isTokenValid) {
+        _userFuture = await Provider.of<UserProvider>(context, listen: false)
+            .getCurrentUser();
+        print(Provider.of<UserProvider>(context, listen: false).currentUser);
+        print('****************GETTING CURRENT USER*******************');
+      }
       // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
         context,
@@ -46,12 +55,30 @@ class _SplashScreenState extends State<SplashScreen> {
               return AboutScreen();
             }
             if (isTokenValid) {
-              if (Provider.of<AuthProvider>(context, listen: false)
-                  .classesTile()) {
-                return ClassesScreen();
-              } else {
-                return KidsScreen();
-              }
+              return FutureBuilder(
+                future: _userFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else {
+                    // UserModel? currentUser =
+                    //     Provider.of<UserProvider>(context, listen: false)
+                    //         .currentUser;
+                    if (Provider.of<UserProvider>(context, listen: false)
+                        .classesTile()) {
+                      return ClassesScreen();
+                    } else {
+                      return KidsScreen();
+                    }
+                  }
+                },
+              );
+              // if (Provider.of<AuthProvider>(context, listen: false)
+              //     .classesTile()) {
+              //   return ClassesScreen();
+              // } else {
+              //   return KidsScreen();
+              // }
             } else {
               return SignInScreen();
             }
