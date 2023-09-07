@@ -66,8 +66,8 @@ class _ClassesScreenState extends State<ClassesScreen> {
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            Provider.of<ReportProvider>(context, listen: false)
-                .getChildReport(1);
+            Provider.of<StatusProvider>(context, listen: false)
+                .getChildStatusByDate(1,'2023-9-04');
           },
         ),
         drawer: AppDrawer(),

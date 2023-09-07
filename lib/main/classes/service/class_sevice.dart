@@ -25,8 +25,6 @@ class ClassService {
       print(jsonDecode(response.body));
       print('******************classes***************');
 
-      // print(jsonDecode(response.body));
-
       if (response.statusCode < 300) {
         final jsonResponse = jsonDecode(response.body);
         

@@ -6,7 +6,7 @@ part 'status_model.g.dart';
 @JsonSerializable()
 class StatusModel {
   final int? id;
-  final String name;
+  final String? name;
   final List<SubStatusModel> substatus;
 
   StatusModel({

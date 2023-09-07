@@ -8,8 +8,8 @@ part of 'status_model.dart';
 
 StatusModel _$StatusModelFromJson(Map<String, dynamic> json) => StatusModel(
       id: json['id'] as int?,
-      name: json['name'] as String,
-      substatus: (json['substatus'] as List<dynamic>)
+      name: json['name'] as String?,
+      substatus: (json['child_substatus'] as List<dynamic>)
           .map((e) => SubStatusModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );

@@ -34,7 +34,7 @@ class _CustomExpandableTileState extends State<CustomExpandableTile> {
           vertical: 15.h,
         ),
         padding: EdgeInsets.all(20.sp),
-        height: isExpanded ? 65.h : 330.h,
+        height: isExpanded ? 85.h : 330.h,
         curve: Curves.fastLinearToSlowEaseIn,
         duration: const Duration(milliseconds: 1200),
         decoration: BoxDecoration(
@@ -67,6 +67,17 @@ class _CustomExpandableTileState extends State<CustomExpandableTile> {
                       fontFamily: "luckiestGuy"
                       // fontWeight: FontWeight.w400,
                       ),
+                ),
+                Spacer(),
+                IconButton(
+                  onPressed: () {
+                    print('pressed');
+                  },
+                  icon: const Icon(
+                    Icons.edit,
+                    size: 23,
+                    color: Colors.red,
+                  ),
                 ),
                 Icon(
                   isExpanded

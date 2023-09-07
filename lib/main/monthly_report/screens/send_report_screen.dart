@@ -3,8 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:progress_state_button/iconed_button.dart';
 import 'package:progress_state_button/progress_button.dart';
 import 'package:provider/provider.dart';
+import 'package:toddily_preschool/common/my_navigator.dart';
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
 import 'package:toddily_preschool/main/monthly_report/providers/report_provider.dart';
+import 'package:toddily_preschool/main/monthly_report/screens/monthly_report_screen.dart';
 import 'package:toddily_preschool/main/monthly_report/widgets/progress_button.dart';
 import 'package:toddily_preschool/models/kids/kid_model.dart';
 
@@ -34,6 +36,16 @@ class _SendReportScreenState extends State<SendReportScreen> {
 
         setState(() {
           stateTextWithIcon = success ? ButtonState.success : ButtonState.fail;
+          if (stateTextWithIcon == ButtonState.success) {
+            Future.delayed(const Duration(milliseconds: 800))
+                .then((value) => Navigator.pop(
+                      context,
+                      MyNavigator(
+                        curves: Curves.easeIn,
+                        screen: MonthlyReportScreen(kid: widget.kid),
+                      ),
+                    ));
+          }
         });
 
         break;
@@ -64,7 +76,7 @@ class _SendReportScreenState extends State<SendReportScreen> {
           withBackButton: true,
         ),
         bottomNavigationBar: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
           child: ProgressButton.icon(
             iconedButtons: {
               ButtonState.idle: IconedButton(
@@ -75,10 +87,10 @@ class _SendReportScreenState extends State<SendReportScreen> {
               ButtonState.loading: IconedButton(
                   text: 'Loading',
                   color: Theme.of(context).colorScheme.secondary),
-              ButtonState.fail: IconedButton(
+              ButtonState.fail: const IconedButton(
                   text: 'Failed',
-                  icon: const Icon(Icons.cancel, color: Colors.white),
-                  color: Colors.red.shade300),
+                  icon: Icon(Icons.cancel, color: Colors.white),
+                  color: Color.fromARGB(255, 207, 66, 66)),
               ButtonState.success: IconedButton(
                   text: 'Success',
                   icon: const Icon(

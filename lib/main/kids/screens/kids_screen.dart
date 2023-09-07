@@ -12,6 +12,7 @@ import 'package:toddily_preschool/auth/providers/auth_provider.dart';
 import 'package:toddily_preschool/common/drawer/app_drawer.dart';
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
 import 'package:toddily_preschool/main/kids/widgets/kid_widget.dart';
+import 'package:toddily_preschool/main/statuses/providers/status_provider.dart';
 import 'package:toddily_preschool/models/kids/kid_model.dart';
 
 class KidsScreen extends StatefulWidget {
@@ -43,8 +44,6 @@ class _KidsScreenState extends State<KidsScreen> {
       classRoom_id: 1);
   // var _classFuture;
 
-  
-
   @override
   void initState() {
     // TODO: implement initState
@@ -67,6 +66,11 @@ class _KidsScreenState extends State<KidsScreen> {
         drawerEnableOpenDragGesture: true,
         drawerEdgeDragWidth: 200.w,
         key: _scaffoldKey,
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            Provider.of<StatusProvider>(context, listen: false).getStatuses();
+          },
+        ),
         appBar: CustomAppBar(
           scaffoldKey: _scaffoldKey,
           title: widget.isComingFromClassesScreen == true

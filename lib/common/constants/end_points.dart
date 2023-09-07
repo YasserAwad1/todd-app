@@ -12,5 +12,6 @@ class Endpoints {
   static const dates = '$baseUrl/api/status-dates';
   static const getChildReports = '$baseUrl/api/get_child_reports';
   static const sendReport = '$baseUrl/api/reports';
+  static const childStatusByDate = '$baseUrl/api/get-child-status-date';
 
 }

@@ -78,47 +78,47 @@ class _MonthlyReportScreenState extends State<MonthlyReportScreen> {
                 label: Text(
                     'Send report for ${DateFormat.MMMM().format(DateTime.now())}'))
             : null,
-        body: 
-        LiquidPullToRefresh(
+        body: LiquidPullToRefresh(
           animSpeedFactor: 4,
           color: Theme.of(context).colorScheme.secondary,
           onRefresh: () {
             return _refreshData();
           },
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(5.0.sp),
             child: Column(
               children: [
                 SizedBox(
                   height: 10.h,
                 ),
-                FutureBuilder(
-                    future: _reportsFuture,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(
-                          child: Platform.isIOS
-                              ? const CupertinoActivityIndicator()
-                              : CircularProgressIndicator(
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                ),
-                        );
-                      }
-                      List<ReportModel> reports =
-                          Provider.of<ReportProvider>(context, listen: false)
-                              .reports;
-                      return Expanded(
-                        child: ListView.builder(
-                          physics: BouncingScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: reports.length,
-                          itemBuilder: (context, i) => CustomExpandableTile(
-                            report: reports[i],
+                Consumer<ReportProvider>(builder: (context, reportProvider, _) {
+                  // reportProvider.getChildReport(widget.kid!.id!);
+                  return FutureBuilder(
+                      future: _reportsFuture,
+                      builder: (context, snapshot) {
+                        if (reportProvider.isLoading) {
+                          return Center(
+                            child: Platform.isIOS
+                                ? const CupertinoActivityIndicator()
+                                : CircularProgressIndicator(
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
+                                  ),
+                          );
+                        }
+                        List<ReportModel> reports = reportProvider.reports;
+                        return Expanded(
+                          child: ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: reports.length,
+                            itemBuilder: (context, i) => CustomExpandableTile(
+                              report: reports[i],
+                            ),
                           ),
-                        ),
-                      );
-                    }),
+                        );
+                      });
+                }),
               ],
             ),
           ),

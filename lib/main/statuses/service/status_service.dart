@@ -43,6 +43,41 @@ class StatusService {
     }
   }
 
+  Future<List<StatusModel>> getChildStatusByDate(
+      int childId, String date) async {
+    try {
+      final url = Uri.parse('${Endpoints.childStatusByDate}/$childId');
+
+      final response = await http.post(url, headers: {
+        "Accept": "application/json",
+        'Authorization': 'Bearer $token'
+      }, body: {
+        "date": date,
+      });
+
+      if (response.statusCode < 300) {
+        final jsonResponse = jsonDecode(response.body);
+        print('****************CHILD status RESPONSE************');
+        print(jsonResponse['status']);
+        print('****************CHILD status RESPONSE************');
+        final statuses = (jsonResponse['status'] as List)
+            .map(
+              (e) => StatusModel.fromJson(e),
+            )
+            .toList();
+        print(statuses);
+
+        return statuses;
+      } else {
+        print('error');
+        return [];
+      }
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
+
   Future<bool> sendStatus(int childId, List<StatusModel> statuses) async {
     try {
       final url = Uri.parse(Endpoints.sendStatus);
