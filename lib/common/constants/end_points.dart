@@ -16,5 +16,6 @@ class Endpoints {
   static const getChildrenByParentOrTeacherId = '$baseUrl/api/get-teacher-parent-child';
   static const getChildStatusByDate = '$baseUrl/api/get-child-status-date';
   static const getStatusesToSend = '$baseUrl/api/get-status-by-child';
+  static const sendKidImage = '$baseUrl/api/child-image';
 
 }

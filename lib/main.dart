@@ -18,6 +18,7 @@ import 'package:toddily_preschool/main/monthly_report/providers/report_provider.
 import 'package:toddily_preschool/main/monthly_report/screens/send_report_screen.dart';
 import 'package:toddily_preschool/main/statuses/providers/status_provider.dart';
 import 'package:toddily_preschool/main/statuses/screens/statuses_screen_to_send.dart';
+import 'package:toddily_preschool/social_media_expert/providers/kid_image_provider.dart';
 import 'package:toddily_preschool/social_media_expert/screens/camera_screen.dart';
 import 'package:toddily_preschool/social_media_expert/screens/taken_images_screen.dart';
 
@@ -97,6 +98,9 @@ class MyApp extends StatelessWidget {
               ),
               ChangeNotifierProvider(
                 create: (ctx) => KidsProvider(),
+              ),
+              ChangeNotifierProvider(
+                create: (ctx) => KidImageProvider(),
               )
             ],
             child: Builder(builder: (context) {
