@@ -5,7 +5,8 @@ import 'package:toddily_preschool/common/providers/language_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CustomErrorWidget extends StatelessWidget {
-  const CustomErrorWidget({super.key});
+  double? height;
+  CustomErrorWidget({this.height = 150});
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +18,9 @@ class CustomErrorWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            SizedBox(
+              height: height!.h,
+            ),
             Image.asset(
               'assets/images/characters/astro3.png',
               scale: 1.5,

@@ -2,11 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:toddily_preschool/common/my_navigator.dart';
+import 'package:toddily_preschool/common/user/provider/user_provider.dart';
+import 'package:toddily_preschool/main/monthly_report/screens/send_report_screen.dart';
+import 'package:toddily_preschool/models/kids/kid_model.dart';
 import 'package:toddily_preschool/models/report/report_model.dart';
 
 class CustomExpandableTile extends StatefulWidget {
   ReportModel report;
-  CustomExpandableTile({required this.report});
+  KidModel kid;
+  CustomExpandableTile({required this.report, required this.kid});
 
   @override
   State<CustomExpandableTile> createState() => _CustomExpandableTileState();
@@ -34,7 +40,7 @@ class _CustomExpandableTileState extends State<CustomExpandableTile> {
           vertical: 15.h,
         ),
         padding: EdgeInsets.all(20.sp),
-        height: isExpanded ? 85.h : 330.h,
+        // height: isExpanded ? 85.h : 330.h,
         curve: Curves.fastLinearToSlowEaseIn,
         duration: const Duration(milliseconds: 1200),
         decoration: BoxDecoration(
@@ -44,7 +50,7 @@ class _CustomExpandableTileState extends State<CustomExpandableTile> {
                   ? Colors.black.withOpacity(0.5)
                   : Theme.of(context).colorScheme.secondary.withOpacity(0.5),
               blurRadius: 20,
-              offset: Offset(5, 10),
+              offset: const Offset(5, 10),
             ),
           ],
           color: isExpanded
@@ -68,17 +74,28 @@ class _CustomExpandableTileState extends State<CustomExpandableTile> {
                       // fontWeight: FontWeight.w400,
                       ),
                 ),
-                Spacer(),
-                IconButton(
-                  onPressed: () {
-                    print('pressed');
-                  },
-                  icon: const Icon(
-                    Icons.edit,
-                    size: 23,
-                    color: Colors.red,
+                const Spacer(),
+                if (Provider.of<UserProvider>(context, listen: false)
+                        .getUserRoleId() ==
+                    3)
+                  IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MyNavigator(
+                              curves: Curves.ease,
+                              screen: SendReportScreen(
+                                isEditing: true,
+                                kid: widget.kid,
+                                previousReport: widget.report,
+                              )));
+                    },
+                    icon: const Icon(
+                      Icons.edit,
+                      size: 23,
+                      color: Colors.red,
+                    ),
                   ),
-                ),
                 Icon(
                   isExpanded
                       ? Icons.keyboard_arrow_down

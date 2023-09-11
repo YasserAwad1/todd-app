@@ -9,6 +9,9 @@ import 'package:provider/provider.dart';
 import 'package:toddily_preschool/common/my_navigator.dart';
 import 'package:toddily_preschool/common/user/provider/user_provider.dart';
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
+import 'package:toddily_preschool/common/widgets/error_widget.dart';
+import 'package:toddily_preschool/common/widgets/no_information_widget.dart';
+import 'package:toddily_preschool/common/widgets/ripple.dart';
 import 'package:toddily_preschool/main/monthly_report/providers/report_provider.dart';
 import 'package:toddily_preschool/main/monthly_report/screens/send_report_screen.dart';
 import 'package:toddily_preschool/main/monthly_report/widgets/custom_expandable_tile.dart';
@@ -38,14 +41,12 @@ class _MonthlyReportScreenState extends State<MonthlyReportScreen> {
         .getChildReport(widget.kid!.id!);
   }
 
-  Future<void> _refreshData() async {
+  Future<void> refreshData() async {
     print('refreshing');
     await Provider.of<ReportProvider>(context, listen: false)
         .getChildReport(widget.kid!.id!);
 
-    setState(() {
-      // Update your data variables
-    });
+    setState(() {});
   }
 
   @override
@@ -69,6 +70,7 @@ class _MonthlyReportScreenState extends State<MonthlyReportScreen> {
                     context,
                     MyNavigator(
                       screen: SendReportScreen(
+                        isEditing: false,
                         kid: widget.kid!,
                       ),
                       curves: Curves.easeOutQuint,
@@ -82,7 +84,7 @@ class _MonthlyReportScreenState extends State<MonthlyReportScreen> {
           animSpeedFactor: 4,
           color: Theme.of(context).colorScheme.secondary,
           onRefresh: () {
-            return _refreshData();
+            return refreshData();
           },
           child: Padding(
             padding: EdgeInsets.all(5.0.sp),
@@ -97,16 +99,17 @@ class _MonthlyReportScreenState extends State<MonthlyReportScreen> {
                       future: _reportsFuture,
                       builder: (context, snapshot) {
                         if (reportProvider.isLoading) {
-                          return Center(
-                            child: Platform.isIOS
-                                ? const CupertinoActivityIndicator()
-                                : CircularProgressIndicator(
-                                    color:
-                                        Theme.of(context).colorScheme.secondary,
-                                  ),
-                          );
+                          return RippleWidget();
+                        }
+                        if (reportProvider.hasError) {
+                          return CustomErrorWidget();
+                        } else if (reportProvider.reports.isEmpty) {
+                          return const NoInformationWidget();
                         }
                         List<ReportModel> reports = reportProvider.reports;
+                        if(reports.isEmpty){
+                          return const NoInformationWidget();
+                        }
                         return Expanded(
                           child: ListView.builder(
                             physics: const BouncingScrollPhysics(),
@@ -114,6 +117,7 @@ class _MonthlyReportScreenState extends State<MonthlyReportScreen> {
                             itemCount: reports.length,
                             itemBuilder: (context, i) => CustomExpandableTile(
                               report: reports[i],
+                              kid: widget.kid!,
                             ),
                           ),
                         );

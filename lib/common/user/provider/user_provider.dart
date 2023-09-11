@@ -5,15 +5,24 @@ import 'package:toddily_preschool/models/user/user_model.dart';
 class UserProvider with ChangeNotifier {
   UserModel? currentUser;
   int? roleId;
+  int? id;
   UserService _service = UserService();
   // bool isGuest = false;
 
   getCurrentUser() async {
     try {
       currentUser = await _service.getCurrentUser();
+      print('******************role ID*****************');
+      print(currentUser!.role_id);
+      print('******************role ID*****************');
     } catch (e) {
       print(e);
+      throw Exception('error in get current user');
     }
+  }
+
+  int? getCurrentUserId() {
+    return currentUser!.id;
   }
 
   assignGuest() {
@@ -51,7 +60,6 @@ class UserProvider with ChangeNotifier {
 
   bool forDatesScreen() {
     if (currentUser!.role_id == 1 ||
-        currentUser!.role_id == 4 ||
         currentUser!.role_id == 5 ||
         currentUser!.role_id == 6 ||
         currentUser!.role_id == 2) {

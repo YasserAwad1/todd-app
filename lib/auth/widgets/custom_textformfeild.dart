@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 
 class CustomTextFormFeild extends StatelessWidget {
   final String labelText;
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final TextInputAction textinputAction;
   final TextInputType inputType;
+  final Function(String) onChanged;
   bool? isObscure;
+
   CustomTextFormFeild({
     required this.labelText,
-    required this.controller,
+    this.controller,
     required this.textinputAction,
     required this.inputType,
+    required this.onChanged,
     this.isObscure = false
   });
 
@@ -23,11 +26,12 @@ class CustomTextFormFeild extends StatelessWidget {
       //   }
       //   return null;
       // },
+      onChanged: onChanged,
       obscureText: isObscure!,
       keyboardType: inputType,
       cursorColor: Theme.of(context).colorScheme.secondary,
       textInputAction: textinputAction,
-      controller: controller,
+      controller: controller ?? controller,
       decoration: InputDecoration(
         errorBorder: const OutlineInputBorder(
           borderSide: BorderSide(

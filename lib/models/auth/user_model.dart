@@ -1,9 +1,9 @@
-class UserModel{
-  int id;
-  String role;
+// class UserModel{
+//   int id;
+//   String role;
 
-  UserModel({
-    required this.id,
-    required this.role
-  });
-}
+//   UserModel({
+//     required this.id,
+//     required this.role
+//   });
+// }

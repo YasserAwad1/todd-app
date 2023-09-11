@@ -8,16 +8,14 @@ part of 'sub_status_model.dart';
 
 SubStatusModel _$SubStatusModelFromJson(Map<String, dynamic> json) =>
     SubStatusModel(
-      id: json['id'] as int?,
-      statusId: json['statusId'] as int?,
-      name: json['name'] as String,
-      description: json['description'] as String?,
-    );
+        name: json['name'] as String,
+        description: json['description'] as String?,
+        image: json['image'] as String,
+        id: json['id'] != null ? json['id'] as int? : null,
+        statusId: json['status_id'] != null ? json['status_id'] as int? : null);
 
 Map<String, dynamic> _$SubStatusModelToJson(SubStatusModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
-      'statusId': instance.statusId,
-      'name': instance.name,
+      'substatus_id': instance.id,
       'description': instance.description,
     };

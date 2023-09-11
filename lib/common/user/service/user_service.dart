@@ -17,8 +17,12 @@ class UserService {
         'Authorization': 'Bearer $token'
       });
       final jsonResponse = jsonDecode(response.body);
+      print(jsonResponse);
       final user = UserModel.fromJson(jsonResponse['user']);
-      return user;
+      if (response.statusCode < 300) {
+        return user;
+      }
+      throw Exception('error in getting user');
     } catch (e) {
       print(e);
       rethrow;

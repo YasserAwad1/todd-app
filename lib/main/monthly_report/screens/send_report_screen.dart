@@ -9,12 +9,19 @@ import 'package:toddily_preschool/main/monthly_report/providers/report_provider.
 import 'package:toddily_preschool/main/monthly_report/screens/monthly_report_screen.dart';
 import 'package:toddily_preschool/main/monthly_report/widgets/progress_button.dart';
 import 'package:toddily_preschool/models/kids/kid_model.dart';
+import 'package:toddily_preschool/models/report/report_model.dart';
 
 class SendReportScreen extends StatefulWidget {
   static const routeName = 'send-report-screen';
   KidModel? kid;
+  ReportModel? previousReport;
+  bool? isEditing = false;
 
-  SendReportScreen({this.kid});
+  SendReportScreen({
+    this.kid,
+    this.previousReport,
+    this.isEditing,
+  });
 
   @override
   State<SendReportScreen> createState() => _SendReportScreenState();
@@ -24,27 +31,39 @@ class _SendReportScreenState extends State<SendReportScreen> {
   TextEditingController descriptionController = TextEditingController();
   ButtonState stateOnlyText = ButtonState.idle;
   ButtonState stateTextWithIcon = ButtonState.idle;
-
+  bool success = false;
   void onPressedIconWithText() async {
     switch (stateTextWithIcon) {
       case ButtonState.idle:
         setState(() {
           stateTextWithIcon = ButtonState.loading;
         });
-        bool success = await Provider.of<ReportProvider>(context, listen: false)
-            .sendReport(widget.kid!.id!, descriptionController.text);
+        if (widget.isEditing!) {
+          success = await Provider.of<ReportProvider>(context, listen: false)
+              .updateReport(widget.kid!.id!, widget.previousReport!.id!,
+                  descriptionController.text);
+        } else {
+          // ignore: use_build_context_synchronously
+          success = await Provider.of<ReportProvider>(context, listen: false)
+              .sendReport(widget.kid!.id!, descriptionController.text);
+        }
 
         setState(() {
           stateTextWithIcon = success ? ButtonState.success : ButtonState.fail;
           if (stateTextWithIcon == ButtonState.success) {
             Future.delayed(const Duration(milliseconds: 800))
-                .then((value) => Navigator.pop(
-                      context,
-                      MyNavigator(
-                        curves: Curves.easeIn,
-                        screen: MonthlyReportScreen(kid: widget.kid),
-                      ),
-                    ));
+                .then((value) async {
+              await Provider.of<ReportProvider>(context, listen: false)
+                  .getChildReport(widget.kid!.id!);
+              // ignore: use_build_context_synchronously
+              Navigator.pop(
+                context,
+                MyNavigator(
+                  curves: Curves.easeIn,
+                  screen: MonthlyReportScreen(kid: widget.kid),
+                ),
+              );
+            });
           }
         });
 
@@ -63,6 +82,16 @@ class _SendReportScreenState extends State<SendReportScreen> {
         stateTextWithIcon = stateTextWithIcon;
       },
     );
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.isEditing!) {
+      descriptionController.value =
+          TextEditingValue(text: widget.previousReport!.description);
+    }
   }
 
   @override

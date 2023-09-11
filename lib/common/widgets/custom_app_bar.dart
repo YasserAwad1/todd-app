@@ -31,7 +31,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     bool isArabic = Provider.of<LanguageProvider>(context).isArabic();
     return AppBar(
       actions: [
-        if (Provider.of<UserProvider>(context).roleId == 5 &&
+        if (Provider.of<UserProvider>(context).getUserRoleId() == 5 &&
             withNotification)
           IconButton(
             onPressed: () {

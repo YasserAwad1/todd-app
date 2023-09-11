@@ -2,22 +2,26 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toddily_preschool/common/my_navigator.dart';
-import 'package:toddily_preschool/main/statuses/screens/statuses_screen.dart';
+import 'package:toddily_preschool/main/statuses/screens/statuses_screen_for_preview.dart';
 
 class DateWidget extends StatelessWidget {
   String image;
   int index;
   bool startAnimation;
   String sentDate;
+  int childId;
 
   DateWidget(
       {required this.image,
       required this.index,
       required this.startAnimation,
-      required this.sentDate});
+      required this.sentDate,required this.childId,});
 
   @override
   Widget build(BuildContext context) {
+    print('******************SENT DATE*****************');
+    print(sentDate);
+    print('******************SENT DATE*****************');
     DateTime date = DateTime.parse(sentDate);
 
     String day = date.day.toString();
@@ -38,13 +42,17 @@ class DateWidget extends StatelessWidget {
       'Dec'
     ];
     String monthAbbreviation = monthAbbreviations[int.parse(month) - 1];
-
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
           MyNavigator(
-            screen: StatusesScreen(),
+            screen: StatusesScreenForPreview(
+              day: day,
+              month: monthAbbreviation,
+              date: sentDate,
+              childId: childId,
+            ),
             curves: Curves.fastOutSlowIn,
           ),
         );

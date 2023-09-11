@@ -55,7 +55,7 @@ class EventWidget extends StatelessWidget {
                 ),
                 child: Image.network(
                   '${Endpoints.baseUrl}${event.image_cover}',
-                  fit: BoxFit.fill,
+                  fit: BoxFit.cover,
                   width: double.infinity.w,
                 ),
               ),
@@ -69,7 +69,7 @@ class EventWidget extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 18.sp,
+                    // fontSize: 18.sp,
                   ),
                 ),
               ),

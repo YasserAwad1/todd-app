@@ -5,13 +5,15 @@ import 'package:camera/camera.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:toddily_preschool/models/kids/kid_model.dart';
 import 'package:toddily_preschool/social_media_expert/providers/camera_provider.dart';
 import 'package:toddily_preschool/social_media_expert/widgets/custom_camera.dart';
 import 'package:toddily_preschool/social_media_expert/widgets/taken_images_list.dart';
 
 class CameraScreen extends StatefulWidget {
   static const routeName = '/camera-screen';
-  const CameraScreen({super.key});
+  KidModel? kid;
+  CameraScreen({this.kid});
 
   @override
   State<CameraScreen> createState() => _CameraScreenState();
@@ -24,7 +26,7 @@ class _CameraScreenState extends State<CameraScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.secondary,
-        title: Text('Kid\'s name'),
+        title: Text(widget.kid!.name),
         actions: [
           IconButton(
             onPressed: () {
@@ -35,7 +37,7 @@ class _CameraScreenState extends State<CameraScreen> {
                         return AlertDialog(
                           title: const Text('Are You Sure You Want To Exit ?'),
                           content: Text(
-                            'You haven\'t taken any photo of kid\'s name, \nNo photos will be sent.',
+                            'You haven\'t taken any photo of ${widget.kid!.name}, \nNo photos will be sent.',
                             style: TextStyle(
                               color: Colors.grey[700],
                             ),
@@ -74,7 +76,7 @@ class _CameraScreenState extends State<CameraScreen> {
           ),
         ],
       ),
-      body: const Column(
+      body: Column(
         children: [
           Expanded(
             child: Column(

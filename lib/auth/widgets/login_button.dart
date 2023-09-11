@@ -31,6 +31,15 @@ class LoginButton extends StatefulWidget {
 }
 
 class _LoginButtonState extends State<LoginButton> {
+  var userProvider;
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    userProvider = Provider.of<UserProvider>(context, listen: false);
+  }
+
   @override
   Widget build(BuildContext context) {
     bool? success;
@@ -63,8 +72,7 @@ class _LoginButtonState extends State<LoginButton> {
                   widget.password,
                 );
                 if (success!) {
-                  await Provider.of<UserProvider>(context, listen: false)
-                      .getCurrentUser();
+                  await userProvider.getCurrentUser();
                   setState(() {
                     widget.isLoading = false;
                   });
@@ -74,7 +82,7 @@ class _LoginButtonState extends State<LoginButton> {
                     PageRouteBuilder(
                       transitionDuration: const Duration(milliseconds: 500),
                       pageBuilder: (ctx, animation, secondaryAnimation) {
-                        if (Provider.of<UserProvider>(context).classesTile()) {
+                        if (userProvider.classesTile()) {
                           return ClassesScreen();
                         } else {
                           return KidsScreen();

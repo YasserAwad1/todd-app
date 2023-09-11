@@ -5,8 +5,21 @@ import 'package:toddily_preschool/models/dates/date_model.dart';
 class DatesProvider with ChangeNotifier {
   List<DateModel> dates = [];
   DatesService _service = DatesService();
+  bool hasError = false;
+  bool isLoading = false;
 
   getDatesByChildId(int childId) async {
-    dates = await _service.getDatesOfStatuses(childId);
+    try {
+      isLoading = true;
+      dates = await _service.getDatesOfStatuses(childId);
+      hasError = _service.hasError;
+      isLoading = false;
+      notifyListeners();
+    } catch (e) {
+      print(e);
+      isLoading = false;
+      hasError = _service.hasError;
+      notifyListeners();
+    }
   }
 }

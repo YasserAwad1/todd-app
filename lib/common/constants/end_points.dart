@@ -11,7 +11,10 @@ class Endpoints {
   static const currentUser = '$baseUrl/api/current-user';
   static const dates = '$baseUrl/api/status-dates';
   static const getChildReports = '$baseUrl/api/get_child_reports';
-  static const sendReport = '$baseUrl/api/reports';
+  static const report = '$baseUrl/api/reports';
   static const childStatusByDate = '$baseUrl/api/get-child-status-date';
+  static const getChildrenByParentOrTeacherId = '$baseUrl/api/get-teacher-parent-child';
+  static const getChildStatusByDate = '$baseUrl/api/get-child-status-date';
+  static const getStatusesToSend = '$baseUrl/api/get-status-by-child';
 
 }

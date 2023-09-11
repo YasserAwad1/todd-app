@@ -13,9 +13,11 @@ import 'package:toddily_preschool/main/classes/screens/classes_screen.dart';
 import 'package:toddily_preschool/main/events/screens/event_images_list_screen.dart';
 import 'package:toddily_preschool/main/events/screens/event_photos_screen.dart';
 import 'package:toddily_preschool/main/kids/providers/dates_provider.dart';
+import 'package:toddily_preschool/main/kids/providers/kids_provider.dart';
 import 'package:toddily_preschool/main/monthly_report/providers/report_provider.dart';
 import 'package:toddily_preschool/main/monthly_report/screens/send_report_screen.dart';
 import 'package:toddily_preschool/main/statuses/providers/status_provider.dart';
+import 'package:toddily_preschool/main/statuses/screens/statuses_screen_to_send.dart';
 import 'package:toddily_preschool/social_media_expert/screens/camera_screen.dart';
 import 'package:toddily_preschool/social_media_expert/screens/taken_images_screen.dart';
 
@@ -38,7 +40,7 @@ import 'package:toddily_preschool/main/monthly_report/screens/monthly_report_scr
 import 'package:toddily_preschool/main/photos/screens/image_list_screen.dart';
 import 'package:toddily_preschool/main/photos/screens/photos_screen.dart';
 import 'package:toddily_preschool/main/splash_screen/splash_screen.dart';
-import 'package:toddily_preschool/main/statuses/screens/statuses_screen.dart';
+import 'package:toddily_preschool/main/statuses/screens/statuses_screen_for_preview.dart';
 import 'package:toddily_preschool/main/events/screens/events_screen.dart';
 import 'package:toddily_preschool/main/notifications/screens/notifications_screen.dart';
 import 'package:toddily_preschool/main/FAQ/screens/FAQScreen.dart';
@@ -92,6 +94,9 @@ class MyApp extends StatelessWidget {
               ),
               ChangeNotifierProvider(
                 create: (ctx) => ReportProvider(),
+              ),
+              ChangeNotifierProvider(
+                create: (ctx) => KidsProvider(),
               )
             ],
             child: Builder(builder: (context) {
@@ -129,7 +134,8 @@ class MyApp extends StatelessWidget {
                 routes: {
                   KidsScreen.routeName: (context) => KidsScreen(),
                   DatesScreen.routeName: (context) => DatesScreen(),
-                  StatusesScreen.routeName: (context) => const StatusesScreen(),
+                  StatusesScreenForPreview.routeName: (context) =>
+                      StatusesScreenForPreview(),
                   PhotosScreen.routeName: (context) => PhotosScreen(),
                   ImageListScreen.routeName: (context) => ImageListScreen(),
                   MonthlyReportScreen.routeName: (context) =>
@@ -149,7 +155,9 @@ class MyApp extends StatelessWidget {
                   EventPhotosScreen.routeName: (context) => EventPhotosScreen(),
                   EventImagesListScreen.routeName: (context) =>
                       EventImagesListScreen(),
-                  SendReportScreen.routeName: (context) => SendReportScreen()
+                  SendReportScreen.routeName: (context) => SendReportScreen(),
+                  StatusesScreenToSend.routeName: (context) =>
+                      StatusesScreenForPreview(),
                 },
               );
             }),

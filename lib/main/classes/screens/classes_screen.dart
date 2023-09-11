@@ -5,19 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:provider/provider.dart';
-import 'package:toddily_preschool/common/user/provider/user_provider.dart';
 import 'package:toddily_preschool/common/widgets/error_widget.dart';
-import 'package:toddily_preschool/main/FAQ/provider/qa_provider.dart';
+import 'package:toddily_preschool/common/widgets/ripple.dart';
 import 'package:toddily_preschool/main/classes/providers/class_provider.dart';
 import 'package:toddily_preschool/main/classes/widgets/class_widget.dart';
 import 'package:toddily_preschool/common/drawer/app_drawer.dart';
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
-import 'package:toddily_preschool/main/events/providers/event_provider.dart';
-import 'package:toddily_preschool/main/kids/providers/dates_provider.dart';
-import 'package:toddily_preschool/main/monthly_report/providers/report_provider.dart';
-import 'package:toddily_preschool/main/photos/providers/photos_povider.dart';
 import 'package:toddily_preschool/main/statuses/providers/status_provider.dart';
-import 'package:toddily_preschool/models/classes/class_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ClassesScreen extends StatefulWidget {
@@ -67,7 +61,7 @@ class _ClassesScreenState extends State<ClassesScreen> {
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
             Provider.of<StatusProvider>(context, listen: false)
-                .getChildStatusByDate(1,'2023-9-04');
+                .getChildStatusByDate(1, '2023-9-04');
           },
         ),
         drawer: AppDrawer(),
@@ -106,38 +100,38 @@ class _ClassesScreenState extends State<ClassesScreen> {
                   FutureBuilder(
                       future: _classesFuture,
                       builder: (context, snapshot) {
-                        if (Provider.of<ClassProvider>(context, listen: false)
-                            .hasError) {
-                          print(
-                              'a;lsdfjaskjdfhalskdfhaslk jhadskjfh aklsdjfh alsdkjfh aklhj ');
-                          return CustomErrorWidget();
-                        }
-                        var classes =
-                            Provider.of<ClassProvider>(context, listen: false)
-                                .classes;
                         if (snapshot.connectionState ==
                                 ConnectionState.waiting ||
                             isLoading) {
-                          return Center(
-                            child: Platform.isAndroid
-                                ? CircularProgressIndicator(
-                                    color: yellow,
-                                  )
-                                : CupertinoActivityIndicator(
-                                    color: yellow,
-                                  ),
+                          return RippleWidget(
+                            height: 0,
+                          );
+                        } else if (Provider.of<ClassProvider>(context,
+                                listen: false)
+                            .hasError) {
+                          // print(
+                          //     'a;lsdfjaskjdfhalskdfhaslk jhadskjfh aklsdjfh alsdkjfh aklhj ');
+                          return CustomErrorWidget(
+                            height: 0,
+                          );
+                        } else {
+                          var classes =
+                              Provider.of<ClassProvider>(context, listen: false)
+                                  .classes;
+
+                          return ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: classes.length,
+                            itemBuilder: (context, i) => ClassWidget(
+                              startAnimation: startAnimation,
+                              index: i,
+                              classModel: classes[i],
+                            ),
                           );
                         }
-                        return ListView.builder(
-                          physics: const BouncingScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: classes.length,
-                          itemBuilder: (context, i) => ClassWidget(
-                            startAnimation: startAnimation,
-                            index: i,
-                            classModel: classes[i],
-                          ),
-                        );
+
+                        return Container();
                       }),
                 ],
               ),

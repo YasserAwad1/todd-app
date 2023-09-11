@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 
 class ReportService {
   var token = locator.get<LocalRepo>().token;
+  bool hasError = false;
 
   Future<List<ReportModel>> getChildReports(int childId) async {
     try {
@@ -25,11 +26,14 @@ class ReportService {
               (e) => ReportModel.fromJson(e),
             )
             .toList();
+            hasError = false;
         return reports;
       } else {
+        hasError = true;
         throw Exception('error in getting reports');
       }
     } catch (e) {
+      hasError = true;
       print(e);
       rethrow;
     }
@@ -37,7 +41,7 @@ class ReportService {
 
   Future<bool> sendReport(String childId, String description) async {
     try {
-      final url = Uri.parse('${Endpoints.sendReport}');
+      final url = Uri.parse(Endpoints.report);
 
       final response = await http.post(url, headers: {
         "Accept": "application/json",
@@ -49,6 +53,34 @@ class ReportService {
       print(response.body);
       if (response.statusCode < 300) {
         print('REPORT SENT');
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
+
+  Future<bool> updateReport(
+    int childId,
+    int reportId,
+    String newDescription,
+  ) async {
+    try {
+      final url = Uri.parse('${Endpoints.report}/$reportId');
+
+      final response = await http.put(url, headers: {
+        "Accept": "application/json",
+        'Authorization': 'Bearer $token'
+      }, body: {
+        "child_id": childId.toString(),
+        "description": newDescription.toString()
+      });
+      print(response.body);
+      if (response.statusCode < 300) {
+        print('REPORT Updated');
         return true;
       } else {
         return false;

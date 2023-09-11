@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:toddily_preschool/main/statuses/widgets/substatus_widget.dart';
+import 'package:toddily_preschool/main/statuses/statusesToSend/widgets/substatus_widget_to_send.dart';
+import 'package:toddily_preschool/models/status/status_model.dart';
 
-class StatusWidget extends StatelessWidget {
+class StatusWidgetToSend extends StatelessWidget {
   bool startAnimation;
   int index;
+  StatusModel status;
 
-  StatusWidget({
-    required this.startAnimation,
-    required this.index,
-  });
+  StatusWidgetToSend(
+      {required this.startAnimation,
+      required this.index,
+      required this.status});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,7 @@ class StatusWidget extends StatelessWidget {
                 height: 4.h,
               ),
               Text(
-                'Drinks',
+                status.name!,
                 // textAlign: TextAlign.end,
                 style: TextStyle(
                   color: Colors.white,
@@ -59,15 +61,15 @@ class StatusWidget extends StatelessWidget {
           child: Container(
             height: 155.h, //155
             child: ListView.builder(
-              shrinkWrap: true,
-              physics: BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              itemCount: 2,
-              itemBuilder: (context, i) => SubstatusWidget(
-                startAnimation: startAnimation,
-                index: i,
-              ),
-            ),
+                shrinkWrap: true,
+                physics: const BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                itemCount: status.substatus!.length,
+                itemBuilder: (context, i) => SubstatusWidgetToSend(
+                      startAnimation: startAnimation,
+                      index: index,
+                      subStatus: status.substatus![i],
+                    )),
           ),
         ),
       ],

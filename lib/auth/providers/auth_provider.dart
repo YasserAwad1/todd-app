@@ -29,6 +29,7 @@ class AuthProvider with ChangeNotifier {
       return false;
     } catch (e) {
       print(e);
+      throw Exception('error logging in');
     }
   }
 

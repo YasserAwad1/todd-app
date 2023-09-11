@@ -1,0 +1,19 @@
+import 'package:flutter/cupertino.dart';
+import 'package:toddily_preschool/main/kids/service/kids_service.dart';
+import 'package:toddily_preschool/models/kids/kid_model.dart';
+
+class KidsProvider with ChangeNotifier {
+  final KidsService _service = KidsService();
+  List<KidModel> kids = [];
+  bool hasError = false;
+
+  getChildrenByTeachOrParentId(int userId) async {
+    try {
+      kids = await _service.getKidsByTeachOrParentId(userId);
+      hasError = _service.hasError;
+    } catch (e) {
+      print(e);
+      hasError = _service.hasError;
+    }
+  }
+}

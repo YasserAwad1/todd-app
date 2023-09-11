@@ -4,16 +4,18 @@ part 'sub_status_model.g.dart';
 
 @JsonSerializable()
 class SubStatusModel {
+  final String? name;
+  String? description;
+  final String? image;
   final int? id;
   final int? statusId;
-  final String name;
-  final String? description;
 
   SubStatusModel({
+    this.name,
+    this.description,
+    this.image,
     this.id,
     this.statusId,
-    required this.name,
-    this.description,
   });
 
   factory SubStatusModel.fromJson(Map<String, dynamic> json) => _$SubStatusModelFromJson(json);

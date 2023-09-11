@@ -25,7 +25,7 @@ class AboutWidget extends StatelessWidget {
           transform: Matrix4.translationValues(
               startAnimation ? 0 : MediaQuery.of(context).size.width, 0, 0),
           padding: EdgeInsets.all(7.sp),
-          height: 170.h,
+          height: 300.h,
           width: 320.w,
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.secondary,
@@ -58,7 +58,7 @@ class AboutWidget extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   fontSize: 20.sp,
                   color: Colors.white,
-                  fontFamily: isArabic ? "Lalezar": "LuckiestGuy",
+                  fontFamily: isArabic ? "Lalezar" : "LuckiestGuy",
                 ),
               ),
               SizedBox(
@@ -69,16 +69,12 @@ class AboutWidget extends StatelessWidget {
                   SizedBox(
                     width: 280.w,
                     child: Text(
-                      isArabic
-                          ? 'لوريم ايبسوم هو نموذج افتراضي يوضع في التصاميم لتعرض على العميل ليتصور طريقه وضع النصوص بالتصاميم سواء كانت تصاميم مطبوعه ... بروشور او فلاير على سبيل المثال ... او نماذج مواقع انترنت ...'
-                          : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua,Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-                      maxLines: isArabic ? 4 : 7,
+                      AppLocalizations.of(context)!.aboutParagraph,
                       softWrap: true,
                       style: TextStyle(
                         fontSize: 16.sp,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
-                        
                       ),
                     ),
                   ),
@@ -89,7 +85,7 @@ class AboutWidget extends StatelessWidget {
         ),
         Positioned(
           right: isArabic ? null : -43.w,
-          top: 20.h,
+          top: isArabic ? 80.h :100.h,
           left: isArabic ? -43 : null,
           // left: 1,
           // left: isArabic ? -43 : 0,

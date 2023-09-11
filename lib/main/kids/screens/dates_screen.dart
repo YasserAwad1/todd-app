@@ -5,15 +5,20 @@ import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:toddily_preschool/auth/providers/auth_provider.dart';
+import 'package:toddily_preschool/common/my_navigator.dart';
 import 'package:toddily_preschool/common/user/provider/user_provider.dart';
 
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
+import 'package:toddily_preschool/common/widgets/error_widget.dart';
+import 'package:toddily_preschool/common/widgets/no_information_widget.dart';
+import 'package:toddily_preschool/common/widgets/ripple.dart';
 import 'package:toddily_preschool/main/classes/providers/class_provider.dart';
 import 'package:toddily_preschool/main/events/providers/event_provider.dart';
 import 'package:toddily_preschool/main/kids/providers/dates_provider.dart';
 import 'package:toddily_preschool/main/kids/widgets/date_widget.dart';
 import 'package:toddily_preschool/main/kids/widgets/dates_screen_button.dart';
 import 'package:toddily_preschool/main/monthly_report/screens/monthly_report_screen.dart';
+import 'package:toddily_preschool/main/statuses/screens/statuses_screen_to_send.dart';
 import 'package:toddily_preschool/models/dates/date_model.dart';
 import 'package:toddily_preschool/models/kids/kid_model.dart';
 
@@ -74,10 +79,15 @@ class _DatesScreenState extends State<DatesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // int? roleId = Provider.of<UserProvider>(context, listen: false).roleId!;
+    // print('******************role ID*****************');
+    // print(roleId);
+    // print('******************role ID*****************');
     return SafeArea(
       child: Scaffold(
         extendBody: true,
-        bottomNavigationBar: Provider.of<UserProvider>(context).reportButton()
+        bottomNavigationBar: Provider.of<UserProvider>(context, listen: false)
+                .reportButton()
             ? DatesScreenButton(
                 title: AppLocalizations.of(context)!.monthlyReport,
                 icon: Icons.health_and_safety_outlined,
@@ -102,23 +112,27 @@ class _DatesScreenState extends State<DatesScreen> {
                   );
                 },
               )
-            : Provider.of<UserProvider>(context).roleId == 2
+            : Provider.of<UserProvider>(context).getUserRoleId() == 2
                 ? DatesScreenButton(
-                    title: 'New Status ${DateFormat('d/M').format(
+                    title: 'New Status ${DateFormat('d/MMMM').format(
                       DateTime.now(),
                     )}',
                     icon: Icons.add,
                     function: () {
-                      Navigator.of(context).pushNamed(
-                        '/statuses-screen',
-                      );
+                      Navigator.push(
+                          context,
+                          MyNavigator(
+                              curves: Curves.easeIn,
+                              screen: StatusesScreenToSend(
+                                childId: widget.kid!.id,
+                              )));
                     },
                   )
                 : null,
         appBar: CustomAppBar(
           scaffoldKey: null,
           title: widget.kid!.name,
-          titleContainerWidth: 130.w,
+          titleContainerWidth: 230.w,
           withBackButton: true,
         ),
         body: LiquidPullToRefresh(
@@ -130,39 +144,50 @@ class _DatesScreenState extends State<DatesScreen> {
           color: Theme.of(context).colorScheme.secondary,
           child: Column(
             children: [
-              FutureBuilder(
-                  future: _datesFuture,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
-                    }
-                    List<DateModel> dates =
-                        Provider.of<DatesProvider>(context, listen: false)
-                            .dates;
-                    return Expanded(
-                      child: GridView.builder(
-                          physics: const BouncingScrollPhysics(),
-                          padding: EdgeInsets.all(20.sp),
-                          shrinkWrap: true,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 20.w,
-                            childAspectRatio: 1.15.sp,
-                            mainAxisSpacing: 15.h,
-                          ),
-                          itemCount: dates.length,
-                          itemBuilder: (context, i) {
-                            _currentIndex = i % characters.length;
-                            return DateWidget(
-                              image: characters[_currentIndex],
-                              index: i,
-                              startAnimation: startAnimation,
-                              sentDate: dates[i].date,
-                            );
-                          }),
-                    );
-                  })
+              Consumer<DatesProvider>(
+                builder: (context, datesProvider, _) {
+                  return FutureBuilder(
+                      future: _datesFuture,
+                      builder: (context, snapshot) {
+                        if(datesProvider.hasError){
+                          return CustomErrorWidget();
+                        }
+                        if (datesProvider.isLoading) {
+                          return RippleWidget();
+                        }
+                        List<DateModel> dates =
+                            datesProvider
+                                .dates;
+                        if (dates.isEmpty) {
+                          return const NoInformationWidget();
+                        }
+                        return Expanded(
+                          child: GridView.builder(
+                              physics: const BouncingScrollPhysics(),
+                              padding: EdgeInsets.all(20.sp),
+                              shrinkWrap: true,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 20.w,
+                                childAspectRatio: 1.15.sp,
+                                mainAxisSpacing: 15.h,
+                              ),
+                              itemCount: dates.length,
+                              itemBuilder: (context, i) {
+                                _currentIndex = i % characters.length;
+                                return DateWidget(
+                                  image: characters[_currentIndex],
+                                  index: i,
+                                  startAnimation: startAnimation,
+                                  sentDate: dates[i].date,
+                                  childId: widget.kid!.id!,
+                                );
+                              }),
+                        );
+                      });
+                }
+              )
             ],
           ),
         ),

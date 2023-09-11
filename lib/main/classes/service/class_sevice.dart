@@ -34,6 +34,7 @@ class ClassService {
             )
             .toList();
         hasError = false;
+        print(classes);
 
         return classes;
       } else {

@@ -8,6 +8,8 @@ import 'package:provider/provider.dart';
 import 'package:toddily_preschool/common/drawer/app_drawer.dart';
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
 import 'package:toddily_preschool/common/widgets/error_widget.dart';
+import 'package:toddily_preschool/common/widgets/no_information_widget.dart';
+import 'package:toddily_preschool/common/widgets/ripple.dart';
 import 'package:toddily_preschool/main/events/providers/event_provider.dart';
 import 'package:toddily_preschool/main/events/widgets/event_widget.dart';
 import 'package:toddily_preschool/models/events/event_model.dart';
@@ -78,23 +80,21 @@ class _EventsScreenState extends State<EventsScreen> {
                 child: FutureBuilder(
                     future: _eventFuture,
                     builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(
-                          child: Platform.isIOS
-                              ? const CupertinoActivityIndicator()
-                              : CircularProgressIndicator(
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                ),
-                        );
-                      }
                       if (Provider.of<EventProvider>(context, listen: false)
                           .hasError) {
-                        return const CustomErrorWidget();
+                        return CustomErrorWidget(
+                          height: 0,
+                        );
+                      }
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return RippleWidget(height: 0,);
                       }
                       List<EventModel> events =
                           Provider.of<EventProvider>(context, listen: false)
                               .events;
+                      if(events.isEmpty){
+                        return NoInformationWidget();
+                      }
                       return GridView.builder(
                         padding: EdgeInsets.all(12.sp),
                         shrinkWrap: true,

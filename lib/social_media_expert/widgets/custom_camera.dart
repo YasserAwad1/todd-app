@@ -22,7 +22,7 @@ class _CustomCameraState extends State<CustomCamera> {
     _cameras = await availableCameras();
     _cameraController = CameraController(
       _cameras[0],
-      ResolutionPreset.medium,
+      ResolutionPreset.max,
     );
 
     await _cameraController!.initialize();

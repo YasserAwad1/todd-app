@@ -40,6 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
           await Provider.of<AuthProvider>(context, listen: false)
               .isTokenValid();
       if (isTokenValid) {
+        // ignore: use_build_context_synchronously
         _userFuture = await Provider.of<UserProvider>(context, listen: false)
             .getCurrentUser();
         print(Provider.of<UserProvider>(context, listen: false).currentUser);
@@ -61,9 +62,6 @@ class _SplashScreenState extends State<SplashScreen> {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return CircularProgressIndicator();
                   } else {
-                    // UserModel? currentUser =
-                    //     Provider.of<UserProvider>(context, listen: false)
-                    //         .currentUser;
                     if (Provider.of<UserProvider>(context, listen: false)
                         .classesTile()) {
                       return ClassesScreen();
@@ -73,12 +71,6 @@ class _SplashScreenState extends State<SplashScreen> {
                   }
                 },
               );
-              // if (Provider.of<AuthProvider>(context, listen: false)
-              //     .classesTile()) {
-              //   return ClassesScreen();
-              // } else {
-              //   return KidsScreen();
-              // }
             } else {
               return SignInScreen();
             }

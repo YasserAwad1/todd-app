@@ -9,6 +9,7 @@ import 'package:toddily_preschool/common/drawer/app_drawer.dart';
 import 'package:toddily_preschool/common/providers/language_provider.dart';
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
 import 'package:toddily_preschool/common/widgets/error_widget.dart';
+import 'package:toddily_preschool/common/widgets/ripple.dart';
 import 'package:toddily_preschool/main/FAQ/provider/qa_provider.dart';
 import 'package:toddily_preschool/main/FAQ/widgets/faq_tile.dart';
 import 'package:toddily_preschool/main/FAQ/widgets/slimy_card.dart';
@@ -77,15 +78,7 @@ class _FAQScreenState extends State<FAQScreen> {
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return Center(
-                              child: Platform.isIOS
-                                  ? CupertinoActivityIndicator()
-                                  : CircularProgressIndicator(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .secondary,
-                                    ),
-                            );
+                            return RippleWidget(height: 0,);
                           }
                           if (Provider.of<QaProvider>(context, listen: false)
                               .hasError) {
@@ -94,7 +87,7 @@ class _FAQScreenState extends State<FAQScreen> {
                                 locale: Provider.of<LanguageProvider>(context,
                                         listen: false)
                                     .getCurrentLocal(),
-                                child: const CustomErrorWidget());
+                                child: CustomErrorWidget(height: 0,));
                           }
                           final qaList =
                               Provider.of<QaProvider>(context, listen: false)

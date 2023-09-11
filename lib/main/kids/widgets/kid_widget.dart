@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:toddily_preschool/auth/providers/auth_provider.dart';
 import 'package:toddily_preschool/common/constants/end_points.dart';
 import 'package:toddily_preschool/common/my_navigator.dart';
 import 'package:toddily_preschool/common/providers/language_provider.dart';
 import 'package:toddily_preschool/common/user/provider/user_provider.dart';
-import 'package:toddily_preschool/main/events/providers/event_provider.dart';
 import 'package:toddily_preschool/main/kids/screens/dates_screen.dart';
-import 'package:toddily_preschool/main/kids/screens/kids_screen.dart';
 import 'package:toddily_preschool/main/monthly_report/screens/monthly_report_screen.dart';
 import 'package:toddily_preschool/models/kids/kid_model.dart';
+import 'package:toddily_preschool/social_media_expert/screens/camera_screen.dart';
 
 class KidsWidget extends StatelessWidget {
   bool startAnimation;
@@ -63,7 +61,15 @@ class KidsWidget extends StatelessWidget {
             : Provider.of<UserProvider>(context, listen: false)
                         .getUserRoleId() ==
                     4
-                ? Navigator.of(context).pushNamed('/camera-screen')
+                ? Navigator.push(
+                    context,
+                    MyNavigator(
+                      curves: Curves.ease,
+                      screen: CameraScreen(
+                        kid: kid,
+                      ),
+                    ),
+                  )
                 : Navigator.push(
                     context,
                     MyNavigator(
@@ -83,7 +89,7 @@ class KidsWidget extends StatelessWidget {
           padding: EdgeInsets.all(15.sp),
           margin: EdgeInsets.all(15.sp),
           width: 300.w,
-          height: 130.h,
+          // height: 130.h,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(
                 15.sp,
@@ -122,11 +128,8 @@ class KidsWidget extends StatelessWidget {
                     child: Text(
                       kid.name,
                       overflow: TextOverflow.ellipsis,
-                      // textAlign: TextAlign.left,
-                      // textAlign: TextAlign.justify,
-                      // softWrap: true,
                       maxLines: 2,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 19,
                           fontWeight: FontWeight.bold,
                           color: Colors.white),
@@ -139,20 +142,30 @@ class KidsWidget extends StatelessWidget {
                     classTitle,
                     textAlign: TextAlign.start,
                     style: TextStyle(
-                      fontSize: 16.sp,
-                      color: Colors.white,
-                    ),
+                        fontSize: 16.sp,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
                     height: 20.h,
                   ),
-                  // Text(
-                  //   '1 unread status',
-                  //   style: TextStyle(
-                  //     fontSize: 14.sp,
-                  //     color: Colors.white,
-                  //   ),
-                  // )
+                  if (kid.isExtra == 1)
+                    Container(
+                      height: 30.h,
+                      width: 80.w,
+                      padding: EdgeInsets.all(10.sp),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.red),
+                      child: Text(
+                        'Extra',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontFamily: "luckiestGuy",
+                            color: Colors.white,
+                            fontSize: 16.sp),
+                      ),
+                    )
                 ],
               ),
               SizedBox(

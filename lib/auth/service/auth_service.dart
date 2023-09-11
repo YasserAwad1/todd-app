@@ -18,6 +18,7 @@ class AuthService {
           "password": password,
         },
       );
+      print(response.statusCode);
       final jsonResponse = jsonDecode(response.body);
       print(jsonResponse);
       if (response.statusCode < 300) {
