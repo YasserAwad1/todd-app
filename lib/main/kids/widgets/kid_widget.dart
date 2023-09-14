@@ -10,6 +10,7 @@ import 'package:toddily_preschool/main/kids/screens/dates_screen.dart';
 import 'package:toddily_preschool/main/monthly_report/screens/monthly_report_screen.dart';
 import 'package:toddily_preschool/models/kids/kid_model.dart';
 import 'package:toddily_preschool/social_media_expert/screens/camera_screen.dart';
+import 'package:toddily_preschool/social_media_expert/screens/pick_image_screen.dart';
 
 class KidsWidget extends StatelessWidget {
   bool startAnimation;
@@ -65,7 +66,7 @@ class KidsWidget extends StatelessWidget {
                     context,
                     MyNavigator(
                       curves: Curves.ease,
-                      screen: CameraScreen(
+                      screen: PickImageScreen(
                         kid: kid,
                       ),
                     ),

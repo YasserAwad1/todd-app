@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class LocalRepo {
   String? token;
   String? role;
+  String? language;
 
   saveToken(String token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -14,6 +15,18 @@ class LocalRepo {
     token = prefs.getString('token');
 
     return token;
+  }
+
+  setLanguage(String languageCode) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('language', languageCode);
+  }
+
+  getLanguage()async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    language = prefs.getString('language');
+
+    return language;
   }
 
   vartoken(String token2) {

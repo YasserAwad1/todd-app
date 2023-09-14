@@ -10,7 +10,7 @@ class KidImagesService {
   var token = locator.get<LocalRepo>().token;
   // bool hasError = false;
 
-  Future<bool> sendKidImage(int childId, File? image) async {
+  Future<bool> sendKidImage(int childId, List<File?> images) async {
     Map<String, String> headers = {
       "Accept": "application/json",
       'Authorization': 'Bearer $token'
@@ -19,10 +19,12 @@ class KidImagesService {
     try {
       final url = Uri.parse(Endpoints.sendKidImage);
       final request = http.MultipartRequest('POST', url);
-      request.files.add(
-        await http.MultipartFile.fromPath('image', image!.path,
-            filename: image.path.split('/').last),
-      );
+      for (var image in images) {
+        request.files.add(
+          await http.MultipartFile.fromPath('image', image!.path,
+              filename: image.path.split('/').last),
+        );
+      }
 
       request.headers.addAll(headers);
 

@@ -20,7 +20,7 @@ class EventWidget extends StatelessWidget {
           context,
           MyNavigator(
             screen: EventPhotosScreen(event: event),
-            curves: Curves.bounceIn,
+            curves: Curves.easeInOut,
           ),
         );
       },

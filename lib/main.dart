@@ -20,6 +20,7 @@ import 'package:toddily_preschool/main/statuses/providers/status_provider.dart';
 import 'package:toddily_preschool/main/statuses/screens/statuses_screen_to_send.dart';
 import 'package:toddily_preschool/social_media_expert/providers/kid_image_provider.dart';
 import 'package:toddily_preschool/social_media_expert/screens/camera_screen.dart';
+import 'package:toddily_preschool/social_media_expert/screens/pick_image_screen.dart';
 import 'package:toddily_preschool/social_media_expert/screens/taken_images_screen.dart';
 
 //language
@@ -72,9 +73,9 @@ class MyApp extends StatelessWidget {
               ChangeNotifierProvider(
                 create: (ctx) => EventProvider(),
               ),
-              ChangeNotifierProvider(
-                create: (ctx) => CameraProvider(),
-              ),
+              // ChangeNotifierProvider(
+              //   create: (ctx) => CameraProvider(),
+              // ),
               ChangeNotifierProvider<LanguageProvider>(
                 create: (ctx) => LanguageProvider(),
               ),
@@ -152,8 +153,8 @@ class MyApp extends StatelessWidget {
                       ImageSelectionScreen(),
                   // RolesScreen.routeName: (context) => RolesScreen(),
                   smeImagesScreen.routeName: (context) => smeImagesScreen(),
-                  CameraScreen.routeName: (context) => CameraScreen(),
-                  TakenImagesScreen.routeName: (context) => TakenImagesScreen(),
+                  // CameraScreen.routeName: (context) => CameraScreen(),
+                  // TakenImagesScreen.routeName: (context) => TakenImagesScreen(),
                   NotificationsScreen.routeName: (context) =>
                       NotificationsScreen(),
                   EventPhotosScreen.routeName: (context) => EventPhotosScreen(),
@@ -162,6 +163,7 @@ class MyApp extends StatelessWidget {
                   SendReportScreen.routeName: (context) => SendReportScreen(),
                   StatusesScreenToSend.routeName: (context) =>
                       StatusesScreenForPreview(),
+                  PickImageScreen.routeName: (context) => PickImageScreen(),
                 },
               );
             }),
