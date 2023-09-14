@@ -3,11 +3,16 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:progress_state_button/iconed_button.dart';
 import 'package:progress_state_button/progress_button.dart';
+import 'package:provider/provider.dart';
+import 'package:toddily_preschool/common/my_navigator.dart';
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
 import 'package:multi_image_picker_view/multi_image_picker_view.dart';
+import 'package:toddily_preschool/main/kids/screens/kids_screen.dart';
 import 'package:toddily_preschool/models/kids/kid_model.dart';
+import 'package:toddily_preschool/social_media_expert/providers/kid_image_provider.dart';
 
 class PickImageScreen extends StatefulWidget {
   static const routeName = '/pick-image-screen';
@@ -27,7 +32,7 @@ class _PickImageScreenState extends State<PickImageScreen> {
       allowedImageTypes: ['png', 'jpg', 'jpeg'],
       images: <ImageFile>[]);
 
-  List<ImageFile>? images;
+  // List<ImageFile>? images;
 
   ButtonState stateOnlyText = ButtonState.idle;
   ButtonState stateTextWithIcon = ButtonState.idle;
@@ -39,18 +44,21 @@ class _PickImageScreenState extends State<PickImageScreen> {
           stateTextWithIcon = ButtonState.loading;
         });
 
+        bool success = await Provider.of<KidImageProvider>(context, listen: false)
+            .sendKidImages(widget.kid!.id!);
+
         setState(() {
-          // stateTextWithIcon = success ? ButtonState.success : ButtonState.fail;
+          stateTextWithIcon = success ? ButtonState.success : ButtonState.fail;
           if (stateTextWithIcon == ButtonState.success) {
             Future.delayed(const Duration(milliseconds: 800))
                 .then((value) async {
-              // Navigator.pop(
-              //   context,
-              //   MyNavigator(
-              //     curves: Curves.easeIn,
-              //     screen: DatesScreen(),
-              //   ),
-              // );
+              Navigator.pop(
+                context,
+                MyNavigator(
+                  curves: Curves.easeIn,
+                  screen: KidsScreen(),
+                ),
+              );
             });
           }
         });
@@ -118,6 +126,19 @@ class _PickImageScreenState extends State<PickImageScreen> {
                 children: [
                   MultiImagePickerView(
                     onChange: (list) {
+                      if (list.isNotEmpty) {
+                        List<String?> imagesToSend =
+                            list.map((element) => element.path).toList();
+                        print(
+                            '********************IMAGES LENGTH*********************');
+                        print(imagesToSend.length);
+                        print(
+                            '********************IMAGES LENGTH*********************');
+                        Provider.of<KidImageProvider>(context, listen: false)
+                            .chosenImages
+                            .addAll(imagesToSend);
+                      }
+
                       // if (images!.isNotEmpty) {
                       //   for (final image in images!) {
                       //     if (image.hasPath) {

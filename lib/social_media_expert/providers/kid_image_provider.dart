@@ -7,15 +7,18 @@ import 'package:toddily_preschool/social_media_expert/service/kid_images_service
 
 class KidImageProvider with ChangeNotifier {
   KidImagesService service = KidImagesService();
-  List<XFile> capturedImages = [];
+  List<String?> chosenImages = [];
 
   sendKidImages(
     int childId,
   ) async {
     try {
       List<File?> imagesToSend = [];
-      for (int i = 0; i < capturedImages.length; i++) {
-        imagesToSend.add(File(capturedImages[i].path));
+      // print(chosenImages[0]);
+      if (chosenImages.isNotEmpty) {
+        for (int i = 0; i < chosenImages.length; i++) {
+          imagesToSend.add(File(chosenImages[i]!));
+        }
       }
       bool success = await service.sendKidImage(childId, imagesToSend);
       return success;

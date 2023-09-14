@@ -21,7 +21,7 @@ class KidImagesService {
       final request = http.MultipartRequest('POST', url);
       for (var image in images) {
         request.files.add(
-          await http.MultipartFile.fromPath('image', image!.path,
+          await http.MultipartFile.fromPath('images', image!.path,
               filename: image.path.split('/').last),
         );
       }
@@ -36,7 +36,7 @@ class KidImagesService {
       print('********responseee*******');
       print(response.statusCode);
       if (response.statusCode < 300) {
-        print('resister success');
+        print('Images Sent Successfuly');
         return true;
       } else {
         return false;

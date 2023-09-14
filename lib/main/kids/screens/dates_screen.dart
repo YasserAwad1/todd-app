@@ -149,11 +149,11 @@ class _DatesScreenState extends State<DatesScreen> {
                   return FutureBuilder(
                       future: _datesFuture,
                       builder: (context, snapshot) {
-                        if(datesProvider.hasError){
-                          return CustomErrorWidget();
-                        }
                         if (datesProvider.isLoading) {
                           return RippleWidget();
+                        }
+                        if(datesProvider.hasError){
+                          return CustomErrorWidget();
                         }
                         List<DateModel> dates =
                             datesProvider
