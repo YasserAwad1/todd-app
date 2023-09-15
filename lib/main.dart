@@ -137,6 +137,7 @@ class MyApp extends StatelessWidget {
                 ),
                 home: SplashScreen(),
                 routes: {
+                  SplashScreen.routeName: (context) => SplashScreen(),
                   KidsScreen.routeName: (context) => KidsScreen(),
                   DatesScreen.routeName: (context) => DatesScreen(),
                   StatusesScreenForPreview.routeName: (context) =>

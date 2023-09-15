@@ -19,10 +19,10 @@ class KidImagesService {
     try {
       final url = Uri.parse(Endpoints.sendKidImage);
       final request = http.MultipartRequest('POST', url);
-      for (var image in images) {
+      for (int i = 0; i < images.length; i++) {
         request.files.add(
-          await http.MultipartFile.fromPath('images', image!.path,
-              filename: image.path.split('/').last),
+          await http.MultipartFile.fromPath('images[]', images[i]!.path,
+              filename: images[i]!.path.split('/').last),
         );
       }
 
@@ -37,6 +37,7 @@ class KidImagesService {
       print(response.statusCode);
       if (response.statusCode < 300) {
         print('Images Sent Successfuly');
+        images.clear();
         return true;
       } else {
         return false;
@@ -49,12 +50,12 @@ class KidImagesService {
       // },
       //   body: kidImageModel.toJson(),
       // );
-      print(response.statusCode);
-      if (response.statusCode < 300) {
-        return true;
-      } else {
-        return false;
-      }
+      // print(response.statusCode);
+      // if (response.statusCode < 300) {
+      //   return true;
+      // } else {
+      //   return false;
+      // }
     } catch (e) {
       print('*************SENDING KID IMAGE*************');
       print(e);

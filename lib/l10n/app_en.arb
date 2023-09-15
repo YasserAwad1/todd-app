@@ -127,13 +127,24 @@
     "@checkInternet":{
         "description": "none"
     },
-    "noInformation": "No Information.",
+    "noInformation": "No Information",
     "@noInformation":{
         "description": "none"
     },
     "aboutParagraph": "A new educational story... your child will be a part of it to develop his seven intelligences... and move from one room to another to learn through his five senses... We teach children communication skills of all kinds, visual, auditory and verbal... and we believe in their importance in our time due to human dependence on electronic devices and their widespread use by children. Our curriculum used in teaching children is OXFORD, and we use the theory of multiple intelligences in teaching the curriculum out of our belief that every child is intelligent, but our mission is to help him excel.",
     "@aboutParagraph":{
         "description": "none"
+    },
+    "noInternetConnection": "No Internet Conntection",
+    "@noInternetConnection":{
+        "description": "none"
+    },
+    "exit": "Exit",
+    "@exit":{
+        "description": "none"
+    },
+    "tryAgain": "Try Again",
+    "@tryAgain":{
+        "description": "none"
     }
-
 }

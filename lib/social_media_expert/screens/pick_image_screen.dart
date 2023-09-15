@@ -40,28 +40,40 @@ class _PickImageScreenState extends State<PickImageScreen> {
   void onPressedIconWithText() async {
     switch (stateTextWithIcon) {
       case ButtonState.idle:
-        setState(() {
-          stateTextWithIcon = ButtonState.loading;
-        });
+        if (controller.images.isEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(
+              'please choose an image',
+            ),
+            backgroundColor: Colors.red,
+          ));
+        } else {
+          setState(() {
+            stateTextWithIcon = ButtonState.loading;
+          });
+          Provider.of<KidImageProvider>(context, listen: false).chosenImages =
+              controller.images.map((element) => element.path).toList();
+          bool success =
+              await Provider.of<KidImageProvider>(context, listen: false)
+                  .sendKidImages(widget.kid!.id!);
 
-        bool success = await Provider.of<KidImageProvider>(context, listen: false)
-            .sendKidImages(widget.kid!.id!);
-
-        setState(() {
-          stateTextWithIcon = success ? ButtonState.success : ButtonState.fail;
-          if (stateTextWithIcon == ButtonState.success) {
-            Future.delayed(const Duration(milliseconds: 800))
-                .then((value) async {
-              Navigator.pop(
-                context,
-                MyNavigator(
-                  curves: Curves.easeIn,
-                  screen: KidsScreen(),
-                ),
-              );
-            });
-          }
-        });
+          setState(() {
+            stateTextWithIcon =
+                success ? ButtonState.success : ButtonState.fail;
+            if (stateTextWithIcon == ButtonState.success) {
+              Future.delayed(const Duration(milliseconds: 800))
+                  .then((value) async {
+                Navigator.pop(
+                  context,
+                  MyNavigator(
+                    curves: Curves.easeIn,
+                    screen: KidsScreen(),
+                  ),
+                );
+              });
+            }
+          });
+        }
 
         break;
       case ButtonState.loading:
@@ -126,27 +138,35 @@ class _PickImageScreenState extends State<PickImageScreen> {
                 children: [
                   MultiImagePickerView(
                     onChange: (list) {
-                      if (list.isNotEmpty) {
-                        List<String?> imagesToSend =
-                            list.map((element) => element.path).toList();
-                        print(
-                            '********************IMAGES LENGTH*********************');
-                        print(imagesToSend.length);
-                        print(
-                            '********************IMAGES LENGTH*********************');
-                        Provider.of<KidImageProvider>(context, listen: false)
-                            .chosenImages
-                            .addAll(imagesToSend);
-                      }
-
-                      // if (images!.isNotEmpty) {
-                      //   for (final image in images!) {
-                      //     if (image.hasPath) {
-                      //       images!.add(File(image.path!));
-                      //     } else
-                      //       request.addFile(File.fromRawPath(image.bytes!));
+                      controller.images;
+                      //   // print('***********************NEW LENGTH   *****************');
+                      //   // print(controller.images.length);
+                      //   // print('***********************NEW LENGTH   *****************');
+                      //   if (list.isNotEmpty) {
+                      //     List<String?> imagesToSend = controller.images
+                      //         .map((element) => element.path)
+                      //         .toList();
+                      //     print(
+                      //         '********************IMAGES LENGTH*********************');
+                      //     for (int i = 0; i < imagesToSend.length; i++) {
+                      //       print(imagesToSend[i]);
+                      //     }
+                      //     print(
+                      //         '********************IMAGES LENGTH*********************');
+                      //     Provider.of<KidImageProvider>(context, listen: false)
+                      //         .chosenImages
+                      //         .addAll(imagesToSend);
+                      //     imagesToSend.clear();
                       //   }
-                      // }
+
+                      //   // if (images!.isNotEmpty) {
+                      //   //   for (final image in images!) {
+                      //   //     if (image.hasPath) {
+                      //   //       images!.add(File(image.path!));
+                      //   //     } else
+                      //   //       request.addFile(File.fromRawPath(image.bytes!));
+                      //   //   }
+                      //   // }
                     },
                     controller: controller,
                     padding: const EdgeInsets.all(10),

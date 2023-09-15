@@ -13,39 +13,39 @@ class StatusService {
   var token = locator.get<LocalRepo>().token;
   bool hasError = false;
 
-  Future<List<StatusModel>> getStatuses() async {
-    try {
-      final url = Uri.parse(Endpoints.statuses);
+  // Future<List<StatusModel>> getStatuses() async {
+  //   try {
+  //     final url = Uri.parse(Endpoints.statuses);
 
-      final response = await http.get(
-        url,
-        headers: {
-          "Accept": "application/json",
-          'Authorization': 'Bearer $token'
-        },
-      );
+  //     final response = await http.get(
+  //       url,
+  //       headers: {
+  //         "Accept": "application/json",
+  //         'Authorization': 'Beare $token'
+  //       },
+  //     );
 
-      if (response.statusCode < 300) {
-        final jsonResponse = jsonDecode(response.body);
-        print('****************status RESPONSE************');
-        print(jsonResponse[0]);
-        print('****************status RESPONSE************');
-        final statuses = (jsonResponse as List)
-            .map(
-              (e) => StatusModel.fromJson(e),
-            )
-            .toList();
+  //     if (response.statusCode < 300) {
+  //       final jsonResponse = jsonDecode(response.body);
+  //       print('****************status RESPONSE************');
+  //       print(jsonResponse[0]);
+  //       print('****************status RESPONSE************');
+  //       final statuses = (jsonResponse as List)
+  //           .map(
+  //             (e) => StatusModel.fromJson(e),
+  //           )
+  //           .toList();
 
-        return statuses;
-      } else {
-        print('error');
-        return [];
-      }
-    } catch (e) {
-      print(e);
-      rethrow;
-    }
-  }
+  //       return statuses;
+  //     } else {
+  //       print('error');
+  //       return [];
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //     rethrow;
+  //   }
+  // }
 
   Future<List<StatusModel>> getChildStatusByDate(
       int childId, String date) async {
@@ -57,7 +57,7 @@ class StatusService {
         "Accept": "application/json",
         'Authorization': 'Bearer $token'
       }, body: {
-        "date": date,
+        "dat": date,
       });
 
       if (response.statusCode < 300) {

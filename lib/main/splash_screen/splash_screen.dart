@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:toddily_preschool/auth/providers/auth_provider.dart';
 import 'package:toddily_preschool/auth/screens/sign_in_screen.dart';
@@ -9,16 +11,48 @@ import 'package:toddily_preschool/locator.dart';
 import 'package:toddily_preschool/main/about/screens/about_screen.dart';
 import 'package:toddily_preschool/main/classes/screens/classes_screen.dart';
 import 'package:toddily_preschool/main/kids/screens/kids_screen.dart';
+import 'package:toddily_preschool/main/splash_screen/widgets/no_internet_dialog.dart';
 import 'package:toddily_preschool/models/user/user_model.dart';
 import 'package:video_player/video_player.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 class SplashScreen extends StatefulWidget {
+  static const routeName = '/splash-screen';
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  ConnectivityResult _connectionStatus = ConnectivityResult.none;
+  final Connectivity _connectivity = Connectivity();
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+  late ConnectivityResult result;
+
+  Future<void> initConnectivity() async {
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      result = await _connectivity.checkConnectivity();
+    } on PlatformException catch (e) {
+      // developer.log('Couldn\'t check connectivity status', error: e);
+      return;
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) {
+      return Future.value(null);
+    }
+
+    return _updateConnectionStatus(result);
+  }
+
+  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+    setState(() {
+      _connectionStatus = result;
+    });
+  }
+
   VideoPlayerController? _videoPlayerController;
   // ChewieController? _chewieController;
   var _userFuture;
@@ -35,10 +69,23 @@ class _SplashScreenState extends State<SplashScreen> {
       _videoPlayerController!.setLooping(false);
       _videoPlayerController!.play();
     });
+    initConnectivity();
+
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
     Timer(const Duration(seconds: 6), () async {
+      if (result == ConnectivityResult.none) {
+        // ignore: use_build_context_synchronously
+        showDialog(
+            context: context,
+            builder: (context) {
+              return NoInternetDialog();
+            });
+      }
       bool isTokenValid =
           await Provider.of<AuthProvider>(context, listen: false)
               .isTokenValid();
+
       if (isTokenValid) {
         // ignore: use_build_context_synchronously
         _userFuture = await Provider.of<UserProvider>(context, listen: false)
@@ -89,6 +136,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void dispose() {
     _videoPlayerController!.dispose();
+    _connectivitySubscription.cancel();
     super.dispose();
   }
 

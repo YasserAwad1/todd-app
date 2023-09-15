@@ -33,51 +33,6 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  // assignRole() {
-  //   roleName = locator.get<LocalRepo>().role;
-  // }
-
-  // String getUserRole() {
-  //   return roleName!;
-  // }
-
-  // bool classesTile() {
-  //   if (roleName == 'admin' ||
-  //       roleName == 'social' ||
-  //       roleName == 'doctor' ) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
-
-  // bool kidsTile(){
-  //   if (roleName == 'teacher' ||
-  //       roleName == 'parent' ||
-  //       roleName == 'extra' ) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
-
-  // bool forDatesScreen() {
-  //   if (roleName == 'admin' ||
-  //       roleName == 'social' ||
-  //       roleName == 'parent' ||
-  //       roleName == 'extra' ||
-  //       roleName == 'teacher') {
-  //     return true;
-  //   }
-  //   return false;
-  // }
-
-  // setGuest() {
-  //   locator.get<LocalRepo>().saveRole('guest');
-  //   locator.get<LocalRepo>().varRole('guest');
-  //   roleName = 'guest';
-  //   isGuest = true;
-  //   notifyListeners();
-  // }
-
   Future<bool> isTokenValid() async {
     // Make the HTTP request to the token validation endpoint
     var checkToken = await locator.get<LocalRepo>().getToken();
@@ -86,10 +41,15 @@ class AuthProvider with ChangeNotifier {
     print(checkToken);
     // print(roleName);
     print('*************check TOken***********');
+    print('I AM GETTING HERE');
     final response = await http.get(
       Uri.parse(Endpoints.baseUrl),
       headers: {'Authorization': 'Bearer $checkToken'},
     );
+    print('*********************isTokenValid*****************');
+    // print(isTokenValid);
+    print(response.statusCode);
+    print('*********************isTokenValid*****************');
 
     // Check the response status code
     if (response.statusCode >= 300 || checkToken == null) {

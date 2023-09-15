@@ -97,11 +97,11 @@ class _StatusesScreenForPreviewState extends State<StatusesScreenForPreview> {
                 child: FutureBuilder(
                     future: _sentStatusesByDateFuture,
                     builder: (context, snapshot) {
-                      if (statusProvider.hasError) {
-                        return CustomErrorWidget(height: 0.h,);
-                      }
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return RippleWidget(height: 0.h,);
+                      }
+                      if (statusProvider.hasError) {
+                        return CustomErrorWidget(height: 0.h,);
                       }
                       List<StatusModel> childStatusesByDate =
                           statusProvider.childStatusesByDate;

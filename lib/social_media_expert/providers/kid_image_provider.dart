@@ -20,7 +20,15 @@ class KidImageProvider with ChangeNotifier {
           imagesToSend.add(File(chosenImages[i]!));
         }
       }
+      print('*****************IMAGES TO SEND********************');
+      print(imagesToSend);
+
+      print('*****************IMAGES TO SEND********************');
       bool success = await service.sendKidImage(childId, imagesToSend);
+      if (success) {
+        imagesToSend.clear();
+        chosenImages.clear();
+      }
       return success;
     } catch (e) {
       print(e);
