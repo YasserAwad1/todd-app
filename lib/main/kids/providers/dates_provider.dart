@@ -7,6 +7,7 @@ class DatesProvider with ChangeNotifier {
   DatesService _service = DatesService();
   bool hasError = false;
   bool isLoading = false;
+  // bool isComingToView = false;
 
   getDatesByChildId(int childId) async {
     try {

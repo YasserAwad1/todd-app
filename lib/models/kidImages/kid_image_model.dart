@@ -8,7 +8,7 @@ class KidImageModel {
   final int? id;
   final int? childId;
   final String? image;
-  final bool? isImageChecked;
+  final int? isImageChecked;
 
   KidImageModel({
     this.id,

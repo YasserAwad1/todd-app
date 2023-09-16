@@ -21,6 +21,7 @@ import 'package:toddily_preschool/main/kids/providers/kids_provider.dart';
 import 'package:toddily_preschool/main/kids/widgets/kid_widget.dart';
 import 'package:toddily_preschool/main/statuses/providers/status_provider.dart';
 import 'package:toddily_preschool/models/kids/kid_model.dart';
+import 'package:toddily_preschool/social_media_expert/providers/kid_image_provider.dart';
 
 class KidsScreen extends StatefulWidget {
   static const routeName = '/kids-screen';
@@ -77,9 +78,8 @@ class _KidsScreenState extends State<KidsScreen> {
         key: _scaffoldKey,
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            var success = Provider.of<StatusProvider>(context, listen: false)
-                .testStatus();
-            print(success);
+            await Provider.of<KidImageProvider>(context, listen: false)
+                .getKidImagesToCheck(13);
           },
         ),
         appBar: CustomAppBar(

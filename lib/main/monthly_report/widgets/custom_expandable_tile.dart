@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:toddily_preschool/common/my_navigator.dart';
+import 'package:toddily_preschool/common/navigators/my_navigator.dart';
 import 'package:toddily_preschool/common/user/provider/user_provider.dart';
 import 'package:toddily_preschool/main/monthly_report/screens/send_report_screen.dart';
 import 'package:toddily_preschool/models/kids/kid_model.dart';

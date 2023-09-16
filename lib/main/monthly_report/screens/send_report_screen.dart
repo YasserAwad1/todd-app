@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:progress_state_button/iconed_button.dart';
 import 'package:progress_state_button/progress_button.dart';
 import 'package:provider/provider.dart';
-import 'package:toddily_preschool/common/my_navigator.dart';
+import 'package:toddily_preschool/common/navigators/my_navigator.dart';
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
 import 'package:toddily_preschool/main/monthly_report/providers/report_provider.dart';
 import 'package:toddily_preschool/main/monthly_report/screens/monthly_report_screen.dart';

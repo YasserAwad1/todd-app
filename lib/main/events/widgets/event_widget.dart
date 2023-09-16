@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toddily_preschool/common/constants/end_points.dart';
-import 'package:toddily_preschool/common/my_navigator.dart';
+import 'package:toddily_preschool/common/navigators/my_navigator.dart';
 import 'package:toddily_preschool/main/events/screens/event_photos_screen.dart';
 import 'package:toddily_preschool/models/events/event_model.dart';
 

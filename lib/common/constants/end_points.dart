@@ -17,5 +17,8 @@ class Endpoints {
   static const getChildStatusByDate = '$baseUrl/api/get-child-status-date';
   static const getStatusesToSend = '$baseUrl/api/get-status-by-child';
   static const sendKidImage = '$baseUrl/api/child-image';
+  static const getChildImagesToCheck = '$baseUrl/api/child-images';
+  static const checkImage = '$baseUrl/api/image-check';
+  static const deleteImageCopy = '$baseUrl/api/child-image';
 
 }

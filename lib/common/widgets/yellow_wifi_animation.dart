@@ -4,12 +4,12 @@ import 'dart:ui';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class WifiAnimation extends StatefulWidget {
+class YellowWifiAnimation extends StatefulWidget {
   @override
-  _WifiAnimationState createState() => _WifiAnimationState();
+  _YellowWifiAnimationState createState() => _YellowWifiAnimationState();
 }
 
-class _WifiAnimationState extends State<WifiAnimation>
+class _YellowWifiAnimationState extends State<YellowWifiAnimation>
     with TickerProviderStateMixin {
   AnimationController? firstController;
   Animation<double>? firstAnimation;
@@ -46,7 +46,7 @@ class _WifiAnimationState extends State<WifiAnimation>
 
     secondController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 1),
+      duration: const Duration(seconds: 1),
     );
     secondAnimation = Tween<double>(begin: .5, end: .41).animate(
         CurvedAnimation(parent: secondController!, curve: Curves.easeInOut))
@@ -63,7 +63,7 @@ class _WifiAnimationState extends State<WifiAnimation>
 
     thirdController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 1),
+      duration: const Duration(seconds: 1),
     );
     thirdAnimation = Tween<double>(begin: .63, end: .52).animate(
         CurvedAnimation(parent: thirdController!, curve: Curves.easeInOut))
@@ -80,7 +80,7 @@ class _WifiAnimationState extends State<WifiAnimation>
 
     fourthController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 1),
+      duration: const Duration(seconds: 1),
     );
     fourthAnimation = Tween<double>(begin: .76, end: .63).animate(
         CurvedAnimation(parent: fourthController!, curve: Curves.easeInOut))
@@ -144,7 +144,7 @@ class DrawPath extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    Color designColor = Colors.white;
+    Color designColor = Color.fromARGB(255, 255, 207, 58);
 
     Paint firstPaint = Paint()
       ..color = designColor
@@ -160,7 +160,7 @@ class DrawPath extends CustomPainter {
     firstPath.moveTo(0, size.height * height1);
     firstPath.arcToPoint(
       Offset(size.width, size.height * height1),
-      radius: Radius.circular(135),
+      radius: const Radius.circular(135),
     );
 
     canvas.drawPath(firstPath, firstPaint);
@@ -169,7 +169,7 @@ class DrawPath extends CustomPainter {
     secondPath.moveTo(size.width * .16, size.height * height2);
     secondPath.arcToPoint(
       Offset(size.width * .84, size.height * height2),
-      radius: Radius.circular(90),
+      radius: const Radius.circular(90),
     );
 
     canvas.drawPath(secondPath, firstPaint);
@@ -178,7 +178,7 @@ class DrawPath extends CustomPainter {
     thirdPath.moveTo(size.width * .33, size.height * height3);
     thirdPath.arcToPoint(
       Offset(size.width * .67, size.height * height3),
-      radius: Radius.circular(43),
+      radius: const Radius.circular(43),
     );
 
     canvas.drawPath(thirdPath, firstPaint);

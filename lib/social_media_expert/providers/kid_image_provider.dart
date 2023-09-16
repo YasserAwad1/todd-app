@@ -8,6 +8,9 @@ import 'package:toddily_preschool/social_media_expert/service/kid_images_service
 class KidImageProvider with ChangeNotifier {
   KidImagesService service = KidImagesService();
   List<String?> chosenImages = [];
+  List<KidImageModel> kidPhotosToCheck = [];
+  bool hasError = false;
+  bool isLoading = false;
 
   sendKidImages(
     int childId,
@@ -33,6 +36,34 @@ class KidImageProvider with ChangeNotifier {
     } catch (e) {
       print(e);
       return false;
+    }
+  }
+
+  getKidImagesToCheck(int childId) async {
+    try {
+      kidPhotosToCheck = await service.getKidPhotosToCheck(childId);
+      hasError = service.hasError;
+    } catch (e) {
+      hasError = service.hasError;
+      print(e);
+    }
+  }
+
+  checkImage(int imageId) async {
+    try {
+      bool success = await service.checkImage(imageId);
+      return success;
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  deleteImageCopy(int imageId)async{
+    try {
+      bool success = await service.deleteImageCopy(imageId);
+      return success;
+    } catch (e) {
+      print(e);
     }
   }
 }

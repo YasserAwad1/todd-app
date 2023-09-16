@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:toddily_preschool/auth/providers/auth_provider.dart';
-import 'package:toddily_preschool/common/my_navigator.dart';
+import 'package:toddily_preschool/common/navigators/my_navigator.dart';
 import 'package:toddily_preschool/common/user/provider/user_provider.dart';
 
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
@@ -120,21 +120,17 @@ class _DatesScreenState extends State<DatesScreen> {
                     icon: Icons.add,
                     function: () {
                       Navigator.push(
-                          context,
-                          MyNavigator(
-                              curves: Curves.easeIn,
-                              screen: StatusesScreenToSend(
-                                childId: widget.kid!.id,
-                              )));
+                        context,
+                        MyNavigator(
+                          curves: Curves.easeIn,
+                          screen: StatusesScreenToSend(
+                            childId: widget.kid!.id,
+                          ),
+                        ),
+                      );
                     },
                   )
                 : null,
-        appBar: CustomAppBar(
-          scaffoldKey: null,
-          title: widget.kid!.name,
-          titleContainerWidth: 230.w,
-          withBackButton: true,
-        ),
         body: LiquidPullToRefresh(
           onRefresh: () {
             return _refreshData();
@@ -144,50 +140,46 @@ class _DatesScreenState extends State<DatesScreen> {
           color: Theme.of(context).colorScheme.secondary,
           child: Column(
             children: [
-              Consumer<DatesProvider>(
-                builder: (context, datesProvider, _) {
-                  return FutureBuilder(
-                      future: _datesFuture,
-                      builder: (context, snapshot) {
-                        if (datesProvider.isLoading) {
-                          return RippleWidget();
-                        }
-                        if(datesProvider.hasError){
-                          return CustomErrorWidget();
-                        }
-                        List<DateModel> dates =
-                            datesProvider
-                                .dates;
-                        if (dates.isEmpty) {
-                          return const NoInformationWidget();
-                        }
-                        return Expanded(
-                          child: GridView.builder(
-                              physics: const BouncingScrollPhysics(),
-                              padding: EdgeInsets.all(20.sp),
-                              shrinkWrap: true,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 20.w,
-                                childAspectRatio: 1.15.sp,
-                                mainAxisSpacing: 15.h,
-                              ),
-                              itemCount: dates.length,
-                              itemBuilder: (context, i) {
-                                _currentIndex = i % characters.length;
-                                return DateWidget(
-                                  image: characters[_currentIndex],
-                                  index: i,
-                                  startAnimation: startAnimation,
-                                  sentDate: dates[i].date,
-                                  childId: widget.kid!.id!,
-                                );
-                              }),
-                        );
-                      });
-                }
-              )
+              Consumer<DatesProvider>(builder: (context, datesProvider, _) {
+                return FutureBuilder(
+                    future: _datesFuture,
+                    builder: (context, snapshot) {
+                      if (datesProvider.isLoading) {
+                        return RippleWidget();
+                      }
+                      if (datesProvider.hasError) {
+                        return CustomErrorWidget();
+                      }
+                      List<DateModel> dates = datesProvider.dates;
+                      if (dates.isEmpty) {
+                        return const NoInformationWidget();
+                      }
+                      return Expanded(
+                        child: GridView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            padding: EdgeInsets.all(20.sp),
+                            shrinkWrap: true,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 20.w,
+                              childAspectRatio: 1.15.sp,
+                              mainAxisSpacing: 15.h,
+                            ),
+                            itemCount: dates.length,
+                            itemBuilder: (context, i) {
+                              _currentIndex = i % characters.length;
+                              return DateWidget(
+                                image: characters[_currentIndex],
+                                index: i,
+                                startAnimation: startAnimation,
+                                sentDate: dates[i].date,
+                                childId: widget.kid!.id!,
+                              );
+                            }),
+                      );
+                    });
+              })
             ],
           ),
         ),

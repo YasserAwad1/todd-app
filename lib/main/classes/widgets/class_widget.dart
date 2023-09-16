@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:toddily_preschool/common/my_navigator.dart';
+import 'package:toddily_preschool/common/navigators/my_navigator.dart';
 import 'package:toddily_preschool/main/kids/screens/kids_screen.dart';
 import 'package:toddily_preschool/models/classes/class_model.dart';
 import 'package:toddily_preschool/models/kids/kid_model.dart';

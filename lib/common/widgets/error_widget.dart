@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:toddily_preschool/common/providers/language_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:toddily_preschool/common/widgets/yellow_wifi_animation.dart';
 
 class CustomErrorWidget extends StatelessWidget {
   double? height;
@@ -21,10 +22,7 @@ class CustomErrorWidget extends StatelessWidget {
             SizedBox(
               height: height!.h,
             ),
-            Image.asset(
-              'assets/images/characters/astro3.png',
-              scale: 1.5,
-            ),
+            YellowWifiAnimation(),
             SizedBox(
               height: 10.h,
             ),

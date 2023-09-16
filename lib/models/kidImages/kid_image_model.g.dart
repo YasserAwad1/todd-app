@@ -11,13 +11,13 @@ KidImageModel _$KidImageModelFromJson(Map<String, dynamic> json) =>
       id: json['id'] as int?,
       childId: json['child_id'] as int?,
       image: json['image'] as String?,
-      // isImageChecked: json['isImageChecked'] as bool?,
+      isImageChecked: json['isImageChecked'] as int?,
     );
 
 Map<String, dynamic> _$KidImageModelToJson(KidImageModel instance) =>
     <String, dynamic>{
-      // 'id': instance.id,
+      'id': instance.id,
       'child_id': instance.childId,
       'image': instance.image,
-      // 'teacher_checked': instance.isImageChecked,
+      'teacher_checked': instance.isImageChecked,
     };

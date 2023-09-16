@@ -8,20 +8,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:toddily_preschool/common/constants/end_points.dart';
 import 'package:toddily_preschool/common/providers/language_provider.dart';
+import 'package:toddily_preschool/main/kids/screens/kid_image_list_screen.dart';
 import 'package:toddily_preschool/main/photos/screens/image_list_screen.dart';
-import 'package:toddily_preschool/models/events/event_images_model.dart';
-import 'package:toddily_preschool/models/latestPhotos/photo_model.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:toddily_preschool/models/kidImages/kid_image_model.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 
-class ImageWidget extends StatelessWidget {
+class KidImageWidget extends StatelessWidget {
   final String? title;
   bool startAnimation;
   int index;
   String image;
-  List<PhotoModel> images;
+  List<KidImageModel> images;
 
-  ImageWidget(
+  KidImageWidget(
       {required this.startAnimation,
       required this.index,
       this.title,
@@ -53,7 +52,7 @@ class ImageWidget extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ImageListScreen(
+              builder: (context) => KidImageListScreen(
                 images: images,
                 sentIndex: index,
                 title: title,

@@ -61,7 +61,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         height: 4.h,
                       ),
                       Text(
-                        'AppLocalizations.of(context)!.classes',
+                        AppLocalizations.of(context)!.classes,
                         style: TextStyle(
                             fontFamily: isArabic ? "Lalezar" : "LuckiestGuy",
                             fontSize: isArabic ? 18 : 14.sp),
