@@ -7,11 +7,11 @@ import 'package:toddily_preschool/models/report/report_model.dart';
 import 'package:http/http.dart' as http;
 
 class ReportService {
-  var token = locator.get<LocalRepo>().token;
   bool hasError = false;
 
   Future<List<ReportModel>> getChildReports(int childId) async {
     try {
+      var token = await locator.get<LocalRepo>().getToken();
       final url = Uri.parse('${Endpoints.getChildReports}/$childId');
 
       final response = await http.get(url, headers: {
@@ -41,6 +41,7 @@ class ReportService {
 
   Future<bool> sendReport(String childId, String description) async {
     try {
+      var token = await locator.get<LocalRepo>().getToken();
       final url = Uri.parse(Endpoints.report);
 
       final response = await http.post(url, headers: {
@@ -69,6 +70,7 @@ class ReportService {
     String newDescription,
   ) async {
     try {
+      var token = await locator.get<LocalRepo>().getToken();
       final url = Uri.parse('${Endpoints.report}/$reportId');
 
       final response = await http.put(url, headers: {

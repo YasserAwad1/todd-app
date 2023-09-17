@@ -8,11 +8,11 @@ import 'package:http/http.dart' as http;
 import 'package:toddily_preschool/models/kids/kid_model.dart';
 
 class DatesService {
-  var token = locator.get<LocalRepo>().token;
   bool hasError = false;
 
   Future<List<DateModel>> getDatesOfStatuses(int childId) async {
     try {
+      var token = await locator.get<LocalRepo>().getToken();
       final url = Uri.parse('${Endpoints.dates}/$childId');
       final response = await http.get(url, headers: {
         "Accept": "application/json",

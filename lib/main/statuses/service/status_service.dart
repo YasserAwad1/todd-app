@@ -10,7 +10,7 @@ import 'package:toddily_preschool/models/status/toSendModels/status_to_send_mode
 import 'package:toddily_preschool/models/subStatus/sub_status_model.dart';
 
 class StatusService {
-  var token = locator.get<LocalRepo>().token;
+  
   bool hasError = false;
 
   // Future<List<StatusModel>> getStatuses() async {
@@ -49,6 +49,7 @@ class StatusService {
 
   Future<List<StatusModel>> getChildStatusByDate(
       int childId, String date) async {
+        var token = await locator.get<LocalRepo>().getToken();
     try {
       final url =
           Uri.parse('${Endpoints.childStatusByDate}/${childId.toString()}');
@@ -57,8 +58,10 @@ class StatusService {
         "Accept": "application/json",
         'Authorization': 'Bearer $token'
       }, body: {
-        "dat": date,
+        "date": date,
       });
+
+      print(response.body);
 
       if (response.statusCode < 300) {
         final jsonResponse = jsonDecode(response.body);
@@ -87,6 +90,7 @@ class StatusService {
 
   Future<List<StatusModel>> getStatusesToSend(int childId) async {
     try {
+      var token = await locator.get<LocalRepo>().getToken();
       final url =
           Uri.parse('${Endpoints.getStatusesToSend}/${childId.toString()}');
 
@@ -119,6 +123,7 @@ class StatusService {
 
   Future<bool> sendStatus(int childId, List<SubStatusModel> statuses) async {
     try {
+      var token = await locator.get<LocalRepo>().getToken();
       final url = Uri.parse(Endpoints.sendStatus);
       var sendStatus = SendStatusModel(childId: childId, subStatuses: statuses);
       final response = await http.post(
@@ -147,6 +152,7 @@ class StatusService {
 
   Future<bool> statusTest() async {
     try {
+      var token = await locator.get<LocalRepo>().getToken();
       final url = Uri.parse(Endpoints.sendStatus);
       final response = await http.post(url,
           headers: {

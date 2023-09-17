@@ -12,7 +12,7 @@ import 'package:toddily_preschool/common/widgets/error_widget.dart';
 import 'package:toddily_preschool/common/widgets/ripple.dart';
 import 'package:toddily_preschool/main/FAQ/provider/qa_provider.dart';
 import 'package:toddily_preschool/main/FAQ/widgets/faq_tile.dart';
-import 'package:toddily_preschool/main/FAQ/widgets/slimy_card.dart';
+import 'package:toddily_preschool/main/FAQ/widgets/custom_slimy_card.dart';
 import 'package:toddily_preschool/main/monthly_report/widgets/month_tile_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

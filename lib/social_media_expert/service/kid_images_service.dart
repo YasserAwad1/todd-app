@@ -8,10 +8,10 @@ import 'package:toddily_preschool/models/kidImages/kid_image_model.dart';
 import 'package:http/http.dart' as http;
 
 class KidImagesService {
-  var token = locator.get<LocalRepo>().token;
   bool hasError = false;
 
   Future<bool> sendKidImage(int childId, List<File?> images) async {
+    var token = await locator.get<LocalRepo>().getToken();
     Map<String, String> headers = {
       "Accept": "application/json",
       'Authorization': 'Bearer $token'
@@ -48,10 +48,14 @@ class KidImagesService {
     }
   }
 
-  Future<List<KidImageModel>> getKidPhotosToCheck(int childId) async {
+  Future<List<KidImageModel>> getChildImagesForParents(int childId) async {
+    var token = await locator.get<LocalRepo>().getToken();
     try {
-      final url =
-          Uri.parse('${Endpoints.getChildImagesToCheck}/${childId.toString()}');
+      final url = Uri.parse(
+          '${Endpoints.getChildImagesForParents}/${childId.toString()}');
+      print('****************TOKEN***********************');
+      print(token);
+      print('****************TOKEN***********************');
 
       final response = await http.get(url, headers: {
         "Accept": "application/json",
@@ -79,7 +83,44 @@ class KidImagesService {
     }
   }
 
+  Future<List<KidImageModel>> getKidPhotosToCheck(int childId) async {
+    var token = await locator.get<LocalRepo>().getToken();
+    try {
+      final url =
+          Uri.parse('${Endpoints.getChildImagesToCheck}/${childId.toString()}');
+
+      final response = await http.get(url, headers: {
+        "Accept": "application/json",
+        'Authorization': 'Bearer $token'
+      });
+
+      print('******************KID IMAGES TO CHECK**********************');
+      print(response.body);
+      print('******************KID IMAGES TO CHECK**********************');
+      if (response.statusCode < 300) {
+        final jsonResponse = jsonDecode(response.body);
+        print(jsonResponse['images']);
+        final images = (jsonResponse['images'] as List)
+            .map(
+              (e) => KidImageModel.fromJson(e),
+            )
+            .toList();
+        print(images);
+        hasError = false;
+        return images;
+      } else {
+        hasError = true;
+        throw Exception('Error in getting kid images');
+      }
+    } catch (e) {
+      hasError = true;
+      print(e);
+      throw Exception('Error in getting kid images');
+    }
+  }
+
   Future<bool> checkImage(int imageId) async {
+    var token = await locator.get<LocalRepo>().getToken();
     try {
       final url = Uri.parse('${Endpoints.checkImage}/${imageId.toString()}');
       final response = await http.put(url, headers: {
@@ -99,6 +140,7 @@ class KidImagesService {
   }
 
   Future<bool> deleteImageCopy(int imageId) async {
+    var token = await locator.get<LocalRepo>().getToken();
     try {
       final url =
           Uri.parse('${Endpoints.deleteImageCopy}/${imageId.toString()}');

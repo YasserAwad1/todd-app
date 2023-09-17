@@ -9,8 +9,14 @@ class KidImageProvider with ChangeNotifier {
   KidImagesService service = KidImagesService();
   List<String?> chosenImages = [];
   List<KidImageModel> kidPhotosToCheck = [];
+  List<KidImageModel> kidPhotosForParents = [];
   bool hasError = false;
   bool isLoading = false;
+
+  // triggerLoading(){
+  //   isLoading = !isLoading;
+  //   notifyListeners();
+  // }
 
   sendKidImages(
     int childId,
@@ -49,6 +55,16 @@ class KidImageProvider with ChangeNotifier {
     }
   }
 
+  getChildImagesForParents(int childId) async {
+    try {
+      kidPhotosForParents = await service.getChildImagesForParents(childId);
+      hasError = service.hasError;
+    } catch (e) {
+      hasError = service.hasError;
+      print(e);
+    }
+  }
+
   checkImage(int imageId) async {
     try {
       bool success = await service.checkImage(imageId);
@@ -58,7 +74,7 @@ class KidImageProvider with ChangeNotifier {
     }
   }
 
-  deleteImageCopy(int imageId)async{
+  deleteImageCopy(int imageId) async {
     try {
       bool success = await service.deleteImageCopy(imageId);
       return success;

@@ -154,5 +154,29 @@
     "photos": "Photos",
     "@photos":{
         "description": "none"
+    },
+    "imageSentSuc": "Image Sent Successfully",
+    "@imageSentSuc":{
+        "description": "none"
+    },
+    "errorInSendingImage": "Error occured in sending image",
+    "@errorInSendingImage":{
+        "description": "none"
+    },
+    "imageDeletedSuc": "Image deleted Successfully",
+    "@imageDeletedSuc":{
+        "description": "none"
+    },
+    "errorInDeletingImage": "Error in deleting message",
+    "@errorInDeletingImage":{
+        "description": "none"
+    },
+    "imageDownloadedSuc": "Image downloaded successfully",
+    "@imageDownloadedSuc":{
+        "description": "none"
+    },
+    "errorOccuredWhileDownloadingImage": "Error occured while downloading image",
+    "@errorOccuredWhileDownloadingImage":{
+        "description": "none"
     }
 }

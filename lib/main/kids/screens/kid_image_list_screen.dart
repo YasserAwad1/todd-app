@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:toddily_preschool/common/constants/end_points.dart';
 
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
-import 'package:toddily_preschool/main/photos/providers/photos_povider.dart';
 import 'package:toddily_preschool/models/kidImages/kid_image_model.dart';
-import 'package:toddily_preschool/models/latestPhotos/photo_model.dart';
 
 class KidImageListScreen extends StatefulWidget {
   static const routeName = 'image-list-screen';
@@ -44,7 +41,7 @@ class _KidImageListScreenState extends State<KidImageListScreen> {
       child: Scaffold(
         appBar: CustomAppBar(
           scaffoldKey: null,
-          title: AppLocalizations.of(context)!.latestPhotos,
+          title: widget.title!,
           titleContainerWidth: 150.w,
           withBackButton: true,
           stayEnglish: true,

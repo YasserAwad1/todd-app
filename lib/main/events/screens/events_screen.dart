@@ -80,19 +80,21 @@ class _EventsScreenState extends State<EventsScreen> {
                 child: FutureBuilder(
                     future: _eventFuture,
                     builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return RippleWidget(
+                          height: 0,
+                        );
+                      }
                       if (Provider.of<EventProvider>(context, listen: false)
                           .hasError) {
                         return CustomErrorWidget(
                           height: 0,
                         );
                       }
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return RippleWidget(height: 0,);
-                      }
                       List<EventModel> events =
                           Provider.of<EventProvider>(context, listen: false)
                               .events;
-                      if(events.isEmpty){
+                      if (events.isEmpty) {
                         return NoInformationWidget();
                       }
                       return GridView.builder(

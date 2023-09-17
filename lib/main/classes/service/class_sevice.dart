@@ -6,12 +6,12 @@ import 'package:toddily_preschool/locator.dart';
 import 'package:toddily_preschool/models/classes/class_model.dart';
 
 class ClassService {
-  var token = locator.get<LocalRepo>().token;
   String? message;
   bool hasError = false;
 
   Future<List<ClassModel>> getClasses() async {
     try {
+      var token = await locator.get<LocalRepo>().getToken();
       final url = Uri.parse(Endpoints.classes);
 
       final response = await http.get(url, headers: {
@@ -52,6 +52,7 @@ class ClassService {
 
   Future<ClassModel?> getClassById(int id) async {
     try {
+      var token = await locator.get<LocalRepo>().getToken();
       final url = Uri.parse('${Endpoints.classes}/$id');
 
       final response = await http.get(url, headers: {

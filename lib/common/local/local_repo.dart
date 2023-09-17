@@ -49,8 +49,14 @@ class LocalRepo {
     role = role2;
   }
 
+  deleteValue(String key) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove(key);
+  }
+
   clear() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = null;
     return prefs.clear();
   }
 }

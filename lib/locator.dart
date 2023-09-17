@@ -7,5 +7,4 @@ final locator = GetIt.instance;
 
 void setUp() {
   locator.registerLazySingleton<LocalRepo>(() => LocalRepo());
-  // locator.registerLazySingleton<UserService>(() => UserService());
 }

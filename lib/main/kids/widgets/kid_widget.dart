@@ -114,7 +114,7 @@ class KidsWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(5.sp),
                   child: Image.network(
                     '${Endpoints.baseUrl}${kid.image}',
-                    fit: BoxFit.fill,
+                    fit: BoxFit.contain,
                   ),
                 ),
               ),

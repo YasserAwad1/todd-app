@@ -94,7 +94,6 @@ class _MonthlyReportScreenState extends State<MonthlyReportScreen> {
                   height: 10.h,
                 ),
                 Consumer<ReportProvider>(builder: (context, reportProvider, _) {
-                  // reportProvider.getChildReport(widget.kid!.id!);
                   return FutureBuilder(
                       future: _reportsFuture,
                       builder: (context, snapshot) {
@@ -103,11 +102,9 @@ class _MonthlyReportScreenState extends State<MonthlyReportScreen> {
                         }
                         if (reportProvider.hasError) {
                           return CustomErrorWidget();
-                        } else if (reportProvider.reports.isEmpty) {
-                          return const NoInformationWidget();
                         }
                         List<ReportModel> reports = reportProvider.reports;
-                        if(reports.isEmpty){
+                        if (reports.isEmpty) {
                           return const NoInformationWidget();
                         }
                         return Expanded(

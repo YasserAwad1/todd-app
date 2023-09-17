@@ -7,11 +7,11 @@ import 'package:toddily_preschool/models/kids/kid_model.dart';
 import 'package:http/http.dart' as http;
 
 class KidsService{
-  var token = locator.get<LocalRepo>().token;
   bool hasError = false;
 
   Future<List<KidModel>> getKidsByTeachOrParentId(int userId) async{
     try {
+      var token = await locator.get<LocalRepo>().getToken();
       final url = Uri.parse('${Endpoints.getChildrenByParentOrTeacherId}/$userId');
       final response = await http.get(url, headers: {
         "Accept": "application/json",

@@ -13,6 +13,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class datesScreenView extends StatelessWidget {
   KidModel? kid;
   static const routeName = '/dates-screen-view';
+  // final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
 
   datesScreenView({this.kid});
 
@@ -29,6 +30,7 @@ class datesScreenView extends StatelessWidget {
           titleContainerWidth: 230.w,
           withBackButton: true,
         ),
+        // key: scaffoldKey,
         body: DefaultTabController(
           length: 2,
           child: Column(
@@ -67,6 +69,8 @@ class datesScreenView extends StatelessWidget {
                     DatesScreen(kid: kid),
                     KidPhotosScreen(
                       kid: kid,
+                      dateScreenViewContext: context,
+                      // scaffoldKey: scaffoldKey,
                     ),
                   ],
                 ),

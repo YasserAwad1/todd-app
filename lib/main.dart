@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 //packages
@@ -51,14 +52,29 @@ import 'package:toddily_preschool/common/screens/image_selection_screen.dart';
 import 'package:toddily_preschool/common/screens/roles_screen.dart';
 import 'package:toddily_preschool/common/screens/sme_images_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   setUp();
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    
+  }
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -150,10 +166,10 @@ class MyApp extends StatelessWidget {
                   AboutScreen.routeName: (context) => AboutScreen(),
                   FAQScreen.routeName: (context) => FAQScreen(),
                   ClassesScreen.routeName: (context) => ClassesScreen(),
-                  ImageSelectionScreen.routeName: (context) =>
-                      ImageSelectionScreen(),
+                  // ImageSelectionScreen.routeName: (context) =>
+                  // ImageSelectionScreen(),
                   // RolesScreen.routeName: (context) => RolesScreen(),
-                  smeImagesScreen.routeName: (context) => smeImagesScreen(),
+                  // smeImagesScreen.routeName: (context) => smeImagesScreen(),
                   // CameraScreen.routeName: (context) => CameraScreen(),
                   // TakenImagesScreen.routeName: (context) => TakenImagesScreen(),
                   NotificationsScreen.routeName: (context) =>

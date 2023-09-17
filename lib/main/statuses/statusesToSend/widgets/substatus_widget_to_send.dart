@@ -81,7 +81,7 @@ class _SubstatusWidgetToSendState extends State<SubstatusWidgetToSend> {
         ],
       ),
       width: 310.w,
-      // height: 220.h,
+      // height: 180.h,
       child: Row(
         children: [
           SizedBox(
@@ -124,31 +124,24 @@ class _SubstatusWidgetToSendState extends State<SubstatusWidgetToSend> {
               SizedBox(
                 height: 4.h,
               ),
-              Flexible(
+              SizedBox(
+                width: 150.w,
                 child: SizedBox(
-                  width: 150.w,
-                  child: SizedBox(
-                    // height: double.infinity,
-                    child: TextField(
-                      // expands: true,
-                      onChanged: (value) {
-                        // print(value);
-                        if (value.isNotEmpty) {
-                          widget.subStatus.description = value;
-                        }
-                      },
-                      cursorColor: Colors.white,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        hintStyle: TextStyle(color: Colors.white),
-                        hintText: 'description',
-                      ),
-                      maxLines: null,
-                      minLines: null,
-
-                      // expands: true,
-                      // keyboardType: TextInputType.multiline,
+                  // height: double.infinity,
+                  child: TextField(
+                    onChanged: (value) {
+                      // print(value);
+                      if (value.isNotEmpty) {
+                        widget.subStatus.description = value;
+                      }
+                    },
+                    cursorColor: Colors.white,
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintStyle: TextStyle(color: Colors.white),
+                      hintText: 'description',
                     ),
+                    maxLines: 5,
                   ),
                 ),
               ),

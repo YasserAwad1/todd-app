@@ -92,12 +92,12 @@ class _PhotosScreenState extends State<PhotosScreen> {
               FutureBuilder(
                   future: _photosFuture,
                   builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return RippleWidget();
+                    }
                     if (Provider.of<PhotosProvider>(context, listen: false)
                         .hasError) {
                       return CustomErrorWidget();
-                    }
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return RippleWidget();
                     }
                     List<PhotoModel> photos =
                         Provider.of<PhotosProvider>(context, listen: false)

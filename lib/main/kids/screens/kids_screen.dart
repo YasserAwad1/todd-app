@@ -1,15 +1,9 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 //packages
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:toddily_preschool/auth/providers/auth_provider.dart';
 
 //widgets
 import 'package:toddily_preschool/common/drawer/app_drawer.dart';
@@ -19,7 +13,6 @@ import 'package:toddily_preschool/common/widgets/error_widget.dart';
 import 'package:toddily_preschool/common/widgets/ripple.dart';
 import 'package:toddily_preschool/main/kids/providers/kids_provider.dart';
 import 'package:toddily_preschool/main/kids/widgets/kid_widget.dart';
-import 'package:toddily_preschool/main/statuses/providers/status_provider.dart';
 import 'package:toddily_preschool/models/kids/kid_model.dart';
 import 'package:toddily_preschool/social_media_expert/providers/kid_image_provider.dart';
 

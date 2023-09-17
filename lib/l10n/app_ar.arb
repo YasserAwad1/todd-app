@@ -37,5 +37,11 @@
     "exit": "خروج",
     "tryAgain": "إعادة المحاولة",
     "statuses": "الحالات",
-    "photos": "الصور"
+    "photos": "الصور",
+    "imageSentSuc": "تم إرسال الصورة بنجاح",
+    "errorInSendingImage": "حدث خطأ في إرسال الصورة",
+    "imageDeletedSuc": "تم حذف الصورة بنجاح",
+    "errorInDeletingImage": "حدث خطأ في حذف الصورة",
+    "imageDownloadedSuc": "تم تنزيل الصورة بنجاح",
+    "errorOccuredWhileDownloadingImage":"حدث خطأ في تنزيل الصورة"
 }

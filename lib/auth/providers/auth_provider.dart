@@ -19,9 +19,12 @@ class AuthProvider with ChangeNotifier {
       final success = await _service.logIn(userName, password);
       print(success);
       if (success) {
-        locator.get<LocalRepo>().saveToken(_service.token!);
+        print('********************PROVIDER TOKEN**********************');
+        print(_service.token);
+        print('********************PROVIDER TOKEN**********************');
+        await locator.get<LocalRepo>().saveToken(_service.token!);
         // locator.get<LocalRepo>().saveRole(_service.role!);
-        locator.get<LocalRepo>().vartoken(_service.token!);
+         locator.get<LocalRepo>().vartoken(_service.token!);
         // locator.get<LocalRepo>().varRole(_service.role!);
         // roleName = locator.get<LocalRepo>().role;
         return true;
@@ -61,8 +64,10 @@ class AuthProvider with ChangeNotifier {
 
   logOut() async {
     final _localService = LocalRepo();
+    await _localService.deleteValue('token');
     locator.get<LocalRepo>().token = null;
     var loggedOut = await _localService.clear();
+    notifyListeners();
     if (loggedOut) {
       return true;
     }

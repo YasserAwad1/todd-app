@@ -31,10 +31,6 @@ class StatusWidgetToSend extends StatelessWidget {
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.secondary,
             borderRadius: BorderRadius.only(
-                // topRight: isArabic ? Radius.zero : Radius.circular(10.sp.sp),
-                // bottomRight: isArabic ? Radius.zero : Radius.circular(10.sp.sp),
-                // topLeft: isArabic ? Radius.circular(10.sp.sp) : Radius.zero,
-                // bottomLeft: isArabic ? Radius.circular(10.sp.sp) : Radius.zero,
                 bottomRight: Radius.circular(10.sp),
                 topRight: Radius.circular(10.sp)),
           ),
@@ -59,7 +55,7 @@ class StatusWidgetToSend extends StatelessWidget {
         ),
         SingleChildScrollView(
           child: Container(
-            height: 155.h, //155
+            height: 200.h, //155
             child: ListView.builder(
                 shrinkWrap: true,
                 physics: const BouncingScrollPhysics(),
