@@ -3,6 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 //packages
+import 'package:firebase_core/firebase_core.dart';
+import 'package:toddily_preschool/common/firebaseApi/firebase_api.dart';
+import 'firebase_options.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:toddily_preschool/auth/providers/auth_provider.dart';
@@ -52,8 +55,14 @@ import 'package:toddily_preschool/common/screens/image_selection_screen.dart';
 import 'package:toddily_preschool/common/screens/roles_screen.dart';
 import 'package:toddily_preschool/common/screens/sme_images_screen.dart';
 
+final navigatorKey = GlobalKey<NavigatorState>();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  await FirebaseApi().initNotifications();
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   setUp();
@@ -68,13 +77,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    
   }
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -123,6 +131,7 @@ class _MyAppState extends State<MyApp> {
             child: Builder(builder: (context) {
               return MaterialApp(
                 title: 'Toddily Preschool',
+                navigatorKey: navigatorKey,
                 debugShowCheckedModeBanner: false,
                 localizationsDelegates: const [
                   AppLocalizations.delegate,

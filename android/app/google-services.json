@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "657529628025",
+    "project_id": "toddily-preschool",
+    "storage_bucket": "toddily-preschool.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:657529628025:android:455cb866956104e5747ba8",
+        "android_client_info": {
+          "package_name": "com.example.toddily_preschool"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChAmbiXnc5fIiTYLu4MTn5hCzDaGHZ0FQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

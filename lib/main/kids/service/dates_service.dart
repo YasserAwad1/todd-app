@@ -21,7 +21,7 @@ class DatesService {
       if (response.statusCode < 300) {
         final jsonResponse = jsonDecode(response.body);
         print('***************jsonResponse***********');
-        print(jsonResponse);
+        print(jsonResponse['data']);
         print('***************jsonResponse***********');
         // var data = jsonResponse['data'];
         // print(
