@@ -15,9 +15,9 @@ import 'package:toddily_preschool/common/widgets/ripple.dart';
 import 'package:toddily_preschool/main/monthly_report/providers/report_provider.dart';
 import 'package:toddily_preschool/main/monthly_report/screens/send_report_screen.dart';
 import 'package:toddily_preschool/main/monthly_report/widgets/custom_expandable_tile.dart';
-import 'package:toddily_preschool/main/monthly_report/widgets/month_tile_widget.dart';
 import 'package:toddily_preschool/models/kids/kid_model.dart';
 import 'package:toddily_preschool/models/report/report_model.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MonthlyReportScreen extends StatefulWidget {
   KidModel? kid;
@@ -55,10 +55,11 @@ class _MonthlyReportScreenState extends State<MonthlyReportScreen> {
       child: Scaffold(
         appBar: CustomAppBar(
           scaffoldKey: null,
-          title: 'Monthly Report',
+          title: AppLocalizations.of(context)!.monthlyReport,
           titleContainerWidth: 180.w,
           withBackButton: true,
           withNotification: true,
+          stayEnglish: true,
         ),
         floatingActionButton: Provider.of<UserProvider>(context, listen: false)
                     .currentUser!

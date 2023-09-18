@@ -23,21 +23,6 @@ class DatesService {
         print('***************jsonResponse***********');
         print(jsonResponse['data']);
         print('***************jsonResponse***********');
-        // var data = jsonResponse['data'];
-        // print(
-        //   data.values.map((map) => map['date']).toList(),
-        // );
-        // print(data);
-        // var datesFromBack = data.values.map((map) => map['date']).toList();
-        // print('***************datesFromBack***********');
-        // print(datesFromBack);
-        // print('***************datesFromBack***********');
-        // List<DateModel> dates = datesFromBack
-        //     .map((dateString) => DateModel(date: dateString))
-        //     .toList();
-        // print('***************DATES***********');
-        // print(dates);
-        // print('***************DATES***********');
         List<DateModel> dates = (jsonResponse['data'] as List)
             .map(
               (e) => DateModel.fromJson(e),

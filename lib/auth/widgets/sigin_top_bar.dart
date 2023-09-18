@@ -30,7 +30,8 @@ class SigninTopBar extends StatelessWidget {
         SizedBox(
           width: 20.w,
         ),
-        SizedBox(
+        Container(
+          padding: EdgeInsets.only(top: 3.h),
           height: 130.h,
           width: 100.w,
           child: Image.asset(

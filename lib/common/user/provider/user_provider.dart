@@ -58,6 +58,20 @@ class UserProvider with ChangeNotifier {
     return false;
   }
 
+  bool teacherOrParent() {
+    if (currentUser!.role_id == 2 || currentUser!.role_id == 5) {
+      return true;
+    }
+    return false;
+  }
+
+  bool teacherOrExtra(){
+    if (currentUser!.role_id == 2 || currentUser!.role_id == 6) {
+      return true;
+    }
+    return false;
+  }
+
   bool forDatesScreen() {
     if (currentUser!.role_id == 1 ||
         currentUser!.role_id == 5 ||

@@ -24,11 +24,6 @@ class AuthService {
       if (response.statusCode < 300) {
         token = jsonResponse['token'];
         role = jsonResponse['user']['role'];
-        // print('*************class id *******************');
-        // print(jsonResponse['user']['class']['id']);
-        // print('*************class id *******************');
-        // print(jsonResponse['token']);
-        // print('good');
         return true;
       } else {
         return false;

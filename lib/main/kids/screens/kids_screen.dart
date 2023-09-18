@@ -14,7 +14,7 @@ import 'package:toddily_preschool/common/widgets/ripple.dart';
 import 'package:toddily_preschool/main/kids/providers/kids_provider.dart';
 import 'package:toddily_preschool/main/kids/widgets/kid_widget.dart';
 import 'package:toddily_preschool/models/kids/kid_model.dart';
-import 'package:toddily_preschool/social_media_expert/providers/kid_image_provider.dart';
+import 'package:toddily_preschool/main/social_media_expert/providers/kid_image_provider.dart';
 
 class KidsScreen extends StatefulWidget {
   static const routeName = '/kids-screen';
@@ -38,19 +38,21 @@ class _KidsScreenState extends State<KidsScreen> {
   var _kidsFuture;
 
   bool startAnimation = false;
-  // var _classFuture;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    // _classFuture = Provider.of<ClassProvider>(context, listen: false)
-    //     .getClassById(widget.classId!);
-    if (Provider.of<UserProvider>(context, listen: false).kidsTile()) {
+    if (Provider.of<UserProvider>(context, listen: false).teacherOrParent()) {
       var userId =
           Provider.of<UserProvider>(context, listen: false).getCurrentUserId();
       _kidsFuture = Provider.of<KidsProvider>(context, listen: false)
           .getChildrenByTeachOrParentId(userId!);
+    } else if (Provider.of<UserProvider>(context, listen: false)
+            .getUserRoleId() ==
+        6) {
+      _kidsFuture =
+          Provider.of<KidsProvider>(context, listen: false).getExtrasChildren();
     }
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {
@@ -61,10 +63,8 @@ class _KidsScreenState extends State<KidsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // var currentUser
     return SafeArea(
       child: Scaffold(
-        // backgroundColor: Color.fromARGB(255, 3, 1, 116),
         extendBodyBehindAppBar: false,
         drawerEnableOpenDragGesture: true,
         drawerEdgeDragWidth: 200.w,
@@ -131,10 +131,17 @@ class _KidsScreenState extends State<KidsScreen> {
                                 .hasError) {
                               return CustomErrorWidget();
                             }
-                            List<KidModel> kids = Provider.of<KidsProvider>(
-                                    context,
-                                    listen: false)
-                                .kids;
+
+                            List<KidModel> kids = Provider.of<UserProvider>(
+                                        context,
+                                        listen: false)
+                                    .teacherOrParent()
+                                ? Provider.of<KidsProvider>(context,
+                                        listen: false)
+                                    .kids
+                                : Provider.of<KidsProvider>(context,
+                                        listen: false)
+                                    .extraChildren;
                             return ListView.builder(
                               physics: const ScrollPhysics(),
                               shrinkWrap: true,
@@ -142,7 +149,7 @@ class _KidsScreenState extends State<KidsScreen> {
                               itemBuilder: (context, i) => KidsWidget(
                                 startAnimation: startAnimation,
                                 index: i,
-                                classTitle: 'class',
+                                classTitle: kids[i].className!,
                                 kid: kids[i],
                               ),
                             );

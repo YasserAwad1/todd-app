@@ -9,9 +9,8 @@ import 'package:provider/provider.dart';
 import 'package:toddily_preschool/common/constants/end_points.dart';
 import 'package:toddily_preschool/common/providers/language_provider.dart';
 import 'package:toddily_preschool/main/photos/screens/image_list_screen.dart';
-import 'package:toddily_preschool/models/events/event_images_model.dart';
 import 'package:toddily_preschool/models/latestPhotos/photo_model.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 
 class ImageWidget extends StatelessWidget {
@@ -108,8 +107,10 @@ class ImageWidget extends StatelessWidget {
                               : Colors.red.shade300,
                           content: Text(
                             savedImage
-                                ? 'Image saved to gallery'
-                                : 'Error occured in donwload photo',
+                                ? AppLocalizations.of(context)!
+                                    .imageDownloadedSuc
+                                : AppLocalizations.of(context)!
+                                    .errorOccuredWhileDownloadingImage,
                           ),
                         ),
                       );

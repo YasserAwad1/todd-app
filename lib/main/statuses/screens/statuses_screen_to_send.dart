@@ -1,20 +1,19 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:progress_state_button/iconed_button.dart';
 import 'package:progress_state_button/progress_button.dart';
 import 'package:provider/provider.dart';
 import 'package:toddily_preschool/common/navigators/my_navigator.dart';
-
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
 import 'package:toddily_preschool/common/widgets/error_widget.dart';
 import 'package:toddily_preschool/common/widgets/ripple.dart';
-import 'package:toddily_preschool/main/kids/providers/dates_provider.dart';
-import 'package:toddily_preschool/main/kids/screens/dates_screen.dart';
+import 'package:toddily_preschool/main/kids/dates/providers/dates_provider.dart';
+import 'package:toddily_preschool/main/kids/dates/screens/dates_screen.dart';
 import 'package:toddily_preschool/main/statuses/providers/status_provider.dart';
 import 'package:toddily_preschool/main/statuses/statusesToSend/widgets/status_widget_to_send.dart';
 import 'package:toddily_preschool/models/status/status_model.dart';
@@ -124,19 +123,19 @@ class _StatusesScreenToSendState extends State<StatusesScreenToSend> {
                 child: ProgressButton.icon(
                   iconedButtons: {
                     ButtonState.idle: IconedButton(
-                      text: 'Send',
+                      text: AppLocalizations.of(context)!.send,
                       icon: const Icon(Icons.send, color: Colors.white),
                       color: Theme.of(context).colorScheme.secondary,
                     ),
                     ButtonState.loading: IconedButton(
-                        text: 'Loading',
+                        text: AppLocalizations.of(context)!.loading,
                         color: Theme.of(context).colorScheme.secondary),
-                    ButtonState.fail: const IconedButton(
-                        text: 'Failed',
-                        icon: Icon(Icons.cancel, color: Colors.white),
-                        color: Color.fromARGB(255, 207, 66, 66)),
+                    ButtonState.fail: IconedButton(
+                        text: AppLocalizations.of(context)!.failed,
+                        icon: const Icon(Icons.cancel, color: Colors.white),
+                        color: const Color.fromARGB(255, 207, 66, 66)),
                     ButtonState.success: IconedButton(
-                        text: 'Success',
+                        text: AppLocalizations.of(context)!.success,
                         icon: const Icon(
                           Icons.check_circle,
                           color: Colors.white,
@@ -159,13 +158,13 @@ class _StatusesScreenToSendState extends State<StatusesScreenToSend> {
                 child: FutureBuilder(
                     future: _statusesToSendFuture,
                     builder: (context, snapshot) {
-                      if (statusProvider.hasError) {
-                        return CustomErrorWidget();
-                      }
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return RippleWidget(
                           height: 0,
                         );
+                      }
+                      if (statusProvider.hasError) {
+                        return CustomErrorWidget();
                       }
                       List<StatusModel> statusesToSend =
                           statusProvider.statusesToSendList;

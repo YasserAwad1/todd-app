@@ -4,19 +4,16 @@ import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:toddily_preschool/auth/providers/auth_provider.dart';
+
 import 'package:toddily_preschool/common/navigators/my_navigator.dart';
 import 'package:toddily_preschool/common/user/provider/user_provider.dart';
-
-import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
 import 'package:toddily_preschool/common/widgets/error_widget.dart';
 import 'package:toddily_preschool/common/widgets/no_information_widget.dart';
 import 'package:toddily_preschool/common/widgets/ripple.dart';
 import 'package:toddily_preschool/main/classes/providers/class_provider.dart';
-import 'package:toddily_preschool/main/events/providers/event_provider.dart';
-import 'package:toddily_preschool/main/kids/providers/dates_provider.dart';
-import 'package:toddily_preschool/main/kids/widgets/date_widget.dart';
-import 'package:toddily_preschool/main/kids/widgets/dates_screen_button.dart';
+import 'package:toddily_preschool/main/kids/dates/providers/dates_provider.dart';
+import 'package:toddily_preschool/main/kids/dates/widgets/date_widget.dart';
+import 'package:toddily_preschool/main/kids/dates/widgets/dates_screen_button.dart';
 import 'package:toddily_preschool/main/monthly_report/screens/monthly_report_screen.dart';
 import 'package:toddily_preschool/main/statuses/screens/statuses_screen_to_send.dart';
 import 'package:toddily_preschool/models/dates/date_model.dart';
@@ -112,7 +109,7 @@ class _DatesScreenState extends State<DatesScreen> {
                   );
                 },
               )
-            : Provider.of<UserProvider>(context).getUserRoleId() == 2
+            : Provider.of<UserProvider>(context).teacherOrExtra()
                 ? DatesScreenButton(
                     title: 'New Status ${DateFormat('d/MMMM').format(
                       DateTime.now(),

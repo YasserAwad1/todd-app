@@ -6,6 +6,7 @@ import 'package:progress_state_button/iconed_button.dart';
 import 'package:progress_state_button/progress_button.dart';
 import 'package:provider/provider.dart';
 import 'package:toddily_preschool/main/monthly_report/providers/report_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CustomProgressButton extends StatefulWidget {
   int childId;
@@ -30,18 +31,19 @@ class _CustomProgressButtonState extends State<CustomProgressButton> {
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: ProgressButton.icon(iconedButtons: {
         ButtonState.idle: IconedButton(
-          text: 'Send',
+          text: AppLocalizations.of(context)!.send,
           icon: const Icon(Icons.send, color: Colors.white),
           color: Theme.of(context).colorScheme.secondary,
         ),
         ButtonState.loading: IconedButton(
-            text: 'Loading', color: Theme.of(context).colorScheme.secondary),
+            text: AppLocalizations.of(context)!.loading,
+            color: Theme.of(context).colorScheme.secondary),
         ButtonState.fail: IconedButton(
-            text: 'Failed',
+            text: AppLocalizations.of(context)!.failed,
             icon: const Icon(Icons.cancel, color: Colors.white),
             color: Colors.red.shade300),
         ButtonState.success: IconedButton(
-            text: 'Success',
+            text: AppLocalizations.of(context)!.success,
             icon: const Icon(
               Icons.check_circle,
               color: Colors.white,

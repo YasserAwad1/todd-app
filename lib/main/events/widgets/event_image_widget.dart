@@ -20,9 +20,6 @@ class EventImageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isArabic = Provider.of<LanguageProvider>(context).isArabic();
-    print('****************************************************************');
-    print(image);
-    print('****************************************************************');
 
     return Padding(
       padding: EdgeInsets.only(top: 8.sp),

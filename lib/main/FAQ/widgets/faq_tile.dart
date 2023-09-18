@@ -15,8 +15,6 @@ class QATile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isArabic =
-        Provider.of<LanguageProvider>(context, listen: false).isArabic();
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 5.h),
       child: ExpansionTile(

@@ -11,7 +11,7 @@ import 'package:toddily_preschool/main/kids/screens/kid_image_list_screen.dart';
 import 'package:toddily_preschool/main/kids/widgets/kid_image_widget.dart';
 import 'package:toddily_preschool/models/kidImages/kid_image_model.dart';
 import 'package:toddily_preschool/models/kids/kid_model.dart';
-import 'package:toddily_preschool/social_media_expert/providers/kid_image_provider.dart';
+import 'package:toddily_preschool/main/social_media_expert/providers/kid_image_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class KidPhotosScreen extends StatefulWidget {
@@ -73,8 +73,7 @@ class _KidPhotosScreenState extends State<KidPhotosScreen> {
             isLoading
                 ? RippleWidget()
                 : Provider.of<UserProvider>(context, listen: false)
-                            .getUserRoleId() ==
-                        2
+                        .teacherOrExtra()
                     ? FutureBuilder(
                         future: _kidPhotosForTeacherToCheckFuture,
                         builder: (context, snapshot) {
@@ -88,7 +87,7 @@ class _KidPhotosScreenState extends State<KidPhotosScreen> {
                               .hasError) {
                             return CustomErrorWidget();
                           }
-                          // refreshData();
+
                           List<KidImageModel> photos =
                               Provider.of<KidImageProvider>(context,
                                       listen: false)

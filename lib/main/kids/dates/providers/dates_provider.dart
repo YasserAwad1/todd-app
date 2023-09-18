@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:toddily_preschool/main/kids/service/dates_service.dart';
+import 'package:toddily_preschool/main/kids/dates/service/dates_service.dart';
 import 'package:toddily_preschool/models/dates/date_model.dart';
 
 class DatesProvider with ChangeNotifier {

@@ -10,46 +10,11 @@ import 'package:toddily_preschool/models/status/toSendModels/status_to_send_mode
 import 'package:toddily_preschool/models/subStatus/sub_status_model.dart';
 
 class StatusService {
-  
   bool hasError = false;
-
-  // Future<List<StatusModel>> getStatuses() async {
-  //   try {
-  //     final url = Uri.parse(Endpoints.statuses);
-
-  //     final response = await http.get(
-  //       url,
-  //       headers: {
-  //         "Accept": "application/json",
-  //         'Authorization': 'Beare $token'
-  //       },
-  //     );
-
-  //     if (response.statusCode < 300) {
-  //       final jsonResponse = jsonDecode(response.body);
-  //       print('****************status RESPONSE************');
-  //       print(jsonResponse[0]);
-  //       print('****************status RESPONSE************');
-  //       final statuses = (jsonResponse as List)
-  //           .map(
-  //             (e) => StatusModel.fromJson(e),
-  //           )
-  //           .toList();
-
-  //       return statuses;
-  //     } else {
-  //       print('error');
-  //       return [];
-  //     }
-  //   } catch (e) {
-  //     print(e);
-  //     rethrow;
-  //   }
-  // }
 
   Future<List<StatusModel>> getChildStatusByDate(
       int childId, String date) async {
-        var token = await locator.get<LocalRepo>().getToken();
+    var token = await locator.get<LocalRepo>().getToken();
     try {
       final url =
           Uri.parse('${Endpoints.childStatusByDate}/${childId.toString()}');

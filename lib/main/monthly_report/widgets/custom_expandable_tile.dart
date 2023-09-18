@@ -70,9 +70,7 @@ class _CustomExpandableTileState extends State<CustomExpandableTile> {
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 20.sp,
-                      fontFamily: "luckiestGuy"
-                      // fontWeight: FontWeight.w400,
-                      ),
+                      fontFamily: "luckiestGuy"),
                 ),
                 const Spacer(),
                 if (Provider.of<UserProvider>(context, listen: false)
@@ -91,7 +89,7 @@ class _CustomExpandableTileState extends State<CustomExpandableTile> {
                               )));
                     },
                     icon: const Icon(
-                      Icons.edit,
+                      Icons.auto_fix_high_outlined,
                       size: 23,
                       color: Colors.red,
                     ),

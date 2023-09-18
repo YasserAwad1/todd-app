@@ -7,7 +7,7 @@ import 'package:toddily_preschool/common/navigators/my_navigator.dart';
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
 import 'package:toddily_preschool/main/monthly_report/providers/report_provider.dart';
 import 'package:toddily_preschool/main/monthly_report/screens/monthly_report_screen.dart';
-import 'package:toddily_preschool/main/monthly_report/widgets/progress_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:toddily_preschool/models/kids/kid_model.dart';
 import 'package:toddily_preschool/models/report/report_model.dart';
 
@@ -109,19 +109,19 @@ class _SendReportScreenState extends State<SendReportScreen> {
           child: ProgressButton.icon(
             iconedButtons: {
               ButtonState.idle: IconedButton(
-                text: 'Send',
+                text: AppLocalizations.of(context)!.send,
                 icon: const Icon(Icons.send, color: Colors.white),
                 color: Theme.of(context).colorScheme.secondary,
               ),
               ButtonState.loading: IconedButton(
-                  text: 'Loading',
+                  text: AppLocalizations.of(context)!.loading,
                   color: Theme.of(context).colorScheme.secondary),
-              ButtonState.fail: const IconedButton(
-                  text: 'Failed',
-                  icon: Icon(Icons.cancel, color: Colors.white),
-                  color: Color.fromARGB(255, 207, 66, 66)),
+              ButtonState.fail: IconedButton(
+                  text: AppLocalizations.of(context)!.failed,
+                  icon: const Icon(Icons.cancel, color: Colors.white),
+                  color: const Color.fromARGB(255, 207, 66, 66)),
               ButtonState.success: IconedButton(
-                  text: 'Success',
+                  text: AppLocalizations.of(context)!.success,
                   icon: const Icon(
                     Icons.check_circle,
                     color: Colors.white,
@@ -142,15 +142,10 @@ class _SendReportScreenState extends State<SendReportScreen> {
               maxLines: 10,
               controller: descriptionController,
               decoration: InputDecoration(
-                labelText: 'Report',
+                labelText: AppLocalizations.of(context)!.monthlyReport,
                 alignLabelWithHint: true,
                 labelStyle: TextStyle(
                   color: Theme.of(context).colorScheme.secondary,
-                ),
-                errorBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.red,
-                  ),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(

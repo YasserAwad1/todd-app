@@ -25,7 +25,7 @@ class AboutWidget extends StatelessWidget {
           transform: Matrix4.translationValues(
               startAnimation ? 0 : MediaQuery.of(context).size.width, 0, 0),
           padding: EdgeInsets.all(7.sp),
-          height: 300.h,
+          // height: 300.h,
           width: 320.w,
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.secondary,
@@ -43,7 +43,6 @@ class AboutWidget extends StatelessWidget {
               topLeft: Radius.circular(isArabic ? 100 : 0),
               bottomLeft: Radius.circular(isArabic ? 100 : 0),
             ),
-            // shape: BoxShape.circle,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,7 +71,7 @@ class AboutWidget extends StatelessWidget {
                       AppLocalizations.of(context)!.aboutParagraph,
                       softWrap: true,
                       style: TextStyle(
-                        fontSize: 16.sp,
+                        fontSize: 15.sp,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
@@ -85,32 +84,22 @@ class AboutWidget extends StatelessWidget {
         ),
         Positioned(
           right: isArabic ? null : -43.w,
-          top: isArabic ? 80.h :100.h,
+          top: isArabic ? 70.h : 100.h,
           left: isArabic ? -43 : null,
-          // left: 1,
-          // left: isArabic ? -43 : 0,
           child: AnimatedContainer(
             curve: Curves.easeOutSine,
             duration: Duration(
               milliseconds: 500 + (index * 100),
             ),
             transform: Matrix4.translationValues(
-              startAnimation
-                  ? 0
-                  : MediaQuery.of(context).size.width, // X translation
-              startAnimation
-                  ? 0
-                  : -MediaQuery.of(context)
-                      .size
-                      .height, // Y translation (negative value to move down)
+              startAnimation ? 0 : MediaQuery.of(context).size.width,
+              startAnimation ? 0 : -MediaQuery.of(context).size.height,
               0,
             ),
-            // width: 70.w,
-            // height: 70.h,
             child: Image.asset(
               'assets/images/characters/astro2.png',
               fit: BoxFit.contain,
-              scale: 1.1,
+              scale: 5.3,
             ),
           ),
         ),

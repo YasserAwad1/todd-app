@@ -5,27 +5,17 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 //packages
 import 'package:firebase_core/firebase_core.dart';
 import 'package:toddily_preschool/common/firebaseApi/firebase_api.dart';
+import 'package:toddily_preschool/main/kids/dates/screens/dates_screen.dart';
 import 'firebase_options.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:toddily_preschool/auth/providers/auth_provider.dart';
-import 'package:toddily_preschool/auth/screens/sign_in_screen.dart';
-import 'package:toddily_preschool/common/user/provider/user_provider.dart';
 import 'package:toddily_preschool/locator.dart';
-import 'package:toddily_preschool/main/FAQ/provider/qa_provider.dart';
 import 'package:toddily_preschool/main/classes/screens/classes_screen.dart';
 import 'package:toddily_preschool/main/events/screens/event_images_list_screen.dart';
 import 'package:toddily_preschool/main/events/screens/event_photos_screen.dart';
-import 'package:toddily_preschool/main/kids/providers/dates_provider.dart';
-import 'package:toddily_preschool/main/kids/providers/kids_provider.dart';
-import 'package:toddily_preschool/main/monthly_report/providers/report_provider.dart';
 import 'package:toddily_preschool/main/monthly_report/screens/send_report_screen.dart';
-import 'package:toddily_preschool/main/statuses/providers/status_provider.dart';
 import 'package:toddily_preschool/main/statuses/screens/statuses_screen_to_send.dart';
-import 'package:toddily_preschool/social_media_expert/providers/kid_image_provider.dart';
-import 'package:toddily_preschool/social_media_expert/screens/camera_screen.dart';
-import 'package:toddily_preschool/social_media_expert/screens/pick_image_screen.dart';
-import 'package:toddily_preschool/social_media_expert/screens/taken_images_screen.dart';
+import 'package:toddily_preschool/main/social_media_expert/screens/pick_image_screen.dart';
 
 //language
 import 'l10n/l10n.dart';
@@ -35,13 +25,19 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 //Providers
 import 'package:toddily_preschool/main/photos/providers/photos_povider.dart';
 import 'package:toddily_preschool/main/events/providers/event_provider.dart';
+import 'package:toddily_preschool/main/statuses/providers/status_provider.dart';
+import 'package:toddily_preschool/main/FAQ/provider/qa_provider.dart';
+import 'package:toddily_preschool/main/social_media_expert/providers/kid_image_provider.dart';
+import 'package:toddily_preschool/auth/providers/auth_provider.dart';
 import 'package:toddily_preschool/main/classes/providers/class_provider.dart';
-import 'package:toddily_preschool/social_media_expert/providers/camera_provider.dart';
 import 'package:toddily_preschool/common/providers/language_provider.dart';
+import 'package:toddily_preschool/common/user/provider/user_provider.dart';
+import 'package:toddily_preschool/main/kids/dates/providers/dates_provider.dart';
+import 'package:toddily_preschool/main/kids/providers/kids_provider.dart';
+import 'package:toddily_preschool/main/monthly_report/providers/report_provider.dart';
 
 //screens
 import 'package:toddily_preschool/main/kids/screens/kids_screen.dart';
-import 'package:toddily_preschool/main/kids/screens/dates_screen.dart';
 import 'package:toddily_preschool/main/monthly_report/screens/monthly_report_screen.dart';
 import 'package:toddily_preschool/main/photos/screens/image_list_screen.dart';
 import 'package:toddily_preschool/main/photos/screens/photos_screen.dart';
@@ -51,9 +47,6 @@ import 'package:toddily_preschool/main/events/screens/events_screen.dart';
 import 'package:toddily_preschool/main/notifications/screens/notifications_screen.dart';
 import 'package:toddily_preschool/main/FAQ/screens/FAQScreen.dart';
 import 'package:toddily_preschool/main/about/screens/about_screen.dart';
-import 'package:toddily_preschool/common/screens/image_selection_screen.dart';
-import 'package:toddily_preschool/common/screens/roles_screen.dart';
-import 'package:toddily_preschool/common/screens/sme_images_screen.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -62,7 +55,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await FirebaseApi().initNotifications();
+  await FirebaseApi.initNotifications();
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   setUp();
@@ -97,9 +90,6 @@ class _MyAppState extends State<MyApp> {
               ChangeNotifierProvider(
                 create: (ctx) => EventProvider(),
               ),
-              // ChangeNotifierProvider(
-              //   create: (ctx) => CameraProvider(),
-              // ),
               ChangeNotifierProvider<LanguageProvider>(
                 create: (ctx) => LanguageProvider(),
               ),

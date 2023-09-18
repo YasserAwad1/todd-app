@@ -47,6 +47,7 @@ class _KidImageWidgetState extends State<KidImageWidget> {
       });
       return true;
     } else {
+      
       print('Failed to download image. Status code: ${response.statusCode}');
       setState(() {
         isDownloading = false;

@@ -5,17 +5,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:toddily_preschool/common/providers/language_provider.dart';
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
-import 'package:toddily_preschool/main/kids/screens/dates_screen.dart';
+import 'package:toddily_preschool/main/kids/dates/screens/dates_screen.dart';
 import 'package:toddily_preschool/main/kids/screens/kid_photos_screen.dart';
 import 'package:toddily_preschool/models/kids/kid_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class datesScreenView extends StatelessWidget {
+class datesImagesTabsScreen extends StatelessWidget {
   KidModel? kid;
   static const routeName = '/dates-screen-view';
   // final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  datesScreenView({this.kid});
+  datesImagesTabsScreen({this.kid});
 
   @override
   Widget build(BuildContext context) {

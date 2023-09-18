@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:marquee/marquee.dart';
-import 'package:provider/provider.dart';
-import 'package:toddily_preschool/auth/providers/auth_provider.dart';
 import 'package:toddily_preschool/common/constants/end_points.dart';
-import 'package:toddily_preschool/common/user/provider/user_provider.dart';
-import 'package:toddily_preschool/main/events/providers/event_provider.dart';
 import 'package:toddily_preschool/models/subStatus/sub_status_model.dart';
 
 class SubStatusWidgetForPreview extends StatefulWidget {
@@ -25,14 +21,6 @@ class SubStatusWidgetForPreview extends StatefulWidget {
 }
 
 class _SubStatusWidgetForPreviewState extends State<SubStatusWidgetForPreview> {
-  // bool isSelected = false;
-
-  // selectStatus() {
-  //   setState(() {
-  //     isSelected = !isSelected;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
@@ -88,14 +76,9 @@ class _SubStatusWidgetForPreviewState extends State<SubStatusWidgetForPreview> {
                   children: [
                     Text(
                       widget.subStatus.name!,
-                      //IF DESCRIPTION IS EMPTY CENTER TEXT
-                      // textAlign: TextAlign.center,
-                      // softWrap: true,
-                      // maxLines: 2,
                       style: const TextStyle(
                         fontSize: 25,
                         fontFamily: "LuckiestGuy",
-                        // fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     ),
@@ -111,19 +94,15 @@ class _SubStatusWidgetForPreviewState extends State<SubStatusWidgetForPreview> {
                     width: 110.w,
                     child: Marquee(
                       text: widget.subStatus.description!,
-                      // maxLines: 5,
                       velocity: 15,
                       pauseAfterRound: const Duration(
                         seconds: 3,
                       ),
-                      // accelerationDuration: Duration(seconds: 20),
                       scrollAxis: Axis.vertical,
                       blankSpace: 10.h,
                       style: TextStyle(
                         fontSize: 14.sp,
                         color: Colors.white,
-                        // fontFamily: "LuckiestGuy",
-                        // fontWeight: FontWeight.w400,
                       ),
                     ),
                   ),

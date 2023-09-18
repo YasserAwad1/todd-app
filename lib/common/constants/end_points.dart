@@ -21,5 +21,6 @@ class Endpoints {
   static const checkImage = '$baseUrl/api/image-check';
   static const deleteImageCopy = '$baseUrl/api/child-image';
   static const getChildImagesForParents = '$baseUrl/api/get-child-images';
+  static const getExtrasChildren = '$baseUrl/api/extra-children';
 
 }

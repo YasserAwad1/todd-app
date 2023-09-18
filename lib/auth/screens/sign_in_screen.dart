@@ -25,6 +25,7 @@ class _SignInScreenState extends State<SignInScreen> {
   TextEditingController passwordController = TextEditingController();
   // static final _formKey = GlobalKey<FormState>();
   bool isLoading = false;
+  bool isObscure = true;
 
   @override
   Widget build(BuildContext context) {
@@ -124,11 +125,13 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                           CustomTextFormFeild(
                             onChanged: (value) {
-                              // userNameController =
-                              //     TextEditingController(text: value);
                               setState(() {});
                             },
                             labelText: AppLocalizations.of(context)!.userName,
+                            prefixIcon: Icon(
+                              Icons.alternate_email_rounded,
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
                             controller: userNameController,
                             textinputAction: TextInputAction.next,
                             inputType: TextInputType.emailAddress,
@@ -138,15 +141,29 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                           CustomTextFormFeild(
                             onChanged: (value) {
-                              // passwordController =
-                              //     TextEditingController(text: value);
                               setState(() {});
                             },
                             labelText: AppLocalizations.of(context)!.password,
+                            prefixIcon: Icon(
+                              Icons.password_rounded,
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
+                            suffixIcon: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    isObscure = !isObscure;
+                                  });
+                                },
+                                icon: Icon(
+                                  isObscure
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                  color: Theme.of(context).colorScheme.primary,
+                                )),
                             controller: passwordController,
                             textinputAction: TextInputAction.done,
                             inputType: TextInputType.visiblePassword,
-                            isObscure: true,
+                            isObscure: isObscure,
                           ),
                           SizedBox(
                             height: 20.h,

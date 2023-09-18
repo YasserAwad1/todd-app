@@ -130,8 +130,6 @@ class _ClassesScreenState extends State<ClassesScreen> {
                             ),
                           );
                         }
-
-                        return Container();
                       }),
                 ],
               ),

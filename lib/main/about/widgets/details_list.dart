@@ -43,8 +43,9 @@ class _DetailsListState extends State<DetailsList> {
             ),
             mode: LaunchMode.externalNonBrowserApplication);
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Whatsapp not installed")));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            backgroundColor: Colors.red,
+            content: Text(AppLocalizations.of(context)!.wtspNotInstalled)));
       }
     } else {
       // android , web
@@ -54,8 +55,9 @@ class _DetailsListState extends State<DetailsList> {
           mode: LaunchMode.externalNonBrowserApplication,
         );
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Whatsapp not installed")));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            backgroundColor: Colors.red,
+            content: Text(AppLocalizations.of(context)!.wtspNotInstalled)));
       }
     }
   }
@@ -69,6 +71,9 @@ class _DetailsListState extends State<DetailsList> {
         mode: LaunchMode.externalApplication,
       );
     } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: Colors.red,
+          content: Text(AppLocalizations.of(context)!.errorOccurred)));
       throw 'Could not launch instagram account';
     }
   }
@@ -83,6 +88,9 @@ class _DetailsListState extends State<DetailsList> {
         mode: LaunchMode.externalApplication,
       );
     } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: Colors.red,
+          content: Text(AppLocalizations.of(context)!.errorOccurred)));
       throw 'Could not launch facebook account';
     }
   }
@@ -97,6 +105,9 @@ class _DetailsListState extends State<DetailsList> {
     )) {
       await launchUrl(Uri.parse(url));
     } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: Colors.red,
+          content: Text(AppLocalizations.of(context)!.errorOccurred)));
       throw 'Could not launch $url';
     }
   }

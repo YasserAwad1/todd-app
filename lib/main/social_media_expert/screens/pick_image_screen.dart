@@ -1,9 +1,6 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:progress_state_button/iconed_button.dart';
 import 'package:progress_state_button/progress_button.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +9,7 @@ import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
 import 'package:multi_image_picker_view/multi_image_picker_view.dart';
 import 'package:toddily_preschool/main/kids/screens/kids_screen.dart';
 import 'package:toddily_preschool/models/kids/kid_model.dart';
-import 'package:toddily_preschool/social_media_expert/providers/kid_image_provider.dart';
+import 'package:toddily_preschool/main/social_media_expert/providers/kid_image_provider.dart';
 
 class PickImageScreen extends StatefulWidget {
   static const routeName = '/pick-image-screen';
@@ -43,7 +40,7 @@ class _PickImageScreenState extends State<PickImageScreen> {
         if (controller.images.isEmpty) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(
-              'please choose an image',
+              AppLocalizations.of(context)!.pleaseChooseImage,
             ),
             backgroundColor: Colors.red,
           ));
@@ -107,19 +104,19 @@ class _PickImageScreenState extends State<PickImageScreen> {
             child: ProgressButton.icon(
               iconedButtons: {
                 ButtonState.idle: IconedButton(
-                  text: 'Send Images',
+                  text: AppLocalizations.of(context)!.send,
                   icon: const Icon(Icons.send, color: Colors.white),
                   color: Theme.of(context).colorScheme.secondary,
                 ),
                 ButtonState.loading: IconedButton(
-                    text: 'Loading',
+                    text: AppLocalizations.of(context)!.loading,
                     color: Theme.of(context).colorScheme.secondary),
-                ButtonState.fail: const IconedButton(
-                    text: 'Failed',
-                    icon: Icon(Icons.cancel, color: Colors.white),
-                    color: Color.fromARGB(255, 207, 66, 66)),
+                ButtonState.fail: IconedButton(
+                    text: AppLocalizations.of(context)!.failed,
+                    icon: const Icon(Icons.cancel, color: Colors.white),
+                    color: const Color.fromARGB(255, 207, 66, 66)),
                 ButtonState.success: IconedButton(
-                    text: 'Success',
+                    text: AppLocalizations.of(context)!.success,
                     icon: const Icon(
                       Icons.check_circle,
                       color: Colors.white,
@@ -139,41 +136,11 @@ class _PickImageScreenState extends State<PickImageScreen> {
                   MultiImagePickerView(
                     onChange: (list) {
                       controller.images;
-                      //   // print('***********************NEW LENGTH   *****************');
-                      //   // print(controller.images.length);
-                      //   // print('***********************NEW LENGTH   *****************');
-                      //   if (list.isNotEmpty) {
-                      //     List<String?> imagesToSend = controller.images
-                      //         .map((element) => element.path)
-                      //         .toList();
-                      //     print(
-                      //         '********************IMAGES LENGTH*********************');
-                      //     for (int i = 0; i < imagesToSend.length; i++) {
-                      //       print(imagesToSend[i]);
-                      //     }
-                      //     print(
-                      //         '********************IMAGES LENGTH*********************');
-                      //     Provider.of<KidImageProvider>(context, listen: false)
-                      //         .chosenImages
-                      //         .addAll(imagesToSend);
-                      //     imagesToSend.clear();
-                      //   }
-
-                      //   // if (images!.isNotEmpty) {
-                      //   //   for (final image in images!) {
-                      //   //     if (image.hasPath) {
-                      //   //       images!.add(File(image.path!));
-                      //   //     } else
-                      //   //       request.addFile(File.fromRawPath(image.bytes!));
-                      //   //   }
-                      //   // }
                     },
                     controller: controller,
                     padding: const EdgeInsets.all(10),
-                    // showInitialContainer: false,
                   ),
                   const SizedBox(height: 32),
-                  // const CustomExamples()
                 ],
               ),
             ),

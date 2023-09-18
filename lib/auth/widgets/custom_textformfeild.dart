@@ -6,6 +6,8 @@ class CustomTextFormFeild extends StatelessWidget {
   final TextInputAction textinputAction;
   final TextInputType inputType;
   final Function(String) onChanged;
+  final Widget prefixIcon;
+  final Widget? suffixIcon;
   bool? isObscure;
 
   CustomTextFormFeild({
@@ -14,18 +16,14 @@ class CustomTextFormFeild extends StatelessWidget {
     required this.textinputAction,
     required this.inputType,
     required this.onChanged,
+    required this.prefixIcon,
+    this.suffixIcon = null,
     this.isObscure = false
   });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      // validator: (value) {
-      //   if (value!.isEmpty) {
-      //     return 'This Feild Is Required';
-      //   }
-      //   return null;
-      // },
       onChanged: onChanged,
       obscureText: isObscure!,
       keyboardType: inputType,
@@ -33,6 +31,8 @@ class CustomTextFormFeild extends StatelessWidget {
       textInputAction: textinputAction,
       controller: controller ?? controller,
       decoration: InputDecoration(
+        prefixIcon: prefixIcon,
+        suffixIcon: suffixIcon,
         errorBorder: const OutlineInputBorder(
           borderSide: BorderSide(
             color: Colors.red,

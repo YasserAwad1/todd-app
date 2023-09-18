@@ -104,8 +104,8 @@ class _LoginButtonState extends State<LoginButton> {
                       backgroundColor: Colors.red,
                       content: Text(
                         widget.userName.isEmpty || widget.password.isEmpty
-                            ? 'All Feilds Are Required'
-                            : 'invalid credentiols',
+                            ? AppLocalizations.of(context)!.allFeildsAreReq
+                            : AppLocalizations.of(context)!.invalidCredentials,
                       ),
                     ),
                   );
@@ -114,23 +114,6 @@ class _LoginButtonState extends State<LoginButton> {
                   });
                 }
               },
-              // () {
-              // Navigator.push(
-              //   context,
-              //   PageRouteBuilder(
-              //     transitionDuration: const Duration(milliseconds: 500),
-              //     pageBuilder: (context, animation, secondaryAnimation) =>
-              //         KidsScreen(),
-              //     transitionsBuilder:
-              //         (context, animation, secondaryAnimation, child) {
-              //       return FadeTransition(
-              //         opacity: animation,
-              //         child: child,
-              //       );
-              //     },
-              //   ),
-              // );
-              // },
               child: Text(
                 AppLocalizations.of(context)!.login,
                 style: TextStyle(

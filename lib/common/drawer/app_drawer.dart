@@ -91,7 +91,7 @@ class _AppDrawerState extends State<AppDrawer> {
               children: [
                 ListTile(
                   leading: Icon(
-                    Icons.person_outline_rounded,
+                    Icons.child_care_rounded,
                     color: yellow,
                     size: 26.sp,
                   ),
@@ -266,32 +266,6 @@ class _AppDrawerState extends State<AppDrawer> {
             color: yellow,
             thickness: 0.3.h,
           ),
-          // ListTile(
-          //   leading: Icon(
-          //     Icons.help_outline,
-          //     color: yellow,
-          //     size: 26.sp,
-          //   ),
-          //   title: const Text(
-          //     'Roles',
-          //     style: TextStyle(
-          //       fontFamily: "LuckiestGuy",
-          //     ),
-          //   ),
-          //   splashColor: yellow.withOpacity(0.9),
-          //   onTap: () {
-          //     Navigator.pop(context);
-          //     Navigator.pushReplacementNamed(
-          //       context,
-          //       '/roles-screen',
-          //     );
-          //   },
-          // ),
-          // Divider(
-          //   color: yellow,
-          //   thickness: 0.3.h,
-          // ),
-
           SizedBox(
             height: 10.h,
           ),
@@ -300,6 +274,7 @@ class _AppDrawerState extends State<AppDrawer> {
           LanguageButtons(
             isArabic: isArabic,
           ),
+          
           //LOGOUT
           logoutButton(
             isArabic: isArabic,

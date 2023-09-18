@@ -42,12 +42,10 @@ class StatusWidgetToSend extends StatelessWidget {
               ),
               Text(
                 status.name!,
-                // textAlign: TextAlign.end,
                 style: TextStyle(
                   color: Colors.white,
                   fontFamily: "LuckiestGuy",
                   fontSize: 20.sp,
-                  // fontWeight: FontWeight.bold,
                 ),
               ),
             ],

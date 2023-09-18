@@ -11,22 +11,19 @@ class DateWidget extends StatelessWidget {
   String sentDate;
   int childId;
 
-  DateWidget(
-      {required this.image,
-      required this.index,
-      required this.startAnimation,
-      required this.sentDate,required this.childId,});
+  DateWidget({
+    required this.image,
+    required this.index,
+    required this.startAnimation,
+    required this.sentDate,
+    required this.childId,
+  });
 
   @override
   Widget build(BuildContext context) {
-    print('******************SENT DATE*****************');
-    print(sentDate);
-    print('******************SENT DATE*****************');
     DateTime date = DateTime.parse(sentDate);
-
     String day = date.day.toString();
     String month = date.month.toString();
-
     List<String> monthAbbreviations = [
       'Jan',
       'Feb',

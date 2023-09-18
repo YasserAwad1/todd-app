@@ -11,28 +11,43 @@ Future<void> handleBackgroundMessage(RemoteMessage message) async {
 }
 
 void handleMessage(RemoteMessage? message) {
-    if (message == null) {
-      return;
-    } else {
-      navigatorKey.currentState!.pushNamed('/about-screen');
-    }
+  if (message == null) {
+    return;
+  } else {
+    // final FlutterLocalNotificationsPlugin notificationsPlugin =
+    //     FlutterLocalNotificationsPlugin();
+    // notificationsPlugin.show(
+    //     1,
+    //     message.notification!.title,
+    //     message.notification!.body,
+    //     NotificationDetails(
+    //         android: AndroidNotificationDetails('channelId', 'channelName',
+    //             importance: Importance.max),
+    //         iOS: DarwinNotificationDetails()));
+    navigatorKey.currentState!.pushNamed('/about-screen');
   }
+}
 
 class FirebaseApi {
-  final _firebaseMessaging = FirebaseMessaging.instance;
+  static final _firebaseMessaging = FirebaseMessaging.instance;
 
-  final _androidChannel = const AndroidNotificationChannel(
+  static const _androidChannel = AndroidNotificationChannel(
       'high_importance_channel', 'High Importance Notifications',
       description: 'This channel is used for important notifications',
       importance: Importance.defaultImportance);
-  final _localnotifications = FlutterLocalNotificationsPlugin();
+  static final _localnotifications = FlutterLocalNotificationsPlugin();
 
-  
-
-  Future initLocalNotifications() async {
+  static Future initLocalNotifications() async {
     // const iOS = IOSInitializationSettings();
     const android = AndroidInitializationSettings('@drawable/tod_logo');
-    const settings = InitializationSettings(android: android);
+    var iOS = DarwinInitializationSettings(
+        requestAlertPermission: true,
+        requestBadgePermission: true,
+        requestSoundPermission: true,
+        onDidReceiveLocalNotification:
+            (int id, String? title, String? body, String? payload) async {});
+
+    var settings = InitializationSettings(android: android, iOS: iOS);
 
     await _localnotifications.initialize(settings,
         onDidReceiveNotificationResponse: (payload) {
@@ -42,11 +57,18 @@ class FirebaseApi {
       final message = RemoteMessage.fromMap(jsonDecode(payload.payload!));
       handleMessage(message);
     });
-    final platfrom = _localnotifications.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
+    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+    flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()!
+        .requestPermission();
+    final platfrom = _localnotifications.resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin>();
     await platfrom!.createNotificationChannel(_androidChannel);
   }
 
-  Future initPushNotifications() async {
+  static Future initPushNotifications() async {
     await FirebaseMessaging.instance
         .setForegroundNotificationPresentationOptions(
       alert: true,
@@ -71,11 +93,12 @@ class FirebaseApi {
           notification.body,
           NotificationDetails(
               android: AndroidNotificationDetails(
-            _androidChannel.id,
-            _androidChannel.name,
-            channelDescription: _androidChannel.description,
-            icon: '@drawable/tod_logo',
-          )),
+                _androidChannel.id,
+                _androidChannel.name,
+                channelDescription: _androidChannel.description,
+                icon: '@drawable/tod_logo',
+              ),
+              iOS: DarwinNotificationDetails()),
           payload: jsonEncode(
             message.toMap(),
           ),
@@ -84,7 +107,7 @@ class FirebaseApi {
     });
   }
 
-  Future<void> initNotifications() async {
+  static Future<void> initNotifications() async {
     await _firebaseMessaging.requestPermission();
     final fCMToken = await _firebaseMessaging.getToken();
     print('token: $fCMToken');

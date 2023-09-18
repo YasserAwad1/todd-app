@@ -29,21 +29,14 @@ class _SplashScreenState extends State<SplashScreen> {
   late ConnectivityResult result;
 
   Future<void> initConnectivity() async {
-    // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       result = await _connectivity.checkConnectivity();
     } on PlatformException catch (e) {
-      // developer.log('Couldn\'t check connectivity status', error: e);
       return;
     }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
     if (!mounted) {
       return Future.value(null);
     }
-
     return _updateConnectionStatus(result);
   }
 
@@ -81,55 +74,57 @@ class _SplashScreenState extends State<SplashScreen> {
             builder: (context) {
               return NoInternetDialog();
             });
-      }
-      bool isTokenValid =
-          await Provider.of<AuthProvider>(context, listen: false)
-              .isTokenValid();
+      } else {
+        bool isTokenValid =
+            await Provider.of<AuthProvider>(context, listen: false)
+                .isTokenValid();
 
-      if (isTokenValid) {
+        if (isTokenValid) {
+          // ignore: use_build_context_synchronously
+          _userFuture = await Provider.of<UserProvider>(context, listen: false)
+              .getCurrentUser();
+          print(Provider.of<UserProvider>(context, listen: false).currentUser);
+          print('****************GETTING CURRENT USER*******************');
+        }
         // ignore: use_build_context_synchronously
-        _userFuture = await Provider.of<UserProvider>(context, listen: false)
-            .getCurrentUser();
-        print(Provider.of<UserProvider>(context, listen: false).currentUser);
-        print('****************GETTING CURRENT USER*******************');
-      }
-      // ignore: use_build_context_synchronously
-      Navigator.pushReplacement(
-        context,
-        PageRouteBuilder(
-          transitionDuration: const Duration(milliseconds: 200),
-          pageBuilder: (context, animation, secondaryAnimation) {
-            if (locator.get<LocalRepo>().role == 'guest') {
-              return AboutScreen();
-            }
-            if (isTokenValid) {
-              return FutureBuilder(
-                future: _userFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
-                  } else {
-                    if (Provider.of<UserProvider>(context, listen: false)
-                        .classesTile()) {
-                      return ClassesScreen();
+        Navigator.pushReplacement(
+          context,
+          PageRouteBuilder(
+            transitionDuration: const Duration(milliseconds: 200),
+            pageBuilder: (context, animation, secondaryAnimation) {
+              if (locator.get<LocalRepo>().role == 'guest') {
+                return AboutScreen();
+              }
+              if (isTokenValid) {
+                return FutureBuilder(
+                  future: _userFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator();
                     } else {
-                      return KidsScreen();
+                      if (Provider.of<UserProvider>(context, listen: false)
+                          .classesTile()) {
+                        return ClassesScreen();
+                      } else {
+                        return KidsScreen();
+                      }
                     }
-                  }
-                },
+                  },
+                );
+              } else {
+                return SignInScreen();
+              }
+            },
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return FadeTransition(
+                opacity: animation,
+                child: child,
               );
-            } else {
-              return SignInScreen();
-            }
-          },
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(
-              opacity: animation,
-              child: child,
-            );
-          },
-        ),
-      );
+            },
+          ),
+        );
+      }
     });
   }
 

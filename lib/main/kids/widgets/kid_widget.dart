@@ -6,12 +6,11 @@ import 'package:toddily_preschool/common/constants/end_points.dart';
 import 'package:toddily_preschool/common/navigators/my_navigator.dart';
 import 'package:toddily_preschool/common/providers/language_provider.dart';
 import 'package:toddily_preschool/common/user/provider/user_provider.dart';
-import 'package:toddily_preschool/main/kids/screens/dates_screen.dart';
-import 'package:toddily_preschool/main/kids/screens/dates_screen_view.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:toddily_preschool/main/kids/dates_images_tabs_screen.dart';
 import 'package:toddily_preschool/main/monthly_report/screens/monthly_report_screen.dart';
 import 'package:toddily_preschool/models/kids/kid_model.dart';
-import 'package:toddily_preschool/social_media_expert/screens/camera_screen.dart';
-import 'package:toddily_preschool/social_media_expert/screens/pick_image_screen.dart';
+import 'package:toddily_preschool/main/social_media_expert/screens/pick_image_screen.dart';
 
 class KidsWidget extends StatelessWidget {
   bool startAnimation;
@@ -55,7 +54,7 @@ class KidsWidget extends StatelessWidget {
             ? Navigator.push(
                 context,
                 MyNavigator(
-                    screen: datesScreenView(
+                    screen: datesImagesTabsScreen(
                       kid: kid,
                     ),
                     curves: Curves.easeOutBack),

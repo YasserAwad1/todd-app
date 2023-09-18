@@ -4,20 +4,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:provider/provider.dart';
-import 'package:toddily_preschool/auth/providers/auth_provider.dart';
 import 'package:toddily_preschool/common/user/provider/user_provider.dart';
 
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
 import 'package:toddily_preschool/common/widgets/error_widget.dart';
 import 'package:toddily_preschool/common/widgets/ripple.dart';
-import 'package:toddily_preschool/main/events/providers/event_provider.dart';
 import 'package:toddily_preschool/main/statuses/providers/status_provider.dart';
 import 'package:toddily_preschool/main/statuses/statusesForPreview/widgets/status_widget_for_preview.dart';
-import 'package:toddily_preschool/main/statuses/statusesForPreview/widgets/substatus_widget_for_preview.dart';
-import 'package:toddily_preschool/main/statuses/statusesToSend/widgets/status_widget_to_send.dart';
 import 'package:toddily_preschool/models/status/status_model.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class StatusesScreenForPreview extends StatefulWidget {
   static const routeName = '/statuses-screen-for-preview';
@@ -76,7 +72,7 @@ class _StatusesScreenForPreviewState extends State<StatusesScreenForPreview> {
                   ),
                   onPressed: () {},
                   child: Text(
-                    'Send Status',
+                    AppLocalizations.of(context)!.send,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20.sp,

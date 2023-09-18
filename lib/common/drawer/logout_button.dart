@@ -75,10 +75,10 @@ class _logoutButtonState extends State<logoutButton> {
                     widget.isLoading = false;
                   });
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
+                    SnackBar(
                       backgroundColor: Colors.red,
                       content: Text(
-                        'Error Occured',
+                        AppLocalizations.of(context)!.errorOccurred,
                       ),
                     ),
                   );

@@ -29,13 +29,9 @@ class _SubstatusWidgetToSendState extends State<SubstatusWidgetToSend> {
       if (isSelected) {
         Provider.of<StatusProvider>(context, listen: false)
             .addSubStatusFromScreen(widget.subStatus);
-        // print(Provider.of<StatusProvider>(context, listen: false)
-        //     .substatusListFromScreen);
       } else {
         Provider.of<StatusProvider>(context, listen: false)
             .removeSubStatusFromScreen(widget.subStatus);
-        // print(Provider.of<StatusProvider>(context, listen: false)
-        //     .substatusListFromScreen);
       }
     });
   }
@@ -51,11 +47,6 @@ class _SubstatusWidgetToSendState extends State<SubstatusWidgetToSend> {
 
   @override
   Widget build(BuildContext context) {
-    // print('***************************');
-    // print(Provider.of<StatusProvider>(context, listen: false)
-    //     .substatusListFromScreen);
-    // print('***************************');
-    // Provider.of<StatusProvider>(context, listen: false).substatusListFromScreen = [];
     return AnimatedContainer(
       curve: Curves.easeIn,
       duration: Duration(
@@ -127,10 +118,8 @@ class _SubstatusWidgetToSendState extends State<SubstatusWidgetToSend> {
               SizedBox(
                 width: 150.w,
                 child: SizedBox(
-                  // height: double.infinity,
                   child: TextField(
                     onChanged: (value) {
-                      // print(value);
                       if (value.isNotEmpty) {
                         widget.subStatus.description = value;
                       }

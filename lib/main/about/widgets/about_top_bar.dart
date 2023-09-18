@@ -10,18 +10,6 @@ class AboutTopBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverAppBar(
       centerTitle: true,
-      // title: Container(
-      //   padding: EdgeInsets.all(5.sp),
-      //   decoration: BoxDecoration(
-      //     borderRadius: BorderRadiusDirectional.circular(15.sp),
-      //     color: Theme.of(context).colorScheme.secondary.withOpacity(
-      //           0.8,
-      //         ),
-      //   ),
-      //   child: Text(
-      //     'About Toddily Preschool',
-      //   ),
-      // ),
       expandedHeight: 250,
       pinned: false,
       flexibleSpace: FlexibleSpaceBar(
@@ -29,14 +17,7 @@ class AboutTopBar extends StatelessWidget {
           'assets/images/toddilyOuterLogo.jpg',
           fit: BoxFit.fill,
         ),
-        // centerTitle: true,
         collapseMode: CollapseMode.parallax,
-        // titlePadding: EdgeInsets.all(8.sp),
-        // title: Text(
-        //   'About Toddily Preschool',
-        //   style:
-        //       TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
-        // ),
       ),
       backgroundColor: Colors.white,
       leading: Padding(

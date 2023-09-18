@@ -13,6 +13,7 @@ class NoInternetDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       backgroundColor: Colors.white,
       content: Container(
         width: double.infinity.w,
@@ -24,29 +25,21 @@ class NoInternetDialog extends StatelessWidget {
               // alignment: Alignment.center,
               children: [
                 Container(
-                    height: 210.h,
-                    color: Theme.of(context).colorScheme.secondary),
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.secondary,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20))),
+                  height: 210.h,
+                ),
                 Positioned(top: 10.h, left: 35.w, child: WifiAnimation()),
               ],
             ),
-            // SizedBox(
-            //   height: 30,
-            // ),
-            // Padding(
-            //   padding: const EdgeInsets.only(left: 16, right: 16),
-            //   child: Text("Something Went Wrong",
-            //       style: TextStyle(
-            //         fontSize: 14,
-            //       )),
-            // ),
-            // SizedBox(
-            //   height: 16,
-            // ),
             SizedBox(
               height: 10.h,
             ),
             Text(
-              'No Internet Conntection',
+              AppLocalizations.of(context)!.noInternetConnection,
               style: TextStyle(fontFamily: "LuckiestGuy", color: Colors.black),
             ),
             SizedBox(
@@ -54,16 +47,16 @@ class NoInternetDialog extends StatelessWidget {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
               children: [
                 MaterialButton(
                   onPressed: () {
-                    Navigator.of(context).pushReplacementNamed(SplashScreen.routeName);
+                    Navigator.of(context)
+                        .pushReplacementNamed(SplashScreen.routeName);
                   },
                   color: Theme.of(context).colorScheme.secondary,
                   child: Text(
-                    'Try Again',
-                    style: TextStyle(
+                    AppLocalizations.of(context)!.tryAgain,
+                    style: const TextStyle(
                         fontFamily: "LuckiestGuy", color: Colors.white),
                   ),
                 ),
@@ -73,14 +66,13 @@ class NoInternetDialog extends StatelessWidget {
                   },
                   color: Theme.of(context).colorScheme.secondary,
                   child: Text(
-                    'Exit',
-                    style: TextStyle(
+                    AppLocalizations.of(context)!.exit,
+                    style: const TextStyle(
                         fontFamily: "LuckiestGuy", color: Colors.white),
                   ),
                 ),
               ],
             ),
-
             SizedBox(
               height: 15.h,
             ),
