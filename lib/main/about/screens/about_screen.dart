@@ -25,15 +25,6 @@ class AboutScreen extends StatefulWidget {
 class _AboutScreenState extends State<AboutScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  List<String> images = [
-    'assets/images/todd.jpg',
-    'assets/images/avatar2.jpg',
-    'assets/images/water.jpg',
-    'assets/images/todd.jpg',
-    'assets/images/avatar2.jpg',
-    'assets/images/water.jpg',
-  ];
-
   bool startAnimation = false;
   var _photosFuture;
 
