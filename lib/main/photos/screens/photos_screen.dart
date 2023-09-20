@@ -30,11 +30,14 @@ class PhotosScreen extends StatefulWidget {
   State<PhotosScreen> createState() => _PhotosScreenState();
 }
 
-class _PhotosScreenState extends State<PhotosScreen> {
+class _PhotosScreenState extends State<PhotosScreen>
+    with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   bool startAnimation = false;
   var _photosFuture;
+  bool expanded = true;
+  AnimationController? controller;
 
   @override
   void initState() {
@@ -47,6 +50,11 @@ class _PhotosScreenState extends State<PhotosScreen> {
         startAnimation = true;
       });
     });
+    controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 400),
+      reverseDuration: const Duration(milliseconds: 400),
+    );
   }
 
   Future<void> _refreshData() async {
@@ -59,7 +67,7 @@ class _PhotosScreenState extends State<PhotosScreen> {
   // final String? title;
   @override
   Widget build(BuildContext context) {
-    bool isList = Provider.of<PhotosProvider>(context).isList;
+    bool isList = Provider.of<PhotosProvider>(context, listen: false).isList;
 
     return SafeArea(
       child: Scaffold(
@@ -74,6 +82,19 @@ class _PhotosScreenState extends State<PhotosScreen> {
           withBackButton: false,
           stayEnglish: true,
         ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            isList ? controller!.forward() : controller!.reverse();
+            setState(() {
+              Provider.of<PhotosProvider>(context, listen: false)
+                  .changeListGridView();
+            });
+          },
+          child: AnimatedIcon(
+            icon: AnimatedIcons.view_list,
+            progress: controller!,
+          ),
+        ),
         body: LiquidPullToRefresh(
           onRefresh: () {
             return _refreshData();
@@ -84,10 +105,6 @@ class _PhotosScreenState extends State<PhotosScreen> {
             children: [
               SizedBox(
                 height: 10.h,
-              ),
-              ListGridButtons(isList: isList),
-              SizedBox(
-                height: 5.h,
               ),
               FutureBuilder(
                   future: _photosFuture,
@@ -102,8 +119,8 @@ class _PhotosScreenState extends State<PhotosScreen> {
                     List<PhotoModel> photos =
                         Provider.of<PhotosProvider>(context, listen: false)
                             .photos;
-                    if(photos.isEmpty){
-                      return const NoInformationWidget();
+                    if (photos.isEmpty) {
+                      return NoInformationWidget();
                     }
                     return Expanded(
                       // PUT OPTION TO DOWNLOAD IMAGES

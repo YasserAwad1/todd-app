@@ -5,15 +5,17 @@ import 'package:provider/provider.dart';
 import 'package:toddily_preschool/common/providers/language_provider.dart';
 
 class NoInformationWidget extends StatelessWidget {
-  const NoInformationWidget({super.key});
+  int? height;
+  NoInformationWidget({this.height = 170});
 
   @override
   Widget build(BuildContext context) {
-    bool isArabic = Provider.of<LanguageProvider>(context, listen: false).isArabic();
+    bool isArabic =
+        Provider.of<LanguageProvider>(context, listen: false).isArabic();
     return Column(
       children: [
         SizedBox(
-          height: 170.h,
+          height: height!.h,
         ),
         Center(
             child: Image.asset(

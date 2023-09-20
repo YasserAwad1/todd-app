@@ -2,10 +2,16 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:toddily_preschool/common/constants/end_points.dart';
 import 'package:toddily_preschool/common/providers/language_provider.dart';
 import 'package:toddily_preschool/common/drawer/app_drawer.dart';
+import 'package:toddily_preschool/common/widgets/error_widget.dart';
+import 'package:toddily_preschool/common/widgets/no_information_widget.dart';
+import 'package:toddily_preschool/common/widgets/ripple.dart';
+import 'package:toddily_preschool/main/about/providers/about_provider.dart';
 import 'package:toddily_preschool/main/about/widgets/about_top_bar.dart';
 import 'package:toddily_preschool/main/about/widgets/about_widget.dart';
+import 'package:toddily_preschool/models/latestPhotos/photo_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:toddily_preschool/main/about/widgets/details_list.dart';
 
@@ -29,11 +35,14 @@ class _AboutScreenState extends State<AboutScreen> {
   ];
 
   bool startAnimation = false;
+  var _photosFuture;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    _photosFuture =
+        Provider.of<AboutProvider>(context, listen: false).getPhotos();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {
         startAnimation = true;
@@ -120,33 +129,55 @@ class _AboutScreenState extends State<AboutScreen> {
                   SizedBox(
                     height: 10.h,
                   ),
-                  CarouselSlider.builder(
-                    itemBuilder: ((context, index, realIndex) => Container(
-                          margin: EdgeInsets.symmetric(horizontal: 25.w),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadiusDirectional.circular(
-                              20.sp,
-                            ),
+                  FutureBuilder(
+                      future: _photosFuture,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return RippleWidget();
+                        }
+                        if (Provider.of<AboutProvider>(context, listen: false)
+                            .hasError) {
+                          return CustomErrorWidget();
+                        }
+                        List<PhotoModel> photos =
+                            Provider.of<AboutProvider>(context, listen: false)
+                                .aboutImages;
+                        if (photos.isEmpty) {
+                          return NoInformationWidget(
+                            height: 1,
+                          );
+                        }
+                        return CarouselSlider.builder(
+                          itemBuilder: ((context, index, realIndex) =>
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 25.w),
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadiusDirectional.circular(
+                                    20.sp,
+                                  ),
+                                ),
+                                width: double.infinity,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20.sp),
+                                  child: Image.network(
+                                    '${Endpoints.baseUrl}${photos[index].image_url}',
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                              )),
+                          itemCount: photos.length,
+                          options: CarouselOptions(
+                            pauseAutoPlayOnTouch: true,
+                            autoPlay: true,
+                            viewportFraction: 1.sp,
+                            enlargeCenterPage: false,
+                            enableInfiniteScroll: false,
+                            aspectRatio: 16 / 9,
                           ),
-                          width: double.infinity,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20.sp),
-                            child: Image.asset(
-                              images[index],
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        )),
-                    itemCount: images.length,
-                    options: CarouselOptions(
-                      pauseAutoPlayOnTouch: true,
-                      autoPlay: true,
-                      viewportFraction: 1.sp,
-                      enlargeCenterPage: false,
-                      enableInfiniteScroll: false,
-                      aspectRatio: 16 / 9,
-                    ),
-                  ),
+                        );
+                      }),
                 ],
               ),
             ),

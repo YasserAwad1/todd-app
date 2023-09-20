@@ -56,6 +56,9 @@ class _StatusesScreenToSendState extends State<StatusesScreenToSend> {
                 .then((value) async {
               await Provider.of<DatesProvider>(context, listen: false)
                   .getDatesByChildId(widget.childId!);
+              Provider.of<StatusProvider>(context, listen: false)
+                  .substatusListFromScreen
+                  .clear();
               Navigator.pop(
                 context,
                 MyNavigator(
@@ -106,7 +109,7 @@ class _StatusesScreenToSendState extends State<StatusesScreenToSend> {
     return SafeArea(
       child: Scaffold(
         extendBody: true,
-        extendBodyBehindAppBar: true,
+        // extendBodyBehindAppBar: true,
         appBar: CustomAppBar(
           scaffoldKey: null,
           title: DateFormat('d/MMM').format(

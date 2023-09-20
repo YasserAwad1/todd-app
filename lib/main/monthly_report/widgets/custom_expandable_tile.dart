@@ -1,11 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
 import 'package:toddily_preschool/common/navigators/my_navigator.dart';
 import 'package:toddily_preschool/common/user/provider/user_provider.dart';
+import 'package:toddily_preschool/main/monthly_report/providers/report_provider.dart';
 import 'package:toddily_preschool/main/monthly_report/screens/send_report_screen.dart';
+import 'package:toddily_preschool/main/monthly_report/screens/update_report_screen.dart';
 import 'package:toddily_preschool/models/kids/kid_model.dart';
 import 'package:toddily_preschool/models/report/report_model.dart';
 
@@ -20,7 +23,7 @@ class CustomExpandableTile extends StatefulWidget {
 
 class _CustomExpandableTileState extends State<CustomExpandableTile> {
   bool isExpanded = true;
-
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     DateTime date = DateTime.parse(widget.report.created_at!);
@@ -76,22 +79,63 @@ class _CustomExpandableTileState extends State<CustomExpandableTile> {
                 if (Provider.of<UserProvider>(context, listen: false)
                         .getUserRoleId() ==
                     3)
+                  isLoading
+                      ? CircularProgressIndicator(
+                          color: Colors.red,
+                        )
+                      : IconButton(
+                          onPressed: () async {
+                            setState(() {
+                              isLoading = true;
+                            });
+                            bool success = await Provider.of<ReportProvider>(
+                                    context,
+                                    listen: false)
+                                .deleteReport(widget.report.id!)
+                                .then((value) async {
+                              await Provider.of<ReportProvider>(context,
+                                      listen: false)
+                                  .getChildReport(widget.kid.id!);
+                              return value;
+                            });
+
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                backgroundColor: success
+                                    ? Colors.green.shade400
+                                    : const Color.fromARGB(255, 207, 66, 66),
+                                content: Text(success
+                                    ? AppLocalizations.of(context)!
+                                        .reportDeletedSuc
+                                    : AppLocalizations.of(context)!
+                                        .errorInDeletedReport)));
+                            setState(() {
+                              isLoading = false;
+                            });
+                          },
+                          icon: const Icon(
+                            Icons.delete_forever_outlined,
+                            size: 23,
+                            color: Color.fromARGB(255, 207, 66, 66),
+                          ),
+                        ),
+                if (Provider.of<UserProvider>(context, listen: false)
+                        .getUserRoleId() ==
+                    3)
                   IconButton(
                     onPressed: () {
                       Navigator.push(
                           context,
                           MyNavigator(
                               curves: Curves.ease,
-                              screen: SendReportScreen(
-                                isEditing: true,
+                              screen: UpdateReportScreen(
                                 kid: widget.kid,
                                 previousReport: widget.report,
                               )));
                     },
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.auto_fix_high_outlined,
                       size: 23,
-                      color: Colors.red,
+                      color: Colors.green.shade400,
                     ),
                   ),
                 Icon(
@@ -111,11 +155,16 @@ class _CustomExpandableTileState extends State<CustomExpandableTile> {
                   fontSize: 0,
                 ),
               ),
-              secondChild: Text(
-                widget.report.description,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 15.7,
+              secondChild: Localizations.override(
+                context: context,
+                locale: Locale('ar'),
+                child: Text(
+                  widget.report.description,
+                  textAlign: TextAlign.right,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 15.7,
+                  ),
                 ),
               ),
               crossFadeState: isExpanded

@@ -93,7 +93,7 @@ class _KidPhotosScreenState extends State<KidPhotosScreen> {
                                       listen: false)
                                   .kidPhotosToCheck;
                           if (photos.isEmpty) {
-                            return const NoInformationWidget();
+                            return NoInformationWidget();
                           }
                           return Expanded(
                             // PUT OPTION TO DOWNLOAD IMAGES
@@ -130,7 +130,7 @@ class _KidPhotosScreenState extends State<KidPhotosScreen> {
                                         listen: false)
                                     .kidPhotosForParents;
                             if (photos.isEmpty) {
-                              return const NoInformationWidget();
+                              return NoInformationWidget();
                             } else {
                               return ListView.builder(
                                 physics: const BouncingScrollPhysics(),

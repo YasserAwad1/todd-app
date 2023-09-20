@@ -26,6 +26,12 @@ class StatusProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  bool isSubstatusInList(int id) {
+    bool isInList =
+        substatusListFromScreen.any((subStatus) => subStatus.id == id);
+    return isInList;
+  }
+
   bool appearSendButton() {
     if (substatusListFromScreen.isEmpty) {
       return true;

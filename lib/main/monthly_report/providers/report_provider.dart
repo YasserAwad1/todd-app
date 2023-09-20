@@ -42,4 +42,14 @@ class ReportProvider with ChangeNotifier {
       print(e);
     }
   }
+
+  Future<bool>deleteReport(int reportId) async {
+    try {
+      bool success = await _service.deleteReport(reportId);
+      return success;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
 }

@@ -106,7 +106,7 @@ class _MonthlyReportScreenState extends State<MonthlyReportScreen> {
                         }
                         List<ReportModel> reports = reportProvider.reports;
                         if (reports.isEmpty) {
-                          return const NoInformationWidget();
+                          return NoInformationWidget();
                         }
                         return Expanded(
                           child: ListView.builder(

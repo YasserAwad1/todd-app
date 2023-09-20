@@ -1,17 +1,23 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:toddily_preschool/common/providers/language_provider.dart';
 import 'package:toddily_preschool/main/splash_screen/splash_screen.dart';
 import 'package:toddily_preschool/main/splash_screen/widgets/wifi_animation.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NoInternetDialog extends StatelessWidget {
-  const NoInternetDialog({super.key});
+  int tryAgain;
+  NoInternetDialog({
+    required this.tryAgain,
+  });
 
   @override
   Widget build(BuildContext context) {
+    bool isArabic =
+        Provider.of<LanguageProvider>(context, listen: false).isArabic();
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       backgroundColor: Colors.white,
@@ -40,7 +46,9 @@ class NoInternetDialog extends StatelessWidget {
             ),
             Text(
               AppLocalizations.of(context)!.noInternetConnection,
-              style: TextStyle(fontFamily: "LuckiestGuy", color: Colors.black),
+              style: TextStyle(
+                  fontFamily: isArabic ? "Lalezar" : "LuckiestGuy",
+                  color: Colors.black),
             ),
             SizedBox(
               height: 15.h,
@@ -50,14 +58,17 @@ class NoInternetDialog extends StatelessWidget {
               children: [
                 MaterialButton(
                   onPressed: () {
-                    Navigator.of(context)
-                        .pushReplacementNamed(SplashScreen.routeName);
+                    tryAgain == 0
+                        ? Navigator.of(context)
+                            .pushReplacementNamed(SplashScreen.routeName)
+                        : Navigator.pop(context);
                   },
                   color: Theme.of(context).colorScheme.secondary,
                   child: Text(
                     AppLocalizations.of(context)!.tryAgain,
-                    style: const TextStyle(
-                        fontFamily: "LuckiestGuy", color: Colors.white),
+                    style: TextStyle(
+                        fontFamily: isArabic ? "Lalezar" : "LuckiestGuy",
+                        color: Colors.white),
                   ),
                 ),
                 MaterialButton(
@@ -67,8 +78,9 @@ class NoInternetDialog extends StatelessWidget {
                   color: Theme.of(context).colorScheme.secondary,
                   child: Text(
                     AppLocalizations.of(context)!.exit,
-                    style: const TextStyle(
-                        fontFamily: "LuckiestGuy", color: Colors.white),
+                    style: TextStyle(
+                        fontFamily: isArabic ? "Lalezar" : "LuckiestGuy",
+                        color: Colors.white),
                   ),
                 ),
               ],

@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:toddily_preschool/auth/providers/auth_provider.dart';
 import 'package:toddily_preschool/auth/screens/sign_in_screen.dart';
 import 'package:toddily_preschool/common/local/local_repo.dart';
+import 'package:toddily_preschool/common/providers/language_provider.dart';
 import 'package:toddily_preschool/common/user/provider/user_provider.dart';
 import 'package:toddily_preschool/locator.dart';
 import 'package:toddily_preschool/main/about/screens/about_screen.dart';
@@ -66,13 +67,17 @@ class _SplashScreenState extends State<SplashScreen> {
 
     _connectivitySubscription =
         _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+
     Timer(const Duration(seconds: 6), () async {
+      await Provider.of<LanguageProvider>(context, listen: false).getLanguage();
       if (result == ConnectivityResult.none) {
         // ignore: use_build_context_synchronously
         showDialog(
             context: context,
             builder: (context) {
-              return NoInternetDialog();
+              return NoInternetDialog(
+                tryAgain: 0,
+              );
             });
       } else {
         bool isTokenValid =

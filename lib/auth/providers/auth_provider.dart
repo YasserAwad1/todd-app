@@ -8,15 +8,16 @@ import 'package:toddily_preschool/locator.dart';
 
 class AuthProvider with ChangeNotifier {
   AuthService _service = AuthService();
+  String errorMessage = '';
   // String? roleName;
   // bool isGuest = false;
 
-  login(String userName, String password) async {
+  login(String userName, String password, BuildContext context) async {
     try {
-      if (userName.isEmpty || password.isEmpty) {
-        return false;
-      }
-      final success = await _service.logIn(userName, password);
+      // if (userName.isEmpty || password.isEmpty) {
+      //   return false;
+      // }
+      final success = await _service.logIn(userName, password, context);
       print(success);
       if (success) {
         print('********************PROVIDER TOKEN**********************');
@@ -24,11 +25,12 @@ class AuthProvider with ChangeNotifier {
         print('********************PROVIDER TOKEN**********************');
         await locator.get<LocalRepo>().saveToken(_service.token!);
         // locator.get<LocalRepo>().saveRole(_service.role!);
-         locator.get<LocalRepo>().vartoken(_service.token!);
+        locator.get<LocalRepo>().vartoken(_service.token!);
         // locator.get<LocalRepo>().varRole(_service.role!);
         // roleName = locator.get<LocalRepo>().role;
         return true;
       }
+      errorMessage = _service.errorMessage;
       return false;
     } catch (e) {
       print(e);
@@ -65,11 +67,13 @@ class AuthProvider with ChangeNotifier {
   logOut() async {
     final _localService = LocalRepo();
     await _localService.deleteValue('token');
+    await _localService.deleteValue('role');
+    await _localService.deleteValue('language');
     locator.get<LocalRepo>().token = null;
-    var loggedOut = await _localService.clear();
+    // var loggedOut = await _localService.clear();
     notifyListeners();
-    if (loggedOut) {
-      return true;
-    }
+    // if (loggedOut) {
+    return true;
+    // }
   }
 }

@@ -11,12 +11,21 @@ class LanguageProvider with ChangeNotifier {
     if (language != null) {
       _currentLocale = Locale(language!);
     } else {
-      _currentLocale = ui.window.locale ?? const Locale('en');
+      _currentLocale = ui.window.locale;
     }
   }
 
   getLanguage() async {
-    language = await locator.get<LocalRepo>().getLanguage();
+    if (locator.get<LocalRepo>().language == null) {
+      print(
+          '*******************************************************************************************');
+      print('GETTING LANGUAGE');
+      print(
+          '*******************************************************************************************');
+      language = 'en';
+    } else {
+      language = await locator.get<LocalRepo>().getLanguage();
+    }
   }
 
   Locale get currentLocale => _currentLocale!;

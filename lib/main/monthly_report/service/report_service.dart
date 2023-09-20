@@ -26,7 +26,7 @@ class ReportService {
               (e) => ReportModel.fromJson(e),
             )
             .toList();
-            hasError = false;
+        hasError = false;
         return reports;
       } else {
         hasError = true;
@@ -80,6 +80,33 @@ class ReportService {
         "child_id": childId.toString(),
         "description": newDescription.toString()
       });
+      print(response.body);
+      if (response.statusCode < 300) {
+        print('REPORT Updated');
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
+
+  Future<bool> deleteReport(
+    int reportId,
+  ) async {
+    try {
+      var token = await locator.get<LocalRepo>().getToken();
+      final url = Uri.parse('${Endpoints.report}/$reportId');
+
+      final response = await http.delete(
+        url,
+        headers: {
+          "Accept": "application/json",
+          'Authorization': 'Bearer $token'
+        },
+      );
       print(response.body);
       if (response.statusCode < 300) {
         print('REPORT Updated');

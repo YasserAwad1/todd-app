@@ -32,8 +32,8 @@ class LanguageButtons extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             TextButton(
-              onPressed: () {
-                Provider.of<LanguageProvider>(context, listen: false)
+              onPressed: () async{
+                await Provider.of<LanguageProvider>(context, listen: false)
                     .changeLocale('en');
               },
               style: TextButton.styleFrom(
@@ -53,8 +53,8 @@ class LanguageButtons extends StatelessWidget {
               ),
             ),
             TextButton(
-              onPressed: () {
-                Provider.of<LanguageProvider>(context, listen: false)
+              onPressed: () async{
+                await Provider.of<LanguageProvider>(context, listen: false)
                     .changeLocale('ar');
               },
               style: TextButton.styleFrom(

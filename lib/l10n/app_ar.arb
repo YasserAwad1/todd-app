@@ -54,5 +54,14 @@
     "extra": "إضافي",
     "errorOccurred": "حدث خطأ",
     "wtspNotInstalled" : "الواتساب غير مثبت",
-    "monthlyReport": "التقرير الشهري"
+    "monthlyReport": "التقرير الشهري",
+    "reportDeletedSuc": "تم حذف التقرير بنجاح",
+    "errorInDeletedReport": "حدث خطأ في حذف التقرير",
+    "devAndBehReport": "التقرير النمائي والسلوكي",
+    "medicalReport": "التقرير الطبي",
+    "academicReport": "التقرير الاكاديمي",
+    "notes": "ملاحظات",
+    "errorOccured": "حدث خطأ",
+    "networkError": "خطأ في الشبكة"
+
 }

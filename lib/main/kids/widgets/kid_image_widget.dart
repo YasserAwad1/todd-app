@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
@@ -47,7 +49,6 @@ class _KidImageWidgetState extends State<KidImageWidget> {
       });
       return true;
     } else {
-      
       print('Failed to download image. Status code: ${response.statusCode}');
       setState(() {
         isDownloading = false;
@@ -102,9 +103,12 @@ class _KidImageWidgetState extends State<KidImageWidget> {
                 right: isArabic ? null : 0,
                 left: isArabic ? 0 : null,
                 child: isDownloading
-                    ? CircularProgressIndicator(
-                        color: Theme.of(context).colorScheme.secondary,
-                      )
+                    ? Platform.isIOS
+                        ? CupertinoActivityIndicator(
+                            color: Theme.of(context).colorScheme.secondary)
+                        : CircularProgressIndicator(
+                            color: Theme.of(context).colorScheme.secondary,
+                          )
                     : Container(
                         width: 40.w,
                         decoration: BoxDecoration(

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:toddily_preschool/common/drawer/app_drawer.dart';
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
+import 'package:toddily_preschool/main/events/providers/event_provider.dart';
 import 'package:toddily_preschool/main/events/widgets/event_image_widget.dart';
 import 'package:toddily_preschool/main/photos/providers/photos_povider.dart';
 import 'package:toddily_preschool/main/photos/widgets/list_grid_buttons.dart';
@@ -19,15 +20,22 @@ class EventPhotosScreen extends StatefulWidget {
   State<EventPhotosScreen> createState() => _EventPhotosScreenState();
 }
 
-class _EventPhotosScreenState extends State<EventPhotosScreen> {
+class _EventPhotosScreenState extends State<EventPhotosScreen>
+    with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   bool startAnimation = false;
+  AnimationController? controller;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 400),
+      reverseDuration: const Duration(milliseconds: 400),
+    );
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {
         startAnimation = true;
@@ -37,7 +45,7 @@ class _EventPhotosScreenState extends State<EventPhotosScreen> {
 
   @override
   Widget build(BuildContext context) {
-    bool isList = Provider.of<PhotosProvider>(context).isList;
+    bool isList = Provider.of<EventProvider>(context, listen: false).isList;
     return SafeArea(
       child: Scaffold(
         drawerEnableOpenDragGesture: true,
@@ -51,14 +59,23 @@ class _EventPhotosScreenState extends State<EventPhotosScreen> {
           withBackButton: true,
           stayEnglish: true,
         ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            isList ? controller!.forward() : controller!.reverse();
+            setState(() {
+              Provider.of<EventProvider>(context, listen: false)
+                  .changeListGridView();
+            });
+          },
+          child: AnimatedIcon(
+            icon: AnimatedIcons.view_list,
+            progress: controller!,
+          ),
+        ),
         body: Column(
           children: [
             SizedBox(
               height: 10.h,
-            ),
-            ListGridButtons(isList: isList),
-            SizedBox(
-              height: 5.h,
             ),
             Expanded(
               // PUT OPTION TO DOWNLOAD IMAGES

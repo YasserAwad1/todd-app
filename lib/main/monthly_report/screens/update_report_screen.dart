@@ -12,26 +12,22 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:toddily_preschool/models/kids/kid_model.dart';
 import 'package:toddily_preschool/models/report/report_model.dart';
 
-class SendReportScreen extends StatefulWidget {
-  static const routeName = 'send-report-screen';
+class UpdateReportScreen extends StatefulWidget {
+  static const routeName = 'update-report-screen';
   KidModel? kid;
   ReportModel? previousReport;
-  bool? isEditing = false;
 
-  SendReportScreen({
+  UpdateReportScreen({
     this.kid,
     this.previousReport,
-    this.isEditing,
   });
+
   @override
-  State<SendReportScreen> createState() => _SendReportScreenState();
+  State<UpdateReportScreen> createState() => _UpdateReportScreenState();
 }
 
-class _SendReportScreenState extends State<SendReportScreen> {
-  TextEditingController devController = TextEditingController();
-  TextEditingController medicalController = TextEditingController();
-  TextEditingController academicController = TextEditingController();
-  TextEditingController notesController = TextEditingController();
+class _UpdateReportScreenState extends State<UpdateReportScreen> {
+  TextEditingController reportController = TextEditingController();
   ButtonState stateOnlyText = ButtonState.idle;
   ButtonState stateTextWithIcon = ButtonState.idle;
   bool success = false;
@@ -44,7 +40,8 @@ class _SendReportScreenState extends State<SendReportScreen> {
         });
         // ignore: use_build_context_synchronously
         success = await Provider.of<ReportProvider>(context, listen: false)
-            .sendReport(widget.kid!.id!, report!);
+            .updateReport(widget.kid!.id!, widget.previousReport!.id!,
+                reportController.text);
 
         setState(() {
           stateTextWithIcon = success ? ButtonState.success : ButtonState.fail;
@@ -86,17 +83,13 @@ class _SendReportScreenState extends State<SendReportScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // if (widget.isEditing!) {
-    //   descriptionController.value =
-    //       TextEditingValue(text: widget.previousReport!.description);
-    // }
+
+    reportController.value =
+        TextEditingValue(text: widget.previousReport!.description);
   }
 
   @override
   Widget build(BuildContext context) {
-    report = notesController.text.isEmpty
-        ? 'التقرير النمائي و السلوكي:\n${devController.text}\n\nالتقرير الطبي:\n${medicalController.text}\n\nالتقرير الاكاديمي:\n${academicController.text}\n\nالملاحظات:\nلا يوجد ملاحظات'
-        : 'التقرير النمائي و السلوكي:\n${devController.text}\n\nالتقرير الطبي:\n${medicalController.text}\n\nالتقرير الاكاديمي:\n${academicController.text}\n\nالملاحظات:\n${notesController.text}';
     return SafeArea(
       child: Scaffold(
         appBar: CustomAppBar(
@@ -141,50 +134,14 @@ class _SendReportScreenState extends State<SendReportScreen> {
                 height: 10.h,
               ),
               CustomTextFormFeild(
-                labelText: AppLocalizations.of(context)!.devAndBehReport,
-                controller: devController,
+                labelText: AppLocalizations.of(context)!.monthlyReport,
+                controller: reportController,
                 textinputAction: TextInputAction.next,
                 inputType: TextInputType.multiline,
-                maxlines: 10,
+                maxlines: 25,
                 alignLabelWithHint: true,
                 onChanged: (val) {},
               ),
-              SizedBox(
-                height: 25.h,
-              ),
-              CustomTextFormFeild(
-                labelText: AppLocalizations.of(context)!.medicalReport,
-                controller: medicalController,
-                textinputAction: TextInputAction.next,
-                inputType: TextInputType.multiline,
-                maxlines: 10,
-                alignLabelWithHint: true,
-                onChanged: (val) {},
-              ),
-              SizedBox(
-                height: 25.h,
-              ),
-              CustomTextFormFeild(
-                labelText: AppLocalizations.of(context)!.academicReport,
-                controller: academicController,
-                textinputAction: TextInputAction.next,
-                inputType: TextInputType.multiline,
-                maxlines: 10,
-                alignLabelWithHint: true,
-                onChanged: (val) {},
-              ),
-              SizedBox(
-                height: 25.h,
-              ),
-              CustomTextFormFeild(
-                labelText: AppLocalizations.of(context)!.notes,
-                controller: notesController,
-                textinputAction: TextInputAction.next,
-                inputType: TextInputType.multiline,
-                maxlines: 10,
-                alignLabelWithHint: true,
-                onChanged: (val) {},
-              )
             ]),
           ),
         ),

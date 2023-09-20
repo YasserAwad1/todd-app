@@ -55,15 +55,8 @@ class _ClassesScreenState extends State<ClassesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var yellow = Theme.of(context).colorScheme.secondary;
     return SafeArea(
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            Provider.of<StatusProvider>(context, listen: false)
-                .getChildStatusByDate(1, '2023-9-04');
-          },
-        ),
         drawer: AppDrawer(),
         key: _scaffoldKey,
         appBar: CustomAppBar(
@@ -79,60 +72,53 @@ class _ClassesScreenState extends State<ClassesScreen> {
           onRefresh: () {
             return _refreshData();
           },
-          child: LiquidPullToRefresh(
-            onRefresh: () {
-              return _refreshData();
-            },
-            child: Container(
-              child: Stack(
-                fit: StackFit.loose,
-                children: [
-                  Column(
-                    children: [
-                      const Spacer(),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 5.w, vertical: 3.h),
-                        child: Image.asset('assets/images/kids.png'),
-                      ),
-                    ],
-                  ),
-                  FutureBuilder(
-                      future: _classesFuture,
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                                ConnectionState.waiting ||
-                            isLoading) {
-                          return RippleWidget(
-                            height: 0,
-                          );
-                        } else if (Provider.of<ClassProvider>(context,
-                                listen: false)
-                            .hasError) {
-                          // print(
-                          //     'a;lsdfjaskjdfhalskdfhaslk jhadskjfh aklsdjfh alsdkjfh aklhj ');
-                          return CustomErrorWidget(
-                            height: 0,
-                          );
-                        } else {
-                          var classes =
-                              Provider.of<ClassProvider>(context, listen: false)
-                                  .classes;
-
-                          return ListView.builder(
-                            physics: const BouncingScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: classes.length,
-                            itemBuilder: (context, i) => ClassWidget(
-                              startAnimation: startAnimation,
-                              index: i,
-                              classModel: classes[i],
-                            ),
-                          );
-                        }
-                      }),
-                ],
-              ),
+          child: Container(
+            child: Stack(
+              fit: StackFit.loose,
+              children: [
+                Column(
+                  children: [
+                    const Spacer(),
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 5.w, vertical: 3.h),
+                      child: Image.asset('assets/images/kids.png'),
+                    ),
+                  ],
+                ),
+                FutureBuilder(
+                    future: _classesFuture,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting ||
+                          isLoading) {
+                        return RippleWidget(
+                          height: 0,
+                        );
+                      } else if (Provider.of<ClassProvider>(context,
+                              listen: false)
+                          .hasError) {
+                        // print(
+                        //     'a;lsdfjaskjdfhalskdfhaslk jhadskjfh aklsdjfh alsdkjfh aklhj ');
+                        return CustomErrorWidget(
+                          height: 0,
+                        );
+                      } else {
+                        var classes =
+                            Provider.of<ClassProvider>(context, listen: false)
+                                .classes;
+                        return ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: classes.length,
+                          itemBuilder: (context, i) => ClassWidget(
+                            startAnimation: startAnimation,
+                            index: i,
+                            classModel: classes[i],
+                          ),
+                        );
+                      }
+                    }),
+              ],
             ),
           ),
         ),

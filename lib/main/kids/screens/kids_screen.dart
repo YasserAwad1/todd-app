@@ -69,12 +69,6 @@ class _KidsScreenState extends State<KidsScreen> {
         drawerEnableOpenDragGesture: true,
         drawerEdgeDragWidth: 200.w,
         key: _scaffoldKey,
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            await Provider.of<KidImageProvider>(context, listen: false)
-                .getKidImagesToCheck(13);
-          },
-        ),
         appBar: CustomAppBar(
           scaffoldKey: _scaffoldKey,
           title: widget.isComingFromClassesScreen == true

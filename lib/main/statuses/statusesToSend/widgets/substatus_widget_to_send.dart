@@ -21,32 +21,34 @@ class SubstatusWidgetToSend extends StatefulWidget {
 }
 
 class _SubstatusWidgetToSendState extends State<SubstatusWidgetToSend> {
-  bool isSelected = false;
+  // bool isSelected = false;
 
   selectStatus() {
-    setState(() {
-      isSelected = !isSelected;
-      if (isSelected) {
-        Provider.of<StatusProvider>(context, listen: false)
-            .addSubStatusFromScreen(widget.subStatus);
-      } else {
-        Provider.of<StatusProvider>(context, listen: false)
-            .removeSubStatusFromScreen(widget.subStatus);
-      }
-    });
+    // isSelected = !isSelected;
+    if (!Provider.of<StatusProvider>(context, listen: false)
+        .isSubstatusInList(widget.subStatus.id!)) {
+      Provider.of<StatusProvider>(context, listen: false)
+          .addSubStatusFromScreen(widget.subStatus);
+    } else {
+      Provider.of<StatusProvider>(context, listen: false)
+          .removeSubStatusFromScreen(widget.subStatus);
+    }
   }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    Provider.of<StatusProvider>(context, listen: false)
-        .substatusListFromScreen
-        .clear();
-  }
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   Provider.of<StatusProvider>(context, listen: false)
+  //       .substatusListFromScreen
+  //       .clear();
+  // }
 
   @override
   Widget build(BuildContext context) {
+    // Provider.of<StatusProvider>(context, listen: false)
+    //     .substatusListFromScreen
+    //     .clear();
     return AnimatedContainer(
       curve: Curves.easeIn,
       duration: Duration(
@@ -59,7 +61,8 @@ class _SubstatusWidgetToSendState extends State<SubstatusWidgetToSend> {
       margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 15.h),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.sp),
-        color: isSelected
+        color: Provider.of<StatusProvider>(context, listen: false)
+                .isSubstatusInList(widget.subStatus.id!)
             ? Theme.of(context).colorScheme.secondary
             : Theme.of(context).colorScheme.primary,
         boxShadow: const [

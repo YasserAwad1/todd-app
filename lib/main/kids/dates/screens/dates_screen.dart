@@ -149,7 +149,7 @@ class _DatesScreenState extends State<DatesScreen> {
                       }
                       List<DateModel> dates = datesProvider.dates;
                       if (dates.isEmpty) {
-                        return const NoInformationWidget();
+                        return  NoInformationWidget();
                       }
                       return Expanded(
                         child: GridView.builder(

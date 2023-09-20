@@ -222,5 +222,37 @@
     "monthlyReport": "Monthly Report",
     "@monthlyReport":{
         "description": "none"
+    },
+    "reportDeletedSuc": "Report deleted successfully",
+    "@reportDeletedSuc":{
+        "description": "none"
+    },
+    "errorInDeletedReport": "Error in deleting report",
+    "@errorInDeletedReport":{
+        "description": "none"
+    },
+    "devAndBehReport": "Developmental and behavioral report",
+    "@devAndBehReport":{
+        "description": "none"
+    },
+    "medicalReport": "Medical report",
+    "@medicalReport":{
+        "description": "none"
+    },
+    "academicReport": "Academic report",
+    "@academicReport":{
+        "description": "none"
+    },
+    "notes": "Notes",
+    "@notes":{
+        "description": "none"
+    },
+    "networkError": "Network error",
+    "@networkError":{
+        "description": "none"
+    },
+    "errorOccured": "Error occured",
+    "@errorOccured":{
+        "description": "none"
     }
 }

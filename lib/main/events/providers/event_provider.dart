@@ -8,6 +8,12 @@ class EventProvider with ChangeNotifier {
   List<EventModel> events = [];
   List<EventImagesModel> eventImages = [];
   bool hasError = false;
+  bool isList = true;
+
+  changeListGridView() {
+    isList = !isList;
+    notifyListeners();
+  }
 
   getEvents() async {
     try {

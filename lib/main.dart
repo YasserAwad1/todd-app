@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:toddily_preschool/common/firebaseApi/firebase_api.dart';
 import 'package:toddily_preschool/main/kids/dates/screens/dates_screen.dart';
+import 'package:toddily_preschool/main/monthly_report/screens/update_report_screen.dart';
 import 'firebase_options.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -52,13 +53,13 @@ final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  setUp();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await FirebaseApi.initNotifications();
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-  setUp();
   runApp(const MyApp());
 }
 
@@ -130,25 +131,12 @@ class _MyAppState extends State<MyApp> {
                   GlobalWidgetsLocalizations.delegate,
                 ],
                 locale: Provider.of<LanguageProvider>(context).currentLocale,
-                // // localizationsDelegates: const [
-                // //   AppLocalizations.delegate,
-                // //   GlobalMaterialLocalizations.delegate,
-                // //   GlobalWidgetsLocalizations.delegate,
-                // //   GlobalCupertinoLocalizations.delegate,
-                // // ],
                 supportedLocales: L10n.all,
                 theme: ThemeData(
                   colorScheme: ColorScheme.fromSwatch().copyWith(
                     primary: Colors.grey[350],
                     secondary: const Color.fromARGB(255, 255, 207, 58),
                   ),
-                  // fontFamily: "LuckiestGuy"
-                  // pageTransitionsTheme: PageTransitionsTheme(
-                  //   builders: {
-                  //     TargetPlatform.android: ZoomPageTransitionsBuilder(),
-                  //     TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-                  //   },
-                  // ),
                 ),
                 home: SplashScreen(),
                 routes: {
@@ -180,6 +168,8 @@ class _MyAppState extends State<MyApp> {
                   StatusesScreenToSend.routeName: (context) =>
                       StatusesScreenForPreview(),
                   PickImageScreen.routeName: (context) => PickImageScreen(),
+                  UpdateReportScreen.routeName: (context) =>
+                      UpdateReportScreen()
                 },
               );
             }),

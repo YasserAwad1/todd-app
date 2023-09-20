@@ -4,6 +4,7 @@ class LocalRepo {
   String? token;
   String? role;
   String? language;
+  String? deviceToken;
 
   saveToken(String token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -17,12 +18,24 @@ class LocalRepo {
     return token;
   }
 
-  setLanguage(String languageCode) async{
+  saveDeviceToken(String deviceToken) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('device_token', deviceToken);
+  }
+
+  getDeviceToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    deviceToken = prefs.getString('device_token');
+
+    return deviceToken;
+  }
+
+  setLanguage(String languageCode) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('language', languageCode);
   }
 
-  getLanguage()async {
+  getLanguage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     language = prefs.getString('language');
 
@@ -38,7 +51,7 @@ class LocalRepo {
     await prefs.setString('role', role);
   }
 
-   getRole() async {
+  getRole() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     role = prefs.getString('role');
 
@@ -49,7 +62,7 @@ class LocalRepo {
     role = role2;
   }
 
-  deleteValue(String key) async{
+  deleteValue(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove(key);
   }
@@ -57,6 +70,8 @@ class LocalRepo {
   clear() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = null;
-    return prefs.clear();
+    prefs.remove('token');
+    prefs.remove('role');
+    prefs.remove('language');
   }
 }
