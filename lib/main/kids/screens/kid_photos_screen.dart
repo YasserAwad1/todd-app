@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:provider/provider.dart';
 import 'package:toddily_preschool/common/constants/end_points.dart';
 import 'package:toddily_preschool/common/providers/language_provider.dart';
@@ -54,10 +55,18 @@ class _KidPhotosScreenState extends State<KidPhotosScreen> {
     });
   }
 
-  Future<void> refreshData() async {
+  Future<void> refreshKidImagesToCheck() async {
     print('refreshing');
     await Provider.of<KidImageProvider>(context, listen: false)
         .getKidImagesToCheck(widget.kid!.id!);
+
+    setState(() {});
+  }
+
+  Future<void> refreshKidImagesForParents() async {
+    print('refreshing');
+    await Provider.of<KidImageProvider>(context, listen: false)
+        .getChildImagesForParents(widget.kid!.id!);
 
     setState(() {});
   }
@@ -88,29 +97,37 @@ class _KidPhotosScreenState extends State<KidPhotosScreen> {
                             return CustomErrorWidget();
                           }
 
-                          List<KidImageModel> photos =
+                          List<KidImageModel> photosToCheck =
                               Provider.of<KidImageProvider>(context,
                                       listen: false)
                                   .kidPhotosToCheck;
-                          if (photos.isEmpty) {
+                          if (photosToCheck.isEmpty) {
                             return NoInformationWidget();
                           }
                           return Expanded(
-                            // PUT OPTION TO DOWNLOAD IMAGES
-                            child: GridView.builder(
-                                physics: const BouncingScrollPhysics(),
-                                padding: EdgeInsets.all(10.sp),
-                                shrinkWrap: true,
-                                itemCount: photos.length,
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2,
-                                        crossAxisSpacing: 10.w,
-                                        mainAxisSpacing: 10.h),
-                                itemBuilder: (context, i) {
-                                  return newImageWidget(context, photos, i,
-                                      isArabic, widget.dateScreenViewContext);
-                                }),
+                            child: LiquidPullToRefresh(
+                              onRefresh: () {
+                                return refreshKidImagesToCheck();
+                              },
+                              child: GridView.builder(
+                                  physics: const BouncingScrollPhysics(),
+                                  padding: EdgeInsets.all(10.sp),
+                                  shrinkWrap: true,
+                                  itemCount: photosToCheck.length,
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 2,
+                                          crossAxisSpacing: 10.w,
+                                          mainAxisSpacing: 10.h),
+                                  itemBuilder: (context, i) {
+                                    return newImageWidget(
+                                        context,
+                                        photosToCheck,
+                                        i,
+                                        isArabic,
+                                        widget.dateScreenViewContext);
+                                  }),
+                            ),
                           );
                         })
                     : FutureBuilder(
@@ -132,17 +149,25 @@ class _KidPhotosScreenState extends State<KidPhotosScreen> {
                             if (photos.isEmpty) {
                               return NoInformationWidget();
                             } else {
-                              return ListView.builder(
-                                physics: const BouncingScrollPhysics(),
-                                itemCount: photos.length,
-                                shrinkWrap: true,
-                                itemBuilder: (context, i) {
-                                  return KidImageWidget(
-                                      startAnimation: startAnimation,
-                                      index: i,
-                                      image: photos[i].image!,
-                                      images: photos);
-                                },
+                              return Expanded(
+                                child: LiquidPullToRefresh(
+                                  onRefresh: () {
+                                    return refreshKidImagesForParents();
+                                  },
+                                  child: ListView.builder(
+                                    physics: const BouncingScrollPhysics(),
+                                    itemCount: photos.length,
+                                    shrinkWrap: true,
+                                    itemBuilder: (context, i) {
+                                      return KidImageWidget(
+                                          startAnimation: startAnimation,
+                                          index: i,
+                                          title: widget.kid!.name,
+                                          image: photos[i].image!,
+                                          images: photos);
+                                    },
+                                  ),
+                                ),
                               );
                             }
                           }
@@ -214,7 +239,7 @@ class _KidPhotosScreenState extends State<KidPhotosScreen> {
                             .getKidImagesToCheck(widget.kid!.id!);
                       }
                       setState(() {
-                        refreshData();
+                        refreshKidImagesToCheck();
                         isLoading = false;
                       });
                       ScaffoldMessenger.of(datesScreenCtx).showSnackBar(
@@ -255,14 +280,14 @@ class _KidPhotosScreenState extends State<KidPhotosScreen> {
                               context,
                               listen: false)
                           .deleteImageCopy(photos[i].id!);
-                      await refreshData();
+                      await refreshKidImagesToCheck();
                       if (success) {
                         await Provider.of<KidImageProvider>(context,
                                 listen: false)
                             .getKidImagesToCheck(widget.kid!.id!);
                       }
                       setState(() {
-                        refreshData();
+                        refreshKidImagesToCheck();
                         isLoading = false;
                       });
                       ScaffoldMessenger.of(datesScreenCtx).showSnackBar(

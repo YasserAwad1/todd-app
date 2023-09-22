@@ -61,6 +61,7 @@ class KidImagesService {
         "Accept": "application/json",
         'Authorization': 'Bearer $token'
       });
+      print(response.statusCode);
       if (response.statusCode < 300) {
         final jsonResponse = jsonDecode(response.body);
         print(jsonResponse['images']);

@@ -9,6 +9,7 @@ import 'package:toddily_preschool/common/drawer/app_drawer.dart';
 import 'package:toddily_preschool/common/providers/language_provider.dart';
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
 import 'package:toddily_preschool/common/widgets/error_widget.dart';
+import 'package:toddily_preschool/common/widgets/no_information_widget.dart';
 import 'package:toddily_preschool/common/widgets/ripple.dart';
 import 'package:toddily_preschool/main/FAQ/provider/qa_provider.dart';
 import 'package:toddily_preschool/main/FAQ/widgets/faq_tile.dart';
@@ -91,6 +92,9 @@ class _FAQScreenState extends State<FAQScreen> {
                           final qaList =
                               Provider.of<QaProvider>(context, listen: false)
                                   .qaList;
+                          if(qaList.isEmpty){
+                            return NoInformationWidget();
+                          }
                           return ListView.builder(
                             physics: const BouncingScrollPhysics(),
                             shrinkWrap: true,

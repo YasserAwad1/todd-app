@@ -5,6 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 //packages
 import 'package:firebase_core/firebase_core.dart';
 import 'package:toddily_preschool/common/firebaseApi/firebase_api.dart';
+import 'package:toddily_preschool/main/about/providers/about_provider.dart';
 import 'package:toddily_preschool/main/kids/dates/screens/dates_screen.dart';
 import 'package:toddily_preschool/main/monthly_report/screens/update_report_screen.dart';
 import 'firebase_options.dart';
@@ -117,6 +118,9 @@ class _MyAppState extends State<MyApp> {
               ),
               ChangeNotifierProvider(
                 create: (ctx) => KidImageProvider(),
+              ),
+              ChangeNotifierProvider(
+                create: (context) => AboutProvider(),
               )
             ],
             child: Builder(builder: (context) {

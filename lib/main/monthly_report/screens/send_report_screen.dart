@@ -42,6 +42,9 @@ class _SendReportScreenState extends State<SendReportScreen> {
         setState(() {
           stateTextWithIcon = ButtonState.loading;
         });
+        report = notesController.text.isEmpty
+            ? 'التقرير النمائي و السلوكي:\n${devController.text}\n\nالتقرير الطبي:\n${medicalController.text}\n\nالتقرير الاكاديمي:\n${academicController.text}\n\nالملاحظات:\nلا يوجد ملاحظات'
+            : 'التقرير النمائي و السلوكي:\n${devController.text}\n\nالتقرير الطبي:\n${medicalController.text}\n\nالتقرير الاكاديمي:\n${academicController.text}\n\nالملاحظات:\n${notesController.text}';
         // ignore: use_build_context_synchronously
         success = await Provider.of<ReportProvider>(context, listen: false)
             .sendReport(widget.kid!.id!, report!);
@@ -94,9 +97,6 @@ class _SendReportScreenState extends State<SendReportScreen> {
 
   @override
   Widget build(BuildContext context) {
-    report = notesController.text.isEmpty
-        ? 'التقرير النمائي و السلوكي:\n${devController.text}\n\nالتقرير الطبي:\n${medicalController.text}\n\nالتقرير الاكاديمي:\n${academicController.text}\n\nالملاحظات:\nلا يوجد ملاحظات'
-        : 'التقرير النمائي و السلوكي:\n${devController.text}\n\nالتقرير الطبي:\n${medicalController.text}\n\nالتقرير الاكاديمي:\n${academicController.text}\n\nالملاحظات:\n${notesController.text}';
     return SafeArea(
       child: Scaffold(
         appBar: CustomAppBar(

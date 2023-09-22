@@ -42,7 +42,7 @@ class _KidImageListScreenState extends State<KidImageListScreen> {
         appBar: CustomAppBar(
           scaffoldKey: null,
           title: widget.title!,
-          titleContainerWidth: 150.w,
+          titleContainerWidth: 230.w,
           withBackButton: true,
           stayEnglish: true,
         ),

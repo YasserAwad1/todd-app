@@ -63,6 +63,9 @@ class _KidsScreenState extends State<KidsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    int roleId =
+        Provider.of<UserProvider>(context, listen: false).getUserRoleId()!;
+
     return SafeArea(
       child: Scaffold(
         extendBodyBehindAppBar: false,
@@ -143,7 +146,8 @@ class _KidsScreenState extends State<KidsScreen> {
                               itemBuilder: (context, i) => KidsWidget(
                                 startAnimation: startAnimation,
                                 index: i,
-                                classTitle: kids[i].className!,
+                                classTitle:
+                                    roleId == 6 ? '' : kids[i].className!,
                                 kid: kids[i],
                               ),
                             );
