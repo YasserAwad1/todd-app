@@ -13,7 +13,8 @@ class Endpoints {
   static const getChildReports = '$baseUrl/api/get_child_reports';
   static const report = '$baseUrl/api/reports';
   static const childStatusByDate = '$baseUrl/api/get-child-status-date';
-  static const getChildrenByParentOrTeacherId = '$baseUrl/api/get-teacher-parent-child';
+  static const getChildrenByParentOrTeacherId =
+      '$baseUrl/api/get-teacher-parent-child';
   static const getChildStatusByDate = '$baseUrl/api/get-child-status-date';
   static const getStatusesToSend = '$baseUrl/api/get-status-by-child';
   static const sendKidImage = '$baseUrl/api/child-image';
@@ -23,5 +24,5 @@ class Endpoints {
   static const getChildImagesForParents = '$baseUrl/api/get-child-images';
   static const getExtrasChildren = '$baseUrl/api/extra-children';
   static const getAboutImagaes = '$baseUrl/api/aboutImages';
-
+  static const getNotifications = '$baseUrl/api/notification';
 }

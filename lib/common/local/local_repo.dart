@@ -42,6 +42,10 @@ class LocalRepo {
     return language;
   }
 
+  varLanguage(String lang){
+    language = lang;
+  }
+
   vartoken(String token2) {
     token = token2;
   }

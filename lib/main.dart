@@ -8,6 +8,8 @@ import 'package:toddily_preschool/common/firebaseApi/firebase_api.dart';
 import 'package:toddily_preschool/main/about/providers/about_provider.dart';
 import 'package:toddily_preschool/main/kids/dates/screens/dates_screen.dart';
 import 'package:toddily_preschool/main/monthly_report/screens/update_report_screen.dart';
+import 'package:toddily_preschool/main/notifications/providers/notification_provider.dart';
+import 'package:toddily_preschool/main/splash_screen/providers/splash_provider.dart';
 import 'firebase_options.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -55,6 +57,7 @@ final navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setUp();
+  await LanguageProvider().getLanguage();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -121,6 +124,12 @@ class _MyAppState extends State<MyApp> {
               ),
               ChangeNotifierProvider(
                 create: (context) => AboutProvider(),
+              ),
+              ChangeNotifierProvider(
+                create: (context) => NotificationProvider(),
+              ),
+              ChangeNotifierProvider(
+                create: (context) => SplashProvider(),
               )
             ],
             child: Builder(builder: (context) {
@@ -157,12 +166,6 @@ class _MyAppState extends State<MyApp> {
                   AboutScreen.routeName: (context) => AboutScreen(),
                   FAQScreen.routeName: (context) => FAQScreen(),
                   ClassesScreen.routeName: (context) => ClassesScreen(),
-                  // ImageSelectionScreen.routeName: (context) =>
-                  // ImageSelectionScreen(),
-                  // RolesScreen.routeName: (context) => RolesScreen(),
-                  // smeImagesScreen.routeName: (context) => smeImagesScreen(),
-                  // CameraScreen.routeName: (context) => CameraScreen(),
-                  // TakenImagesScreen.routeName: (context) => TakenImagesScreen(),
                   NotificationsScreen.routeName: (context) =>
                       NotificationsScreen(),
                   EventPhotosScreen.routeName: (context) => EventPhotosScreen(),

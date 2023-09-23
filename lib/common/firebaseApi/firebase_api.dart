@@ -1,32 +1,76 @@
 import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:provider/provider.dart';
 import 'package:toddily_preschool/common/local/local_repo.dart';
+import 'package:toddily_preschool/common/navigators/my_navigator.dart';
 import 'package:toddily_preschool/locator.dart';
 import 'package:toddily_preschool/main.dart';
+import 'package:toddily_preschool/main/splash_screen/providers/splash_provider.dart';
+import 'package:toddily_preschool/main/statuses/screens/statuses_screen_for_preview.dart';
+import 'package:toddily_preschool/models/kids/kid_model.dart';
 
 Future<void> handleBackgroundMessage(RemoteMessage message) async {
-  print(message.notification!.title);
-  print(message.notification!.body);
-  print(message.data);
+  // WHEN IN  BACKGROUND BUT NOT OPENED
+  // String? type;
+  // if (type == 'normal') {
+  //   navigatorKey.currentState!.pushNamed('/about-screen');
+  // } else if (type == 'status') {
+  //   navigatorKey.currentState!.pushNamed('/FAQ-screen');
+  // }
+  BuildContext context = navigatorKey.currentState!.context;
+  Provider.of<SplashProvider>(context, listen: false).setNotification();
+  Provider.of<SplashProvider>(context, listen: false).setMessage(message);
 }
 
 void handleMessage(RemoteMessage? message) {
+  // INSIDE APPLICAION
+  String? type;
   if (message == null) {
     return;
   } else {
-    // final FlutterLocalNotificationsPlugin notificationsPlugin =
-    //     FlutterLocalNotificationsPlugin();
-    // notificationsPlugin.show(
-    //     1,
-    //     message.notification!.title,
-    //     message.notification!.body,
-    //     NotificationDetails(
-    //         android: AndroidNotificationDetails('channelId', 'channelName',
-    //             importance: Importance.max),
-    //         iOS: DarwinNotificationDetails()));
-    navigatorKey.currentState!.pushNamed('/about-screen');
+    BuildContext context = navigatorKey.currentState!.context;
+    Provider.of<SplashProvider>(context, listen: false).setNotification();
+    Provider.of<SplashProvider>(context, listen: false).setMessage(message);
+    type = message.data['type'];
+    if (type == 'normal') {
+      navigatorKey.currentState!.pushNamed('/notifications-screen');
+    } else if (type == 'status') {
+      var decoded = jsonDecode(message.data['body']);
+      var kid = KidModel.fromJson(decoded['child']);
+      var sentDate = decoded['date'];
+      DateTime date = DateTime.parse(sentDate);
+      String day = date.day.toString();
+      String month = date.month.toString();
+      List<String> monthAbbreviations = [
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec'
+      ];
+      String monthAbbreviation = monthAbbreviations[int.parse(month) - 1];
+      Navigator.push(
+          navigatorKey.currentState!.context,
+          MyNavigator(
+            screen: StatusesScreenForPreview(
+              childId: kid.id,
+              date: date.toString(),
+              day: day,
+              month: monthAbbreviation,
+            ),
+            curves: Curves.ease,
+          ));
+    }
   }
 }
 
@@ -36,7 +80,7 @@ class FirebaseApi {
   static const _androidChannel = AndroidNotificationChannel(
       'high_importance_channel', 'High Importance Notifications',
       description: 'This channel is used for important notifications',
-      importance: Importance.defaultImportance);
+      importance: Importance.max);
   static final _localnotifications = FlutterLocalNotificationsPlugin();
 
   static Future initLocalNotifications() async {

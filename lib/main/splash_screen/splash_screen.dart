@@ -1,19 +1,17 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:toddily_preschool/auth/providers/auth_provider.dart';
 import 'package:toddily_preschool/auth/screens/sign_in_screen.dart';
 import 'package:toddily_preschool/common/local/local_repo.dart';
-import 'package:toddily_preschool/common/providers/language_provider.dart';
 import 'package:toddily_preschool/common/user/provider/user_provider.dart';
 import 'package:toddily_preschool/locator.dart';
 import 'package:toddily_preschool/main/about/screens/about_screen.dart';
 import 'package:toddily_preschool/main/classes/screens/classes_screen.dart';
 import 'package:toddily_preschool/main/kids/screens/kids_screen.dart';
+import 'package:toddily_preschool/main/splash_screen/providers/splash_provider.dart';
 import 'package:toddily_preschool/main/splash_screen/widgets/no_internet_dialog.dart';
-import 'package:toddily_preschool/models/user/user_model.dart';
 import 'package:video_player/video_player.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
@@ -69,7 +67,6 @@ class _SplashScreenState extends State<SplashScreen> {
         _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
 
     Timer(const Duration(seconds: 6), () async {
-      await Provider.of<LanguageProvider>(context, listen: false).getLanguage();
       if (result == ConnectivityResult.none) {
         // ignore: use_build_context_synchronously
         showDialog(
@@ -104,8 +101,15 @@ class _SplashScreenState extends State<SplashScreen> {
                 return FutureBuilder(
                   future: _userFuture,
                   builder: (context, snapshot) {
+                    bool isNotification =
+                        Provider.of<SplashProvider>(context, listen: false)
+                            .isNotification;
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
+                      return const CircularProgressIndicator();
+                    }
+                    if (isNotification) {
+                      return Provider.of<SplashProvider>(context, listen: false)
+                          .handleNotification();
                     } else {
                       if (Provider.of<UserProvider>(context, listen: false)
                           .classesTile()) {
