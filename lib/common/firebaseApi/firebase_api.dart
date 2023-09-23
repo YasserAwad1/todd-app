@@ -20,6 +20,8 @@ Future<void> handleBackgroundMessage(RemoteMessage message) async {
   // } else if (type == 'status') {
   //   navigatorKey.currentState!.pushNamed('/FAQ-screen');
   // }
+  // print(
+  //     '*********************************THIS IS HANDING BACKGROUND******************************************************');
   BuildContext context = navigatorKey.currentState!.context;
   Provider.of<SplashProvider>(context, listen: false).setNotification();
   Provider.of<SplashProvider>(context, listen: false).setMessage(message);
@@ -28,12 +30,14 @@ Future<void> handleBackgroundMessage(RemoteMessage message) async {
 void handleMessage(RemoteMessage? message) {
   // INSIDE APPLICAION
   String? type;
+  print(
+      '*********************************THIS IS HANDlING MESSAGE******************************************************');
   if (message == null) {
     return;
   } else {
-    BuildContext context = navigatorKey.currentState!.context;
-    Provider.of<SplashProvider>(context, listen: false).setNotification();
-    Provider.of<SplashProvider>(context, listen: false).setMessage(message);
+    // BuildContext context = navigatorKey.currentState!.context;
+    // Provider.of<SplashProvider>(context, listen: false).setNotification();
+    // Provider.of<SplashProvider>(context, listen: false).setMessage(message);
     type = message.data['type'];
     if (type == 'normal') {
       navigatorKey.currentState!.pushNamed('/notifications-screen');
@@ -121,9 +125,9 @@ class FirebaseApi {
       badge: true,
       sound: true,
     );
-    FirebaseMessaging.instance
-        .getInitialMessage()
-        .then(handleMessage); // app opened in a notification
+    FirebaseMessaging.instance.getInitialMessage().then((message) async {
+      await handleBackgroundMessage(message!); // app opened in a notification
+    });
     FirebaseMessaging.onMessageOpenedApp
         .listen(handleMessage); // app opened in background state
     FirebaseMessaging.onBackgroundMessage(

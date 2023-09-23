@@ -90,6 +90,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                 ),
                 onPressed: () {
+                  //TODO
+                  // IF COMING FROM NOTIFICATION, MAKE IT PUSH NAMED KIDS SCREEN
                   Navigator.of(context).pop();
                 },
                 child: Icon(

@@ -1,12 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.toddily_preschool">
-   <uses-permission android:name="android.permission.INTERNET"/>
-   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-   <uses-permission android:name="android.permission.VIBRATE" />
-   <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
-   <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
-   <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
-   <application
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <application
         android:label="toddily_preschool"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
@@ -30,9 +30,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-              <meta-data 
+        <meta-data 
               android:name="com.google.firebase.messaging.default_notification_channel_id"
               android:value="high_importance_channel" />
+        <meta-data
+    android:name="com.google.firebase.messaging.default_notification_icon"
+    android:resource="@drawable/tod_logo" />
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data

@@ -15,6 +15,10 @@ class SplashProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  //TODO
+  //SET ISNOTIFICATION TO FALSE WHERE YOU FIND IT GOOD
+  
+
   setMessage(RemoteMessage msg) {
     message = msg;
     // notifyListeners();
