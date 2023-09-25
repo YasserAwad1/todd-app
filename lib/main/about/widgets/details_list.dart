@@ -135,7 +135,7 @@ class _DetailsListState extends State<DetailsList> {
       CustomTile(
         title: AppLocalizations.of(context)!.openTimes,
         subtitle:
-            '  ${AppLocalizations.of(context)!.openDays}\n${AppLocalizations.of(context)!.openHours}',
+            '${AppLocalizations.of(context)!.openDays}\n${AppLocalizations.of(context)!.openHours}',
         icon: Icons.calendar_month_rounded,
       ),
       //WHATSAPP

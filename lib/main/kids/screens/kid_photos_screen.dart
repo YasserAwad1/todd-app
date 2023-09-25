@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:toddily_preschool/common/constants/end_points.dart';
 import 'package:toddily_preschool/common/providers/language_provider.dart';
 import 'package:toddily_preschool/common/user/provider/user_provider.dart';
+import 'package:toddily_preschool/common/widgets/app_place_holder.dart';
 import 'package:toddily_preschool/common/widgets/error_widget.dart';
 import 'package:toddily_preschool/common/widgets/no_information_widget.dart';
 import 'package:toddily_preschool/common/widgets/ripple.dart';
@@ -42,17 +43,26 @@ class _KidPhotosScreenState extends State<KidPhotosScreen> {
         2) {
       _kidPhotosForTeacherToCheckFuture =
           Provider.of<KidImageProvider>(context, listen: false)
-              .getKidImagesToCheck(widget.kid!.id!);
+              .getKidImagesToCheck(widget.kid!.id!)
+              .then((value) {
+        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+          setState(() {
+            startAnimation = true;
+          });
+        });
+      });
     } else {
       _kidPhotosForParents =
           Provider.of<KidImageProvider>(context, listen: false)
-              .getChildImagesForParents(widget.kid!.id!);
-    }
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      setState(() {
-        startAnimation = true;
+              .getChildImagesForParents(widget.kid!.id!)
+              .then((value) {
+        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+          setState(() {
+            startAnimation = true;
+          });
+        });
       });
-    });
+    }
   }
 
   Future<void> refreshKidImagesToCheck() async {
@@ -145,7 +155,9 @@ class _KidPhotosScreenState extends State<KidPhotosScreen> {
                             List<KidImageModel> photos =
                                 Provider.of<KidImageProvider>(context,
                                         listen: false)
-                                    .kidPhotosForParents;
+                                    .kidPhotosForParents
+                                    .reversed
+                                    .toList();
                             if (photos.isEmpty) {
                               return NoInformationWidget();
                             } else {
@@ -154,7 +166,12 @@ class _KidPhotosScreenState extends State<KidPhotosScreen> {
                                   onRefresh: () {
                                     return refreshKidImagesForParents();
                                   },
-                                  child: ListView.builder(
+                                  child: GridView.builder(
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      // crossAxisSpacing: 10.w
+                                    ),
                                     physics: const BouncingScrollPhysics(),
                                     itemCount: photos.length,
                                     shrinkWrap: true,
@@ -214,6 +231,20 @@ class _KidPhotosScreenState extends State<KidPhotosScreen> {
                 child: Image.network(
                   '${Endpoints.baseUrl}${photos[i].image}',
                   fit: BoxFit.contain,
+                  frameBuilder: (_, image, loadingBuilder, __) {
+                    if (loadingBuilder == null) {
+                      return AppPlaceholder(
+                          child: Container(
+                        color: Colors.black,
+                        height: 200.h,
+                      ));
+                    }
+                    return image;
+                  },
+                  errorBuilder: (context, error, stackTrace) => Image(
+                    image: AssetImage('images/image_error.jpg'),
+                    height: 160.h,
+                  ),
                 ),
               ),
               Positioned(

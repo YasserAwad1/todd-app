@@ -91,11 +91,16 @@ class _StatusesScreenToSendState extends State<StatusesScreenToSend> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    Provider.of<StatusProvider>(context, listen: false)
+        .substatusListFromScreen
+        .clear();
     _statusesToSendFuture = Provider.of<StatusProvider>(context, listen: false)
-        .getStatusesToSend(widget.childId!);
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      setState(() {
-        startAnimation = true;
+        .getStatusesToSend(widget.childId!)
+        .then((value) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        setState(() {
+          startAnimation = true;
+        });
       });
     });
   }
@@ -103,9 +108,6 @@ class _StatusesScreenToSendState extends State<StatusesScreenToSend> {
   @override
   Widget build(BuildContext context) {
     var statusProvider = Provider.of<StatusProvider>(context, listen: false);
-    print('******************STATUS TO SEND LIST****************');
-    print(statusProvider.substatusListFromScreen.length);
-    print('******************STATUS TO SEND LIST****************');
     return SafeArea(
       child: Scaffold(
         extendBody: true,

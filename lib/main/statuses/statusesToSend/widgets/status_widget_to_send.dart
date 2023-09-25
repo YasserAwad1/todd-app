@@ -15,6 +15,10 @@ class StatusWidgetToSend extends StatelessWidget {
       required this.index,
       required this.status});
 
+  //MYTODO 
+  //WHEN I SELECT SUBSTATUSES AND GET OUT OF SCREEN, THEY STAY AND DONT SEND DESCRIPTION
+  //FIX THIS THING
+
   @override
   Widget build(BuildContext context) {
     return Column(

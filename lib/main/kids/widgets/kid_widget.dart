@@ -7,6 +7,7 @@ import 'package:toddily_preschool/common/navigators/my_navigator.dart';
 import 'package:toddily_preschool/common/providers/language_provider.dart';
 import 'package:toddily_preschool/common/user/provider/user_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:toddily_preschool/common/widgets/app_place_holder.dart';
 import 'package:toddily_preschool/main/kids/dates_images_tabs_screen.dart';
 import 'package:toddily_preschool/main/monthly_report/screens/monthly_report_screen.dart';
 import 'package:toddily_preschool/models/kids/kid_model.dart';
@@ -114,6 +115,20 @@ class KidsWidget extends StatelessWidget {
                   child: Image.network(
                     '${Endpoints.baseUrl}${kid.image}',
                     fit: BoxFit.contain,
+                    frameBuilder: (_, image, loadingBuilder, __) {
+                      if (loadingBuilder == null) {
+                        return AppPlaceholder(
+                            child: Container(
+                          color: Colors.black,
+                          height: 200.h,
+                        ));
+                      }
+                      return image;
+                    },
+                    errorBuilder: (context, error, stackTrace) => Image(
+                      image: AssetImage('images/image_error.jpg'),
+                      height: 160.h,
+                    ),
                   ),
                 ),
               ),

@@ -1,9 +1,12 @@
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 //packages
 import 'package:firebase_core/firebase_core.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toddily_preschool/common/firebaseApi/firebase_api.dart';
 import 'package:toddily_preschool/main/about/providers/about_provider.dart';
 import 'package:toddily_preschool/main/kids/dates/screens/dates_screen.dart';
@@ -32,7 +35,7 @@ import 'package:toddily_preschool/main/events/providers/event_provider.dart';
 import 'package:toddily_preschool/main/statuses/providers/status_provider.dart';
 import 'package:toddily_preschool/main/FAQ/provider/qa_provider.dart';
 import 'package:toddily_preschool/main/social_media_expert/providers/kid_image_provider.dart';
-import 'package:toddily_preschool/auth/providers/auth_provider.dart';
+import 'package:toddily_preschool/main/auth/providers/auth_provider.dart';
 import 'package:toddily_preschool/main/classes/providers/class_provider.dart';
 import 'package:toddily_preschool/common/providers/language_provider.dart';
 import 'package:toddily_preschool/common/user/provider/user_provider.dart';
@@ -53,11 +56,17 @@ import 'package:toddily_preschool/main/FAQ/screens/FAQScreen.dart';
 import 'package:toddily_preschool/main/about/screens/about_screen.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
-
+final LanguageProvider lProvider = LanguageProvider();
+String? language;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setUp();
-  await LanguageProvider().getLanguage();
+  // SharedPreferences prefs = await SharedPreferences.getInstance();
+  // language = prefs.getString('language');
+  // if (language == null) {
+  //   prefs.setString("language", ui.window.locale.languageCode);
+  // }
+  await lProvider.getLanguage();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -96,7 +105,7 @@ class _MyAppState extends State<MyApp> {
                 create: (ctx) => EventProvider(),
               ),
               ChangeNotifierProvider<LanguageProvider>(
-                create: (ctx) => LanguageProvider(),
+                create: (ctx) => lProvider,
               ),
               ChangeNotifierProvider(
                 create: (ctx) => ClassProvider(),

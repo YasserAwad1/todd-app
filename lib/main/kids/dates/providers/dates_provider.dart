@@ -9,7 +9,7 @@ class DatesProvider with ChangeNotifier {
   bool isLoading = false;
   // bool isComingToView = false;
 
-  getDatesByChildId(int childId) async {
+  Future<void> getDatesByChildId(int childId) async {
     try {
       isLoading = true;
       dates = await _service.getDatesOfStatuses(childId);

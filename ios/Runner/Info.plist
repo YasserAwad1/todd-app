@@ -5,7 +5,7 @@
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleDisplayName</key>
-		<string>Toddily Preschool</string>
+		<string>Toddily</string>
 		<key>NSPhotoLibraryAddUsageDescription</key>
 		<string>We need access to your photos</string>
 		<key>CFBundleExecutable</key>
@@ -15,7 +15,7 @@
 		<key>CFBundleInfoDictionaryVersion</key>
 		<string>6.0</string>
 		<key>CFBundleName</key>
-		<string>toddily_preschool</string>
+		<string>Toddily</string>
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>toddily preschool would like to access photos</string>
 		<key>NSCameraUsageDescription</key>

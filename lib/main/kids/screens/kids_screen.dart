@@ -47,18 +47,33 @@ class _KidsScreenState extends State<KidsScreen> {
       var userId =
           Provider.of<UserProvider>(context, listen: false).getCurrentUserId();
       _kidsFuture = Provider.of<KidsProvider>(context, listen: false)
-          .getChildrenByTeachOrParentId(userId!);
+          .getChildrenByTeachOrParentId(userId!)
+          .then((value) {
+        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+          setState(() {
+            startAnimation = true;
+          });
+        });
+      });
     } else if (Provider.of<UserProvider>(context, listen: false)
             .getUserRoleId() ==
         6) {
-      _kidsFuture =
-          Provider.of<KidsProvider>(context, listen: false).getExtrasChildren();
-    }
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      setState(() {
-        startAnimation = true;
+      _kidsFuture = Provider.of<KidsProvider>(context, listen: false)
+          .getExtrasChildren()
+          .then((value) {
+        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+          setState(() {
+            startAnimation = true;
+          });
+        });
       });
-    });
+    } else {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        setState(() {
+          startAnimation = true;
+        });
+      });
+    }
   }
 
   @override
@@ -69,7 +84,10 @@ class _KidsScreenState extends State<KidsScreen> {
     return SafeArea(
       child: Scaffold(
         extendBodyBehindAppBar: false,
-        drawerEnableOpenDragGesture: true,
+        drawerEnableOpenDragGesture:
+            Provider.of<UserProvider>(context, listen: false).classesTile()
+                ? false
+                : true,
         drawerEdgeDragWidth: 200.w,
         key: _scaffoldKey,
         appBar: CustomAppBar(

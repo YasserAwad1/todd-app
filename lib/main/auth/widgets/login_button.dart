@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:toddily_preschool/auth/providers/auth_provider.dart';
+import 'package:toddily_preschool/main/auth/providers/auth_provider.dart';
 import 'package:toddily_preschool/common/user/provider/user_provider.dart';
 import 'package:toddily_preschool/main/classes/screens/classes_screen.dart';
 import 'package:toddily_preschool/main/kids/screens/kids_screen.dart';
@@ -67,7 +67,6 @@ class _LoginButtonState extends State<LoginButton> {
 
     _connectivitySubscription =
         _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
-        
   }
 
   @override
@@ -106,65 +105,55 @@ class _LoginButtonState extends State<LoginButton> {
                 backgroundColor: Theme.of(context).colorScheme.secondary,
               ),
               onPressed: () async {
-                if (result == ConnectivityResult.none) {
-                  return showDialog(
-                      context: context,
-                      builder: (context) {
-                        return NoInternetDialog(
-                          tryAgain: 1,
-                        );
-                      });
-                } else {
+                setState(() {
+                  widget.isLoading = true;
+                });
+                success =
+                    await Provider.of<AuthProvider>(widget.ctx, listen: false)
+                        .login(widget.userName, widget.password, context);
+                if (success!) {
+                  await userProvider.getCurrentUser();
                   setState(() {
-                    widget.isLoading = true;
+                    widget.isLoading = false;
                   });
-                  success =
-                      await Provider.of<AuthProvider>(widget.ctx, listen: false)
-                          .login(widget.userName, widget.password, context);
-                  if (success!) {
-                    await userProvider.getCurrentUser();
-                    setState(() {
-                      widget.isLoading = false;
-                    });
-                    // ignore: use_build_context_synchronously
-                    Navigator.pushReplacement(
-                      context,
-                      PageRouteBuilder(
-                        transitionDuration: const Duration(milliseconds: 500),
-                        pageBuilder: (ctx, animation, secondaryAnimation) {
-                          if (userProvider.classesTile()) {
-                            return ClassesScreen();
-                          } else {
-                            return KidsScreen();
-                          }
-                        },
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) {
-                          return FadeTransition(
-                            opacity: animation,
-                            child: child,
-                          );
-                        },
-                      ),
-                    );
-                  } else {
-                    // ignore: use_build_context_synchronously
-                    ScaffoldMessenger.of(widget.ctx).showSnackBar(
-                      SnackBar(
-                        backgroundColor: Colors.red,
-                        content: Text(
-                            Provider.of<AuthProvider>(context, listen: false)
-                                .errorMessage
-                            // widget.userName.isEmpty || widget.password.isEmpty
-                            //     ? AppLocalizations.of(context)!.allFeildsAreReq
-                            //     : AppLocalizations.of(context)!.invalidCredentials,
-                            ),
-                      ),
-                    );
-                    setState(() {
-                      widget.isLoading = false;
-                    });
-                  }
+                  // ignore: use_build_context_synchronously
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      transitionDuration: const Duration(milliseconds: 500),
+                      pageBuilder: (ctx, animation, secondaryAnimation) {
+                        if (userProvider.classesTile()) {
+                          return ClassesScreen();
+                        } else {
+                          return KidsScreen();
+                        }
+                      },
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        return FadeTransition(
+                          opacity: animation,
+                          child: child,
+                        );
+                      },
+                    ),
+                  );
+                } else {
+                  // ignore: use_build_context_synchronously
+                  ScaffoldMessenger.of(widget.ctx).showSnackBar(
+                    SnackBar(
+                      backgroundColor: Colors.red,
+                      content: Text(
+                          Provider.of<AuthProvider>(context, listen: false)
+                              .errorMessage
+                          // widget.userName.isEmpty || widget.password.isEmpty
+                          //     ? AppLocalizations.of(context)!.allFeildsAreReq
+                          //     : AppLocalizations.of(context)!.invalidCredentials,
+                          ),
+                    ),
+                  );
+                  setState(() {
+                    widget.isLoading = false;
+                  });
                 }
               },
               child: Text(

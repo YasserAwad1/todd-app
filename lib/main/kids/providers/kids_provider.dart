@@ -8,7 +8,7 @@ class KidsProvider with ChangeNotifier {
   List<KidModel> extraChildren = [];
   bool hasError = false;
 
-  getChildrenByTeachOrParentId(int userId) async {
+  Future<void> getChildrenByTeachOrParentId(int userId) async {
     try {
       kids = await _service.getKidsByTeachOrParentId(userId);
       hasError = _service.hasError;
@@ -18,7 +18,7 @@ class KidsProvider with ChangeNotifier {
     }
   }
 
-  getExtrasChildren() async {
+  Future<void> getExtrasChildren() async {
     try {
       extraChildren = await _service.getExtrasChildren();
       hasError = _service.hasError;

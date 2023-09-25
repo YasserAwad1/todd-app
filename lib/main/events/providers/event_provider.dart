@@ -8,14 +8,14 @@ class EventProvider with ChangeNotifier {
   List<EventModel> events = [];
   List<EventImagesModel> eventImages = [];
   bool hasError = false;
-  bool isList = true;
+  bool isList = false;
 
   changeListGridView() {
     isList = !isList;
     notifyListeners();
   }
 
-  getEvents() async {
+  Future<void> getEvents() async {
     try {
       events = await _service.getEvents();
       hasError = _service.hasError;

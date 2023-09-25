@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:toddily_preschool/auth/providers/auth_provider.dart';
-import 'package:toddily_preschool/auth/screens/sign_in_screen.dart';
+import 'package:toddily_preschool/main/auth/providers/auth_provider.dart';
+import 'package:toddily_preschool/main/auth/screens/sign_in_screen.dart';
 import 'package:toddily_preschool/common/local/local_repo.dart';
 import 'package:toddily_preschool/common/user/provider/user_provider.dart';
 import 'package:toddily_preschool/locator.dart';
@@ -108,8 +108,15 @@ class _SplashScreenState extends State<SplashScreen> {
                       return const CircularProgressIndicator();
                     }
                     if (isNotification) {
-                      return Provider.of<SplashProvider>(context, listen: false)
-                          .handleNotification();
+                      Navigator.pushReplacementNamed(
+                          context, KidsScreen.routeName);
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return Provider.of<SplashProvider>(context,
+                                listen: false)
+                            .handleNotification();
+                      }));
+                      return Container();
                     } else {
                       if (Provider.of<UserProvider>(context, listen: false)
                           .classesTile()) {

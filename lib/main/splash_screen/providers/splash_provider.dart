@@ -15,9 +15,9 @@ class SplashProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  //TODO
+  //MYTODO
   //SET ISNOTIFICATION TO FALSE WHERE YOU FIND IT GOOD
-  
+
 
   setMessage(RemoteMessage msg) {
     message = msg;
@@ -25,6 +25,7 @@ class SplashProvider with ChangeNotifier {
   }
 
   Widget handleNotification() {
+    print('THIS IS HANDLE NOTIFICATIONSSSSSSSSSSSSSSSSSSSSSSSSS');
     String type = message!.data['type'];
     if (type == 'normal') {
       return NotificationsScreen();

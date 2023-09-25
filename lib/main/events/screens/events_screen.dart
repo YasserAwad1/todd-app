@@ -32,11 +32,13 @@ class _EventsScreenState extends State<EventsScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _eventFuture =
-        Provider.of<EventProvider>(context, listen: false).getEvents();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      setState(() {
-        startAnimation = true;
+    _eventFuture = Provider.of<EventProvider>(context, listen: false)
+        .getEvents()
+        .then((value) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        setState(() {
+          startAnimation = true;
+        });
       });
     });
   }
@@ -93,7 +95,9 @@ class _EventsScreenState extends State<EventsScreen> {
                       }
                       List<EventModel> events =
                           Provider.of<EventProvider>(context, listen: false)
-                              .events;
+                              .events
+                              .reversed
+                              .toList();
                       if (events.isEmpty) {
                         return NoInformationWidget();
                       }

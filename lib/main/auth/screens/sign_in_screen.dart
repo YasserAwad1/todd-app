@@ -4,11 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
-import 'package:toddily_preschool/auth/widgets/custom_textformfeild.dart';
-import 'package:toddily_preschool/auth/widgets/guest_login_button.dart';
-import 'package:toddily_preschool/auth/widgets/login_button.dart';
-import 'package:toddily_preschool/auth/widgets/or_widget.dart';
-import 'package:toddily_preschool/auth/widgets/sigin_top_bar.dart';
+import 'package:toddily_preschool/main/auth/widgets/custom_textformfeild.dart';
+import 'package:toddily_preschool/main/auth/widgets/guest_login_button.dart';
+import 'package:toddily_preschool/main/auth/widgets/login_button.dart';
+import 'package:toddily_preschool/main/auth/widgets/or_widget.dart';
+import 'package:toddily_preschool/main/auth/widgets/sigin_top_bar.dart';
 import 'package:toddily_preschool/common/providers/language_provider.dart';
 
 class SignInScreen extends StatefulWidget {

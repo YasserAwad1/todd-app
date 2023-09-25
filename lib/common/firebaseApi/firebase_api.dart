@@ -20,8 +20,8 @@ Future<void> handleBackgroundMessage(RemoteMessage message) async {
   // } else if (type == 'status') {
   //   navigatorKey.currentState!.pushNamed('/FAQ-screen');
   // }
-  // print(
-  //     '*********************************THIS IS HANDING BACKGROUND******************************************************');
+  print(
+      '*********************************THIS IS HANDING BACKGROUND******************************************************');
   BuildContext context = navigatorKey.currentState!.context;
   Provider.of<SplashProvider>(context, listen: false).setNotification();
   Provider.of<SplashProvider>(context, listen: false).setMessage(message);
@@ -126,6 +126,7 @@ class FirebaseApi {
       sound: true,
     );
     FirebaseMessaging.instance.getInitialMessage().then((message) async {
+      print('THIS IS THE INITIAL MESSAGE ');
       await handleBackgroundMessage(message!); // app opened in a notification
     });
     FirebaseMessaging.onMessageOpenedApp

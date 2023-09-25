@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:toddily_preschool/common/widgets/app_place_holder.dart';
 
 class AboutTopBar extends StatelessWidget {
   var scaffoldKey;
@@ -16,6 +17,20 @@ class AboutTopBar extends StatelessWidget {
         background: Image.asset(
           'assets/images/toddilyOuterLogo.jpg',
           fit: BoxFit.fill,
+          frameBuilder: (_, image, loadingBuilder, __) {
+            if (loadingBuilder == null) {
+              return AppPlaceholder(
+                  child: Container(
+                color: Colors.black,
+                height: 200.h,
+              ));
+            }
+            return image;
+          },
+          errorBuilder: (context, error, stackTrace) => Image(
+            image: AssetImage('images/image_error.jpg'),
+            height: 160.h,
+          ),
         ),
         collapseMode: CollapseMode.parallax,
       ),

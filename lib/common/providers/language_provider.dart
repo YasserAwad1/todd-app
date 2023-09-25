@@ -7,24 +7,22 @@ class LanguageProvider with ChangeNotifier {
   Locale? _currentLocale;
   String? language;
 
-  LanguageProvider() {
-    if (language != null) {
-      _currentLocale = Locale(language!);
-    } else {
-      _currentLocale = ui.window.locale;
-    }
-  }
+  LanguageProvider() {}
 
   getLanguage() async {
-    if (locator.get<LocalRepo>().language == null) {
+    if (await locator.get<LocalRepo>().getLanguage() == null) {
       print(
           '*******************************************************************************************');
       print('GETTING LANGUAGE');
       print(
           '*******************************************************************************************');
       language = 'en';
+      _currentLocale = Locale(language!);
+      notifyListeners();
     } else {
       language = await locator.get<LocalRepo>().getLanguage();
+      _currentLocale = Locale(language!);
+      notifyListeners();
     }
   }
 

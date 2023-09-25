@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:toddily_preschool/auth/providers/auth_provider.dart';
-import 'package:toddily_preschool/auth/screens/sign_in_screen.dart';
+import 'package:toddily_preschool/main/auth/providers/auth_provider.dart';
+import 'package:toddily_preschool/main/auth/screens/sign_in_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class logoutButton extends StatefulWidget {

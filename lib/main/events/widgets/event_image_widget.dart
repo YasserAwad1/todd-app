@@ -8,6 +8,7 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:provider/provider.dart';
 import 'package:toddily_preschool/common/constants/end_points.dart';
 import 'package:toddily_preschool/common/providers/language_provider.dart';
+import 'package:toddily_preschool/common/widgets/app_place_holder.dart';
 import 'package:toddily_preschool/main/events/screens/event_images_list_screen.dart';
 import 'package:toddily_preschool/models/events/event_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -90,6 +91,20 @@ class _EventImageWidgetState extends State<EventImageWidget> {
                 child: Image.network(
                   '${Endpoints.baseUrl}${widget.image}',
                   fit: BoxFit.contain,
+                  frameBuilder: (_, image, loadingBuilder, __) {
+                    if (loadingBuilder == null) {
+                      return AppPlaceholder(
+                          child: Container(
+                        color: Colors.black,
+                        height: 200.h,
+                      ));
+                    }
+                    return image;
+                  },
+                  errorBuilder: (context, error, stackTrace) => Image(
+                    image: AssetImage('images/image_error.jpg'),
+                    height: 160.h,
+                  ),
                 ),
               ),
               Positioned(

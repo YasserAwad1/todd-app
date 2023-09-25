@@ -13,11 +13,6 @@ class KidImageProvider with ChangeNotifier {
   bool hasError = false;
   bool isLoading = false;
 
-  // triggerLoading(){
-  //   isLoading = !isLoading;
-  //   notifyListeners();
-  // }
-
   sendKidImages(
     int childId,
   ) async {
@@ -45,7 +40,7 @@ class KidImageProvider with ChangeNotifier {
     }
   }
 
-  getKidImagesToCheck(int childId) async {
+  Future<void> getKidImagesToCheck(int childId) async {
     try {
       kidPhotosToCheck = await service.getKidPhotosToCheck(childId);
       hasError = service.hasError;
@@ -55,7 +50,7 @@ class KidImageProvider with ChangeNotifier {
     }
   }
 
-  getChildImagesForParents(int childId) async {
+  Future<void> getChildImagesForParents(int childId) async {
     try {
       kidPhotosForParents = await service.getChildImagesForParents(childId);
       hasError = service.hasError;

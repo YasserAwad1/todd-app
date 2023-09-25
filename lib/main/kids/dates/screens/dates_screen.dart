@@ -59,10 +59,12 @@ class _DatesScreenState extends State<DatesScreen> {
     // TODO: implement initState
     super.initState();
     _datesFuture = Provider.of<DatesProvider>(context, listen: false)
-        .getDatesByChildId(widget.kid!.id!);
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      setState(() {
-        startAnimation = true;
+        .getDatesByChildId(widget.kid!.id!)
+        .then((value) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        setState(() {
+          startAnimation = true;
+        });
       });
     });
   }
@@ -70,16 +72,11 @@ class _DatesScreenState extends State<DatesScreen> {
   Future<void> _refreshData() async {
     print('refreshing');
     await Provider.of<ClassProvider>(context, listen: false).getClasses();
-
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    // int? roleId = Provider.of<UserProvider>(context, listen: false).roleId!;
-    // print('******************role ID*****************');
-    // print(roleId);
-    // print('******************role ID*****************');
     return SafeArea(
       child: Scaffold(
         extendBody: true,
@@ -147,9 +144,10 @@ class _DatesScreenState extends State<DatesScreen> {
                       if (datesProvider.hasError) {
                         return CustomErrorWidget();
                       }
-                      List<DateModel> dates = datesProvider.dates;
+                      List<DateModel> dates =
+                          datesProvider.dates.reversed.toList();
                       if (dates.isEmpty) {
-                        return  NoInformationWidget();
+                        return NoInformationWidget();
                       }
                       return Expanded(
                         child: GridView.builder(

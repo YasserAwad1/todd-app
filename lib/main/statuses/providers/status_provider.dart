@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toddily_preschool/main/statuses/service/status_service.dart';
 import 'package:toddily_preschool/models/status/status_model.dart';
-import 'package:toddily_preschool/models/status/toSendModels/status_to_send_model.dart';
-import 'package:toddily_preschool/models/status/toSendModels/subStatus_to_send_model.dart';
 import 'package:toddily_preschool/models/subStatus/sub_status_model.dart';
 
 class StatusProvider with ChangeNotifier {
@@ -53,63 +51,8 @@ class StatusProvider with ChangeNotifier {
     }
   }
 
-  // createStatusListFromSubstatusList(int childId) async {
-  //   List<StatusModel> statusList = [];
-  //   List<StatusToSendModel> statusesToSend = [];
-  //   List<SubStatusToSendModel> subStatusesToSend = [];
-  //   bool success = false;
 
-  //   for (SubStatusModel substatus in substatusListFromScreen) {
-  //     bool addedToExistingStatus = false;
-
-  //     for (StatusModel status in statusList) {
-  //       if (status.id == substatus.statusId) {
-  //         status.substatus!.add(substatus);
-  //         addedToExistingStatus = true;
-  //         break;
-  //       }
-  //     }
-
-  //     if (!addedToExistingStatus) {
-  //       StatusModel newStatus = StatusModel(
-  //         id: substatus.statusId,
-  //         // statusId: substatus.statusId,
-  //         substatus: [substatus],
-  //       );
-  //       statusList.add(newStatus);
-  //     }
-  //   }
-  //   for (int i = 0; i < statusList.length; i++) {
-  //     for (int j = 0; j < statusList[i].substatus!.length; j++) {
-  //       subStatusesToSend.add(
-  //         SubStatusToSendModel(
-  //           subStatusId: statusList[i].substatus![j].id!,
-  //           description: statusList[i].substatus![j].description
-  //         ),
-  //       );
-  //     }
-  //     statusesToSend.add(StatusToSendModel(
-  //       statusId: statusList[i].id!,
-  //       // name: statusList[i].name!,
-  //       substatus: subStatusesToSend,
-  //     ));
-  //     // print('****************STATUSES TO SEND*******************');
-  //     // print(statusesToSend[1].statusId);
-  //     // print('****************STATUSES TO SEND*******************');
-  //   }
-  //   try {
-  //     success = await _service.sendStatus(
-  //       childId,
-  //       statusesToSend,
-  //     );
-  //     return success;
-  //   } catch (e) {
-  //     print(e);
-  //     throw Exception('error in sending statuses');
-  //   }
-  // }
-
-  getChildStatusByDate(int childId, String date) async {
+  Future<void> getChildStatusByDate(int childId, String date) async {
     try {
       childStatusesByDate = await _service.getChildStatusByDate(
         childId,
@@ -122,7 +65,7 @@ class StatusProvider with ChangeNotifier {
     }
   }
 
-  getStatusesToSend(int childId) async {
+  Future<void> getStatusesToSend(int childId) async {
     try {
       statusesToSendList = await _service.getStatusesToSend(childId);
       hasError = _service.hasError;
@@ -142,7 +85,4 @@ class StatusProvider with ChangeNotifier {
     }
   }
 
-  // sendStatus(int childId, List<StatusesTo> statusList) async {
-  //   await _service.sendStatus(childId, statusList);
-  // }
 }

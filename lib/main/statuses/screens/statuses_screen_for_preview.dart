@@ -44,10 +44,12 @@ class _StatusesScreenForPreviewState extends State<StatusesScreenForPreview> {
     super.initState();
     _sentStatusesByDateFuture =
         Provider.of<StatusProvider>(context, listen: false)
-            .getChildStatusByDate(widget.childId!, widget.date!);
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      setState(() {
-        startAnimation = true;
+            .getChildStatusByDate(widget.childId!, widget.date!)
+            .then((value) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        setState(() {
+          startAnimation = true;
+        });
       });
     });
   }
@@ -94,10 +96,14 @@ class _StatusesScreenForPreviewState extends State<StatusesScreenForPreview> {
                     future: _sentStatusesByDateFuture,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return RippleWidget(height: 0.h,);
+                        return RippleWidget(
+                          height: 0.h,
+                        );
                       }
                       if (statusProvider.hasError) {
-                        return CustomErrorWidget(height: 0.h,);
+                        return CustomErrorWidget(
+                          height: 0.h,
+                        );
                       }
                       List<StatusModel> childStatusesByDate =
                           statusProvider.childStatusesByDate;

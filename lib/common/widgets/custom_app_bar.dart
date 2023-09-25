@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:toddily_preschool/auth/providers/auth_provider.dart';
+import 'package:toddily_preschool/main/auth/providers/auth_provider.dart';
 import 'package:toddily_preschool/common/navigators/my_navigator.dart';
 import 'package:toddily_preschool/common/providers/language_provider.dart';
 import 'package:toddily_preschool/common/user/provider/user_provider.dart';
@@ -90,7 +90,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                 ),
                 onPressed: () {
-                  //TODO
+                  //MYTODO
                   // IF COMING FROM NOTIFICATION, MAKE IT PUSH NAMED KIDS SCREEN
                   Navigator.of(context).pop();
                 },

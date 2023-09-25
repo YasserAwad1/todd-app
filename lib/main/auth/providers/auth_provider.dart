@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:toddily_preschool/auth/service/auth_service.dart';
+import 'package:toddily_preschool/main/auth/service/auth_service.dart';
 import 'package:toddily_preschool/common/constants/end_points.dart';
 import 'package:toddily_preschool/common/local/local_repo.dart';
 import 'package:toddily_preschool/locator.dart';

@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:toddily_preschool/common/constants/end_points.dart';
 import 'package:toddily_preschool/common/providers/language_provider.dart';
 import 'package:toddily_preschool/common/drawer/app_drawer.dart';
+import 'package:toddily_preschool/common/widgets/app_place_holder.dart';
 import 'package:toddily_preschool/common/widgets/error_widget.dart';
 import 'package:toddily_preschool/common/widgets/no_information_widget.dart';
 import 'package:toddily_preschool/common/widgets/ripple.dart';
@@ -155,6 +156,23 @@ class _AboutScreenState extends State<AboutScreen> {
                                   child: Image.network(
                                     '${Endpoints.baseUrl}${photos[index].image_url}',
                                     fit: BoxFit.contain,
+                                    frameBuilder:
+                                        (_, image, loadingBuilder, __) {
+                                      if (loadingBuilder == null) {
+                                        return AppPlaceholder(
+                                            child: Container(
+                                          color: Colors.black,
+                                          height: 200.h,
+                                        ));
+                                      }
+                                      return image;
+                                    },
+                                    errorBuilder:
+                                        (context, error, stackTrace) => Image(
+                                      image:
+                                          AssetImage('images/image_error.jpg'),
+                                      height: 160.h,
+                                    ),
                                   ),
                                 ),
                               )),

@@ -58,10 +58,13 @@ class NoInternetDialog extends StatelessWidget {
               children: [
                 MaterialButton(
                   onPressed: () {
-                    tryAgain == 0
-                        ? Navigator.of(context)
-                            .pushReplacementNamed(SplashScreen.routeName)
-                        : Navigator.pop(context);
+                    if (tryAgain == 0) {
+                      Navigator.of(context).pop();
+                      Navigator.of(context)
+                          .pushReplacementNamed(SplashScreen.routeName);
+                    } else {
+                      Navigator.pop(context);
+                    }
                   },
                   color: Theme.of(context).colorScheme.secondary,
                   child: Text(

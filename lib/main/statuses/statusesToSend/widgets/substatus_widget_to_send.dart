@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:toddily_preschool/common/constants/end_points.dart';
+import 'package:toddily_preschool/common/widgets/app_place_holder.dart';
 import 'package:toddily_preschool/main/statuses/providers/status_provider.dart';
 import 'package:toddily_preschool/models/subStatus/sub_status_model.dart';
 
@@ -21,10 +22,7 @@ class SubstatusWidgetToSend extends StatefulWidget {
 }
 
 class _SubstatusWidgetToSendState extends State<SubstatusWidgetToSend> {
-  // bool isSelected = false;
-
   selectStatus() {
-    // isSelected = !isSelected;
     if (!Provider.of<StatusProvider>(context, listen: false)
         .isSubstatusInList(widget.subStatus.id!)) {
       Provider.of<StatusProvider>(context, listen: false)
@@ -35,20 +33,8 @@ class _SubstatusWidgetToSendState extends State<SubstatusWidgetToSend> {
     }
   }
 
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   Provider.of<StatusProvider>(context, listen: false)
-  //       .substatusListFromScreen
-  //       .clear();
-  // }
-
   @override
   Widget build(BuildContext context) {
-    // Provider.of<StatusProvider>(context, listen: false)
-    //     .substatusListFromScreen
-    //     .clear();
     return AnimatedContainer(
       curve: Curves.easeIn,
       duration: Duration(
@@ -90,6 +76,20 @@ class _SubstatusWidgetToSendState extends State<SubstatusWidgetToSend> {
                 child: Image.network(
                   '${Endpoints.baseUrl}${widget.subStatus.image}',
                   fit: BoxFit.fill,
+                  frameBuilder: (_, image, loadingBuilder, __) {
+                    if (loadingBuilder == null) {
+                      return AppPlaceholder(
+                          child: Container(
+                        color: Colors.black,
+                        height: 200.h,
+                      ));
+                    }
+                    return image;
+                  },
+                  errorBuilder: (context, error, stackTrace) => Image(
+                    image: AssetImage('images/image_error.jpg'),
+                    height: 160.h,
+                  ),
                 ),
               ),
             ),
@@ -100,26 +100,22 @@ class _SubstatusWidgetToSendState extends State<SubstatusWidgetToSend> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              //IF DESCRIPTION IN EMPTY PT SIZED BOX
               Flexible(
-                child: Row(
-                  children: [
-                    Text(
-                      widget.subStatus.name!,
-                      style: TextStyle(
-                        fontSize: 25.sp,
-                        fontFamily: "LuckiestGuy",
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
+                child: Text(
+                  widget.subStatus.name!,
+                  style: TextStyle(
+                    fontSize: 25.sp,
+                    fontFamily: "LuckiestGuy",
+                    color: Colors.white,
+                  ),
                 ),
               ),
               SizedBox(
-                height: 4.h,
+                height: 10.h,
               ),
               SizedBox(
                 width: 150.w,
+                height: 100.h,
                 child: SizedBox(
                   child: TextField(
                     onChanged: (value) {

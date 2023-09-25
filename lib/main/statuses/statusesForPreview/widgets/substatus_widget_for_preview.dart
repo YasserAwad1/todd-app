@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:marquee/marquee.dart';
 import 'package:toddily_preschool/common/constants/end_points.dart';
+import 'package:toddily_preschool/common/widgets/app_place_holder.dart';
 import 'package:toddily_preschool/models/subStatus/sub_status_model.dart';
 
 class SubStatusWidgetForPreview extends StatefulWidget {
@@ -57,6 +58,20 @@ class _SubStatusWidgetForPreviewState extends State<SubStatusWidgetForPreview> {
               child: Image.network(
                 '${Endpoints.baseUrl}${widget.subStatus.image}',
                 fit: BoxFit.fill,
+                frameBuilder: (_, image, loadingBuilder, __) {
+                  if (loadingBuilder == null) {
+                    return AppPlaceholder(
+                        child: Container(
+                      color: Colors.black,
+                      height: 200.h,
+                    ));
+                  }
+                  return image;
+                },
+                errorBuilder: (context, error, stackTrace) => Image(
+                  image: AssetImage('images/image_error.jpg'),
+                  height: 160.h,
+                ),
               ),
             ),
           ),

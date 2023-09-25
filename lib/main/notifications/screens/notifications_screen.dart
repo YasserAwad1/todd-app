@@ -60,7 +60,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   }
                   List<NotificationModel> notifications =
                       Provider.of<NotificationProvider>(context, listen: false)
-                          .notifications;
+                          .notifications.reversed.toList();
                   if (notifications.isEmpty) {
                     return NoInformationWidget();
                   }

@@ -153,10 +153,10 @@ class _AppDrawerState extends State<AppDrawer> {
               // Navigator.pop(context);
               // await Future.delayed(
               //     const Duration(milliseconds: 50)); // wait some time
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => PhotosScreen(),
+                  builder: (context) => const PhotosScreen(),
                 ),
               );
             },

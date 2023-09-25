@@ -32,11 +32,13 @@ class _ClassesScreenState extends State<ClassesScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _classesFuture =
-        Provider.of<ClassProvider>(context, listen: false).getClasses();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      setState(() {
-        startAnimation = true;
+    _classesFuture = Provider.of<ClassProvider>(context, listen: false)
+        .getClasses()
+        .then((value) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        setState(() {
+          startAnimation = true;
+        });
       });
     });
   }

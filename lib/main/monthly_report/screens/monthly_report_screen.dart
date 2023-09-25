@@ -104,7 +104,7 @@ class _MonthlyReportScreenState extends State<MonthlyReportScreen> {
                         if (reportProvider.hasError) {
                           return CustomErrorWidget();
                         }
-                        List<ReportModel> reports = reportProvider.reports;
+                        List<ReportModel> reports = reportProvider.reports.reversed.toList();
                         if (reports.isEmpty) {
                           return NoInformationWidget();
                         }

@@ -43,13 +43,16 @@ class _PhotosScreenState extends State<PhotosScreen>
   void initState() {
     // TODO: implement initState
     super.initState();
-    _photosFuture =
-        Provider.of<PhotosProvider>(context, listen: false).getPhotos();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      setState(() {
-        startAnimation = true;
+    _photosFuture = Provider.of<PhotosProvider>(context, listen: false)
+        .getPhotos()
+        .then((value) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        setState(() {
+          startAnimation = true;
+        });
       });
     });
+
     controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 400),

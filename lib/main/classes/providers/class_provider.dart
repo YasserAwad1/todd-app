@@ -9,7 +9,7 @@ class ClassProvider with ChangeNotifier {
   String? message;
   bool hasError = false;
 
-  getClasses() async {
+  Future<void> getClasses() async {
     try {
       classes = await _service.getClasses();
       hasError = _service.hasError;

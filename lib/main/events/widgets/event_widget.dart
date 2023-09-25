@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toddily_preschool/common/constants/end_points.dart';
 import 'package:toddily_preschool/common/navigators/my_navigator.dart';
+import 'package:toddily_preschool/common/widgets/app_place_holder.dart';
 import 'package:toddily_preschool/main/events/screens/event_photos_screen.dart';
 import 'package:toddily_preschool/models/events/event_model.dart';
 
@@ -57,6 +58,20 @@ class EventWidget extends StatelessWidget {
                   '${Endpoints.baseUrl}${event.image_cover}',
                   fit: BoxFit.cover,
                   width: double.infinity.w,
+                  frameBuilder: (_, image, loadingBuilder, __) {
+                    if (loadingBuilder == null) {
+                      return AppPlaceholder(
+                          child: Container(
+                        color: Colors.black,
+                        height: 200.h,
+                      ));
+                    }
+                    return image;
+                  },
+                  errorBuilder: (context, error, stackTrace) => Image(
+                    image: AssetImage('images/image_error.jpg'),
+                    height: 160.h,
+                  ),
                 ),
               ),
             ),
