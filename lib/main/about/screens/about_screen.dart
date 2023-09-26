@@ -172,7 +172,7 @@ class _AboutScreenState extends State<AboutScreen> {
                                     errorBuilder:
                                         (context, error, stackTrace) => Image(
                                       image:
-                                          AssetImage('images/image_error.jpg'),
+                                          AssetImage('assets/images/errorImage.png'),
                                       height: 160.h,
                                     ),
                                   ),

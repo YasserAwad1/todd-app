@@ -102,7 +102,7 @@ class _EventImageWidgetState extends State<EventImageWidget> {
                     return image;
                   },
                   errorBuilder: (context, error, stackTrace) => Image(
-                    image: AssetImage('images/image_error.jpg'),
+                    image: AssetImage('assets/images/errorImage.png'),
                     height: 160.h,
                   ),
                 ),
