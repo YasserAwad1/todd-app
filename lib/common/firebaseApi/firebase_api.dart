@@ -14,14 +14,6 @@ import 'package:toddily_preschool/models/kids/kid_model.dart';
 
 Future<void> handleBackgroundMessage(RemoteMessage message) async {
   // WHEN IN  BACKGROUND BUT NOT OPENED
-  // String? type;
-  // if (type == 'normal') {
-  //   navigatorKey.currentState!.pushNamed('/about-screen');
-  // } else if (type == 'status') {
-  //   navigatorKey.currentState!.pushNamed('/FAQ-screen');
-  // }
-  print(
-      '*********************************THIS IS HANDING BACKGROUND******************************************************');
   BuildContext context = navigatorKey.currentState!.context;
   Provider.of<SplashProvider>(context, listen: false).setNotification();
   Provider.of<SplashProvider>(context, listen: false).setMessage(message);
@@ -30,14 +22,9 @@ Future<void> handleBackgroundMessage(RemoteMessage message) async {
 void handleMessage(RemoteMessage? message) {
   // INSIDE APPLICAION
   String? type;
-  print(
-      '*********************************THIS IS HANDlING MESSAGE******************************************************');
   if (message == null) {
     return;
   } else {
-    // BuildContext context = navigatorKey.currentState!.context;
-    // Provider.of<SplashProvider>(context, listen: false).setNotification();
-    // Provider.of<SplashProvider>(context, listen: false).setMessage(message);
     type = message.data['type'];
     if (type == 'normal') {
       navigatorKey.currentState!.pushNamed('/notifications-screen');

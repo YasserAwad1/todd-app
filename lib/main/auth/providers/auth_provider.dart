@@ -9,6 +9,7 @@ import 'package:toddily_preschool/locator.dart';
 class AuthProvider with ChangeNotifier {
   AuthService _service = AuthService();
   String errorMessage = '';
+  final _localService = LocalRepo();
   // String? roleName;
   // bool isGuest = false;
 
@@ -65,15 +66,17 @@ class AuthProvider with ChangeNotifier {
   }
 
   logOut() async {
-    final _localService = LocalRepo();
-    await _localService.deleteValue('token');
-    await _localService.deleteValue('role');
-    await _localService.deleteValue('language');
-    locator.get<LocalRepo>().token = null;
-    // var loggedOut = await _localService.clear();
-    notifyListeners();
-    // if (loggedOut) {
-    return true;
-    // }
+    try {
+      final success = await _service.logout();
+      await _localService.deleteValue('token');
+      await _localService.deleteValue('role');
+      await _localService.deleteValue('language');
+      // await _localService.deleteValue('device_token');
+      locator.get<LocalRepo>().token = null;
+      notifyListeners();
+      return success;
+    } catch (e) {
+      return false;
+    }
   }
 }

@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -80,9 +83,13 @@ class _CustomExpandableTileState extends State<CustomExpandableTile> {
                         .getUserRoleId() ==
                     3)
                   isLoading
-                      ? CircularProgressIndicator(
-                          color: Colors.red,
-                        )
+                      ? Platform.isIOS
+                          ? CupertinoActivityIndicator(
+                              color: Colors.red,
+                            )
+                          : CircularProgressIndicator(
+                              color: Colors.red,
+                            )
                       : IconButton(
                           onPressed: () async {
                             setState(() {

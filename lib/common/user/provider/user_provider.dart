@@ -36,6 +36,11 @@ class UserProvider with ChangeNotifier {
     // notifyListeners();
   }
 
+  deleteGuest() {
+    currentUser = null;
+    notifyListeners();
+  }
+
   int? getUserRoleId() {
     return currentUser!.role_id;
   }
@@ -65,7 +70,7 @@ class UserProvider with ChangeNotifier {
     return false;
   }
 
-  bool teacherOrExtra(){
+  bool teacherOrExtra() {
     if (currentUser!.role_id == 2 || currentUser!.role_id == 6) {
       return true;
     }

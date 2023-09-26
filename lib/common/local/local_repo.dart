@@ -42,7 +42,7 @@ class LocalRepo {
     return language;
   }
 
-  varLanguage(String lang){
+  varLanguage(String lang) {
     language = lang;
   }
 
@@ -74,8 +74,6 @@ class LocalRepo {
   clear() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = null;
-    prefs.remove('token');
-    prefs.remove('role');
-    prefs.remove('language');
+    prefs.clear();
   }
 }

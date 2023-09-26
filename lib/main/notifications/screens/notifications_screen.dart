@@ -71,7 +71,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                       shrinkWrap: true,
                       itemBuilder: (context, i) {
                         return NotificationWidget(
-                          title: notifications[i].body!,
+                          notification: notifications[i],
                         );
                       },
                     ),

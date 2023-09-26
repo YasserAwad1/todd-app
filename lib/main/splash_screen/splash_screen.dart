@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -105,7 +107,13 @@ class _SplashScreenState extends State<SplashScreen> {
                         Provider.of<SplashProvider>(context, listen: false)
                             .isNotification;
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator();
+                      return Platform.isIOS
+                          ? CupertinoActivityIndicator(
+                              color: Theme.of(context).colorScheme.secondary,
+                            )
+                          : CircularProgressIndicator(
+                              color: Theme.of(context).colorScheme.secondary,
+                            );
                     }
                     if (isNotification) {
                       Navigator.pushReplacementNamed(

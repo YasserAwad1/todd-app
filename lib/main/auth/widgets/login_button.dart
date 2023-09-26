@@ -92,11 +92,11 @@ class _LoginButtonState extends State<LoginButton> {
       height: 70.h,
       child: widget.isLoading
           ? Center(
-              child: Platform.isAndroid
-                  ? CircularProgressIndicator(
+              child: Platform.isIOS
+                  ? CupertinoActivityIndicator(
                       color: Theme.of(context).colorScheme.secondary,
                     )
-                  : CupertinoActivityIndicator(
+                  : CircularProgressIndicator(
                       color: Theme.of(context).colorScheme.secondary,
                     ),
             )

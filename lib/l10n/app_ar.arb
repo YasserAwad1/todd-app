@@ -62,6 +62,7 @@
     "academicReport": "التقرير الاكاديمي",
     "notes": "ملاحظات",
     "errorOccured": "حدث خطأ",
-    "networkError": "خطأ في الشبكة"
+    "networkError": "خطأ في الشبكة",
+    "errorLoggingOut": "حدث خطأ في تسجيل الخروج"
 
 }

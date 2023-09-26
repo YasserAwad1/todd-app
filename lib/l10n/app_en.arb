@@ -254,5 +254,9 @@
     "errorOccured": "Error occured",
     "@errorOccured":{
         "description": "none"
+    },
+    "errorLoggingOut": "Error logging out",
+    "@errorLoggingOut":{
+        "description": "none"
     }
 }

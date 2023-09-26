@@ -6,7 +6,6 @@ import 'package:toddily_preschool/common/constants/end_points.dart';
 import 'package:toddily_preschool/common/navigators/my_navigator.dart';
 import 'package:toddily_preschool/common/providers/language_provider.dart';
 import 'package:toddily_preschool/common/user/provider/user_provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:toddily_preschool/common/widgets/app_place_holder.dart';
 import 'package:toddily_preschool/main/kids/dates_images_tabs_screen.dart';
 import 'package:toddily_preschool/main/monthly_report/screens/monthly_report_screen.dart';

@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:toddily_preschool/common/constants/end_points.dart';
 import 'package:toddily_preschool/common/providers/language_provider.dart';
 import 'package:toddily_preschool/common/drawer/app_drawer.dart';
+import 'package:toddily_preschool/common/user/provider/user_provider.dart';
 import 'package:toddily_preschool/common/widgets/app_place_holder.dart';
 import 'package:toddily_preschool/common/widgets/error_widget.dart';
 import 'package:toddily_preschool/common/widgets/no_information_widget.dart';
@@ -71,6 +72,7 @@ class _AboutScreenState extends State<AboutScreen> {
   @override
   Widget build(BuildContext context) {
     bool isArabic = Provider.of<LanguageProvider>(context).isArabic();
+    print(Provider.of<UserProvider>(context, listen: false).getUserRoleId());
 
     return SafeArea(
       child: Scaffold(

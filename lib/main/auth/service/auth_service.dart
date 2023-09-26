@@ -48,16 +48,37 @@ class AuthService {
       }
       errorMessage = AppLocalizations.of(context)!.errorOccured;
       return false;
-    } on SocketException catch(e){
+    } on SocketException catch (e) {
       errorMessage = AppLocalizations.of(context)!.errorOccured;
       return false;
-    } on TimeoutException catch (e){
+    } on TimeoutException catch (e) {
       errorMessage = AppLocalizations.of(context)!.errorOccured;
       return false;
     } catch (e) {
       print(e);
       rethrow;
       // return false;
+    }
+  }
+
+  Future<bool> logout() async {
+    try {
+      var token = await locator.get<LocalRepo>().getToken();
+      final url = Uri.parse(Endpoints.logout);
+      final response = await http.post(url, headers: {
+        "Accept": "application/json",
+        'Authorization': 'Bearer $token'
+      });
+
+      if (response.statusCode < 300) {
+        return true;
+      } else {
+        errorMessage = 'Error logging out';
+        return false;
+      }
+    } catch (e) {
+      errorMessage = 'Error logging out';
+      throw Exception('error logging out');
     }
   }
 }

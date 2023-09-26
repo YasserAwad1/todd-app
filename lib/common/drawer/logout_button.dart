@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:toddily_preschool/common/user/provider/user_provider.dart';
 import 'package:toddily_preschool/main/auth/providers/auth_provider.dart';
 import 'package:toddily_preschool/main/auth/screens/sign_in_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -26,11 +27,11 @@ class _logoutButtonState extends State<logoutButton> {
       padding: EdgeInsets.all(15.sp),
       child: widget.isLoading
           ? Center(
-              child: Platform.isAndroid
-                  ? CircularProgressIndicator(
+              child: Platform.isIOS
+                  ? CupertinoActivityIndicator(
                       color: Theme.of(context).colorScheme.secondary,
                     )
-                  : CupertinoActivityIndicator(
+                  : CircularProgressIndicator(
                       color: Theme.of(context).colorScheme.secondary,
                     ),
             )
@@ -44,17 +45,9 @@ class _logoutButtonState extends State<logoutButton> {
                 ),
               ),
               onPressed: () async {
-                setState(() {
-                  widget.isLoading = true;
-                });
-                final loggedOut =
-                    await Provider.of<AuthProvider>(context, listen: false)
-                        .logOut();
-                if (loggedOut) {
-                  setState(() {
-                    widget.isLoading = false;
-                  });
-                  // ignore: use_build_context_synchronously
+                if (Provider.of<UserProvider>(context, listen: false)
+                        .getUserRoleId() ==
+                    7) {
                   Navigator.pushReplacement(
                     context,
                     PageRouteBuilder(
@@ -70,18 +63,47 @@ class _logoutButtonState extends State<logoutButton> {
                       },
                     ),
                   );
+                  // });
                 } else {
                   setState(() {
-                    widget.isLoading = false;
+                    widget.isLoading = true;
                   });
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      backgroundColor: Colors.red,
-                      content: Text(
-                        AppLocalizations.of(context)!.errorOccurred,
+                  final loggedOut =
+                      await Provider.of<AuthProvider>(context, listen: false)
+                          .logOut();
+                  if (loggedOut) {
+                    setState(() {
+                      widget.isLoading = false;
+                    });
+                    // ignore: use_build_context_synchronously
+                    Navigator.pushReplacement(
+                      context,
+                      PageRouteBuilder(
+                        transitionDuration: const Duration(milliseconds: 500),
+                        pageBuilder: (ctx, animation, secondaryAnimation) =>
+                            SignInScreen(),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          return FadeTransition(
+                            opacity: animation,
+                            child: child,
+                          );
+                        },
                       ),
-                    ),
-                  );
+                    );
+                  } else {
+                    setState(() {
+                      widget.isLoading = false;
+                    });
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: Colors.red,
+                        content: Text(
+                          AppLocalizations.of(context)!.errorLoggingOut,
+                        ),
+                      ),
+                    );
+                  }
                 }
               },
               icon: const Icon(

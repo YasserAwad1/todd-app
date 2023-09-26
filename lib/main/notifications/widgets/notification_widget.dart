@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
+import 'package:toddily_preschool/models/notifications/notification_model.dart';
 
 class NotificationWidget extends StatelessWidget {
-  String title;
+  NotificationModel notification;
   NotificationWidget({
-    required this.title,
+    required this.notification,
   });
 
   @override
   Widget build(BuildContext context) {
+    DateTime dateTime = DateTime.parse(notification.time!);
+    String formattedDateTime =
+        DateFormat('dd/MM/yyyy hh:mm a').format(dateTime);
     return Padding(
       padding: EdgeInsets.all(10.sp),
       child: Card(
@@ -21,7 +26,8 @@ class NotificationWidget extends StatelessWidget {
             color: Theme.of(context).colorScheme.secondary,
             size: 45.sp,
           ),
-          title: Text(title),
+          title: Text(notification.body!),
+          subtitle: Text(formattedDateTime),
           tileColor: Colors.white,
         ),
       ),
