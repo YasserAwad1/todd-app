@@ -8,8 +8,8 @@ class AppPlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: Theme.of(context).hoverColor,
-      highlightColor: Theme.of(context).highlightColor,
+      baseColor: Colors.grey.shade100,
+      highlightColor: Theme.of(context).colorScheme.secondary,
       enabled: true,
       child: child,
     );

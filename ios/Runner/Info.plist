@@ -40,6 +40,10 @@
 		<array>
 			<string>sms</string>
 			<string>tel</string>
+			<string>https</string>
+			<string>whatsapp</string>
+			<string>instagram</string>
+			<string>facebook</string>
 		</array>
 		<key>UISupportedInterfaceOrientations</key>
 		<array>

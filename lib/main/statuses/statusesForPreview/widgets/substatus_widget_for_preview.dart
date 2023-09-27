@@ -80,24 +80,18 @@ class _SubStatusWidgetForPreviewState extends State<SubStatusWidgetForPreview> {
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              //IF DESCRIPTION IN EMPTY PT SIZED BOX
-              if (widget.subStatus.description == null)
-                SizedBox(
-                  height: 40.h,
-                ),
-              Flexible(
-                child: Row(
-                  children: [
-                    Text(
-                      widget.subStatus.name!,
-                      style: const TextStyle(
-                        fontSize: 25,
-                        fontFamily: "LuckiestGuy",
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
+              SizedBox(
+                width: 150.w,
+                child: Text(
+                  widget.subStatus.name!,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 3,
+                  style: TextStyle(
+                      fontSize: 19.sp,
+                      fontFamily: "LuckiestGuy",
+                      color: Colors.white),
                 ),
               ),
               SizedBox(

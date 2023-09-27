@@ -121,7 +121,7 @@ class _WifiAnimationState extends State<WifiAnimation>
           fourthAnimation!.value,
         ),
         child: SizedBox(
-          height: 220.h,
+          height: 200.h,
           width: 210.w,
         ),
       ),

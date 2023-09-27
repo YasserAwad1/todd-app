@@ -77,6 +77,7 @@ class _DatesScreenState extends State<DatesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.kid!.gender);
     return SafeArea(
       child: Scaffold(
         extendBody: true,

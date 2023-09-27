@@ -8,6 +8,7 @@ class KidModel {
   final String name;
   final String? image;
   final String? className;
+  final String? gender;
   final int isExtra;
 
   KidModel({
@@ -15,6 +16,7 @@ class KidModel {
     required this.name,
     required this.image,
     this.className,
+    this.gender,
     required this.isExtra,
   });
 

@@ -10,6 +10,7 @@ KidModel _$KidModelFromJson(Map<String, dynamic> json) => KidModel(
       id: json['id'] as int?,
       name: json['name'] as String,
       image: json['image'] as String?,
+      gender: json['gender'] as String?,
       className: json['className'] != null ? json['className'] as String? : null,
       isExtra: json['isExtra'] as int,
     );

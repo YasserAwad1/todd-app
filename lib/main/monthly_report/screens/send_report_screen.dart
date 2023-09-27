@@ -86,16 +86,6 @@ class _SendReportScreenState extends State<SendReportScreen> {
   }
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    // if (widget.isEditing!) {
-    //   descriptionController.value =
-    //       TextEditingValue(text: widget.previousReport!.description);
-    // }
-  }
-
-  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
@@ -133,59 +123,65 @@ class _SendReportScreenState extends State<SendReportScreen> {
             state: stateTextWithIcon,
           ),
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.all(15.0.sp),
-            child: Column(children: [
-              SizedBox(
-                height: 10.h,
-              ),
-              CustomTextFormFeild(
-                labelText: AppLocalizations.of(context)!.devAndBehReport,
-                controller: devController,
-                textinputAction: TextInputAction.next,
-                inputType: TextInputType.multiline,
-                maxlines: 10,
-                alignLabelWithHint: true,
-                onChanged: (val) {},
-              ),
-              SizedBox(
-                height: 25.h,
-              ),
-              CustomTextFormFeild(
-                labelText: AppLocalizations.of(context)!.medicalReport,
-                controller: medicalController,
-                textinputAction: TextInputAction.next,
-                inputType: TextInputType.multiline,
-                maxlines: 10,
-                alignLabelWithHint: true,
-                onChanged: (val) {},
-              ),
-              SizedBox(
-                height: 25.h,
-              ),
-              CustomTextFormFeild(
-                labelText: AppLocalizations.of(context)!.academicReport,
-                controller: academicController,
-                textinputAction: TextInputAction.next,
-                inputType: TextInputType.multiline,
-                maxlines: 10,
-                alignLabelWithHint: true,
-                onChanged: (val) {},
-              ),
-              SizedBox(
-                height: 25.h,
-              ),
-              CustomTextFormFeild(
-                labelText: AppLocalizations.of(context)!.notes,
-                controller: notesController,
-                textinputAction: TextInputAction.next,
-                inputType: TextInputType.multiline,
-                maxlines: 10,
-                alignLabelWithHint: true,
-                onChanged: (val) {},
-              )
-            ]),
+        body: GestureDetector(
+          onTap: (){
+            FocusScope.of(context).requestFocus(FocusNode());
+          },
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Padding(
+              padding: EdgeInsets.all(15.0.sp),
+              child: Column(children: [
+                SizedBox(
+                  height: 10.h,
+                ),
+                CustomTextFormFeild(
+                  labelText: AppLocalizations.of(context)!.devAndBehReport,
+                  controller: devController,
+                  textinputAction: TextInputAction.next,
+                  inputType: TextInputType.multiline,
+                  maxlines: 10,
+                  alignLabelWithHint: true,
+                  onChanged: (val) {},
+                ),
+                SizedBox(
+                  height: 25.h,
+                ),
+                CustomTextFormFeild(
+                  labelText: AppLocalizations.of(context)!.medicalReport,
+                  controller: medicalController,
+                  textinputAction: TextInputAction.next,
+                  inputType: TextInputType.multiline,
+                  maxlines: 10,
+                  alignLabelWithHint: true,
+                  onChanged: (val) {},
+                ),
+                SizedBox(
+                  height: 25.h,
+                ),
+                CustomTextFormFeild(
+                  labelText: AppLocalizations.of(context)!.academicReport,
+                  controller: academicController,
+                  textinputAction: TextInputAction.next,
+                  inputType: TextInputType.multiline,
+                  maxlines: 10,
+                  alignLabelWithHint: true,
+                  onChanged: (val) {},
+                ),
+                SizedBox(
+                  height: 25.h,
+                ),
+                CustomTextFormFeild(
+                  labelText: AppLocalizations.of(context)!.notes,
+                  controller: notesController,
+                  textinputAction: TextInputAction.next,
+                  inputType: TextInputType.multiline,
+                  maxlines: 10,
+                  alignLabelWithHint: true,
+                  onChanged: (val) {},
+                )
+              ]),
+            ),
           ),
         ),
       ),

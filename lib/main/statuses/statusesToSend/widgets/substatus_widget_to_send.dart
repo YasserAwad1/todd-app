@@ -100,14 +100,16 @@ class _SubstatusWidgetToSendState extends State<SubstatusWidgetToSend> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Flexible(
+              SizedBox(
+                width: 140.w,
                 child: Text(
                   widget.subStatus.name!,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
                   style: TextStyle(
-                    fontSize: 25.sp,
-                    fontFamily: "LuckiestGuy",
-                    color: Colors.white,
-                  ),
+                      fontSize: 20.sp,
+                      fontFamily: "LuckiestGuy",
+                      color: Colors.white),
                 ),
               ),
               SizedBox(

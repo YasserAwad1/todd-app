@@ -65,10 +65,10 @@ class _DetailsListState extends State<DetailsList> {
   void launchInstagramProfile() async {
     String url = 'https://www.instagram.com/toddily_preschool';
 
-    if (await canLaunchUrl(Uri.parse(url))) {
+    if (await canLaunchUrl(Uri.parse(url),)) {
       await launchUrl(
         Uri.parse(url),
-        mode: LaunchMode.externalApplication,
+        mode: LaunchMode.externalNonBrowserApplication,
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -85,7 +85,7 @@ class _DetailsListState extends State<DetailsList> {
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(
         Uri.parse(url),
-        mode: LaunchMode.externalApplication,
+        mode: LaunchMode.externalNonBrowserApplication,
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -102,8 +102,9 @@ class _DetailsListState extends State<DetailsList> {
       Uri.parse(
         url,
       ),
+      
     )) {
-      await launchUrl(Uri.parse(url));
+      await launchUrl(Uri.parse(url),);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: Colors.red,

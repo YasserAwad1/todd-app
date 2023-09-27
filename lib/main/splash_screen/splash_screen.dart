@@ -48,16 +48,14 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   VideoPlayerController? _videoPlayerController;
-  // ChewieController? _chewieController;
   var _userFuture;
 
   @override
   void initState() {
     super.initState();
-    // initializeVideoPlayer();
 
-    _videoPlayerController = VideoPlayerController.asset(
-        'assets/videos/toddilyIntro.mp4'); // Replace with your actual video path
+    _videoPlayerController =
+        VideoPlayerController.asset('assets/videos/toddilyIntro.mp4');
     _videoPlayerController!.initialize().then((_) {
       setState(() {});
       _videoPlayerController!.setLooping(false);

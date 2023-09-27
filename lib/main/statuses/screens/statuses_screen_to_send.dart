@@ -151,41 +151,46 @@ class _StatusesScreenToSendState extends State<StatusesScreenToSend> {
                   state: stateTextWithIcon,
                 ),
               ),
-        body: Localizations.override(
-          context: context,
-          locale: const Locale('en'),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 20.h,
-              ),
-              Expanded(
-                child: FutureBuilder(
-                    future: _statusesToSendFuture,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return RippleWidget(
-                          height: 0,
+        body: GestureDetector(
+          onTap: (){
+            FocusScope.of(context).requestFocus(FocusNode());
+          },
+          child: Localizations.override(
+            context: context,
+            locale: const Locale('en'),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 20.h,
+                ),
+                Expanded(
+                  child: FutureBuilder(
+                      future: _statusesToSendFuture,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return RippleWidget(
+                            height: 0,
+                          );
+                        }
+                        if (statusProvider.hasError) {
+                          return CustomErrorWidget();
+                        }
+                        List<StatusModel> statusesToSend =
+                            statusProvider.statusesToSendList;
+                        return ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          itemBuilder: (context, i) => StatusWidgetToSend(
+                            startAnimation: startAnimation,
+                            index: i,
+                            status: statusesToSend[i],
+                          ),
+                          itemCount: statusesToSend.length,
+                          shrinkWrap: true,
                         );
-                      }
-                      if (statusProvider.hasError) {
-                        return CustomErrorWidget();
-                      }
-                      List<StatusModel> statusesToSend =
-                          statusProvider.statusesToSendList;
-                      return ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        itemBuilder: (context, i) => StatusWidgetToSend(
-                          startAnimation: startAnimation,
-                          index: i,
-                          status: statusesToSend[i],
-                        ),
-                        itemCount: statusesToSend.length,
-                        shrinkWrap: true,
-                      );
-                    }),
-              ),
-            ],
+                      }),
+                ),
+              ],
+            ),
           ),
         ),
       ),

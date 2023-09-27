@@ -29,7 +29,7 @@ class _AppDrawerState extends State<AppDrawer> {
         children: [
           Container(
             width: double.infinity,
-            height: 126.h,
+            height: 135.h,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(25.sp),
@@ -38,7 +38,7 @@ class _AppDrawerState extends State<AppDrawer> {
               color: yellow,
             ),
             child: Container(
-                margin: EdgeInsets.all(15.sp),
+                margin: EdgeInsets.all(17.sp),
                 child: Image.asset(
                   'assets/images/ToddilyLogo.png',
                   fit: BoxFit.fill,

@@ -144,8 +144,8 @@ class KidsWidget extends StatelessWidget {
                       kid.name,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
-                      style: const TextStyle(
-                          fontSize: 19,
+                      style: TextStyle(
+                          fontSize: 19.sp,
                           fontWeight: FontWeight.bold,
                           color: Colors.white),
                     ),
@@ -166,19 +166,24 @@ class KidsWidget extends StatelessWidget {
                   ),
                   if (kid.isExtra == 1)
                     Container(
-                      height: 30.h,
+                      height: 34.h,
                       width: 80.w,
+                      alignment: Alignment.center,
                       padding: EdgeInsets.all(10.sp),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           color: Colors.red),
-                      child: Text(
-                        'Extra',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
+                      child: FittedBox(
+                        fit: BoxFit.fitHeight,
+                        child: Text(
+                          'Extra',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
                             fontFamily: "luckiestGuy",
                             color: Colors.white,
-                            fontSize: 16.sp),
+                            // fontSize: 16.sp,
+                          ),
+                        ),
                       ),
                     )
                 ],

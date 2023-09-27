@@ -27,22 +27,23 @@ class NoInternetDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Stack(
-              // alignment: Alignment.center,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.secondary,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20))),
-                  height: 210.h,
-                ),
-                Positioned(top: 10.h, left: 35.w, child: WifiAnimation()),
-              ],
+            Container(
+              decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.secondary,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20))),
+              height: 220.h,
+              child: Column(
+                children: [
+                  SizedBox(height: 20.h,),
+                  WifiAnimation(),
+                ],
+              ),
+              alignment: Alignment.center,
             ),
             SizedBox(
-              height: 10.h,
+              height: 15.h,
             ),
             Text(
               AppLocalizations.of(context)!.noInternetConnection,

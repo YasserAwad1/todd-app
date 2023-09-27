@@ -93,6 +93,8 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
+      minTextAdapt: true,  //new
+      splitScreenMode: true,    //new  
       builder: ((context, child) => MultiProvider(
             providers: [
               ChangeNotifierProvider(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 //packages
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:provider/provider.dart';
 
 //widgets
@@ -76,6 +77,10 @@ class _KidsScreenState extends State<KidsScreen> {
     }
   }
 
+  Future<void> refreshData() async{
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     int roleId =
@@ -146,7 +151,7 @@ class _KidsScreenState extends State<KidsScreen> {
                                 .hasError) {
                               return CustomErrorWidget();
                             }
-
+        
                             List<KidModel> kids = Provider.of<UserProvider>(
                                         context,
                                         listen: false)
