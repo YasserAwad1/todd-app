@@ -17,7 +17,7 @@ class DatesProvider with ChangeNotifier {
       isLoading = false;
       notifyListeners();
     } catch (e) {
-      print(e);
+      // print(e);
       isLoading = false;
       hasError = _service.hasError;
       notifyListeners();

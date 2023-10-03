@@ -42,7 +42,6 @@ class _MonthlyReportScreenState extends State<MonthlyReportScreen> {
   }
 
   Future<void> refreshData() async {
-    print('refreshing');
     await Provider.of<ReportProvider>(context, listen: false)
         .getChildReport(widget.kid!.id!);
 

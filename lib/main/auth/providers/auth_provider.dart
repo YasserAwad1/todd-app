@@ -19,11 +19,11 @@ class AuthProvider with ChangeNotifier {
       //   return false;
       // }
       final success = await _service.logIn(userName, password, context);
-      print(success);
+      // print(success);
       if (success) {
-        print('********************PROVIDER TOKEN**********************');
-        print(_service.token);
-        print('********************PROVIDER TOKEN**********************');
+        // print('********************PROVIDER TOKEN**********************');
+        // print(_service.token);
+        // print('********************PROVIDER TOKEN**********************');
         await locator.get<LocalRepo>().saveToken(_service.token!);
         // locator.get<LocalRepo>().saveRole(_service.role!);
         locator.get<LocalRepo>().vartoken(_service.token!);
@@ -34,7 +34,7 @@ class AuthProvider with ChangeNotifier {
       errorMessage = _service.errorMessage;
       return false;
     } catch (e) {
-      print(e);
+      // print(e);
       throw Exception('error logging in');
     }
   }
@@ -43,19 +43,19 @@ class AuthProvider with ChangeNotifier {
     // Make the HTTP request to the token validation endpoint
     var checkToken = await locator.get<LocalRepo>().getToken();
     // roleName = await locator.get<LocalRepo>().getRole();
-    print('*************check TOken***********');
-    print(checkToken);
-    // print(roleName);
-    print('*************check TOken***********');
-    print('I AM GETTING HERE');
+    // print('*************check TOken***********');
+    // print(checkToken);
+    // // print(roleName);
+    // print('*************check TOken***********');
+    // print('I AM GETTING HERE');
     final response = await http.get(
       Uri.parse(Endpoints.baseUrl),
       headers: {'Authorization': 'Bearer $checkToken'},
     );
-    print('*********************isTokenValid*****************');
-    // print(isTokenValid);
-    print(response.statusCode);
-    print('*********************isTokenValid*****************');
+    // print('*********************isTokenValid*****************');
+    // // print(isTokenValid);
+    // print(response.statusCode);
+    // print('*********************isTokenValid*****************');
 
     // Check the response status code
     if (response.statusCode >= 300 || checkToken == null) {

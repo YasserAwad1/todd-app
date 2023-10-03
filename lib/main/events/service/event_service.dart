@@ -23,7 +23,7 @@ class EventService {
               (e) => EventModel.fromJson(e),
             )
             .toList();
-        print(events);
+        // print(events);
         hasError = false;
 
         return events;
@@ -32,22 +32,9 @@ class EventService {
         throw Exception('Error in getting events');
       }
     } catch (e) {
-      print(e);
+      // print(e);
       hasError = true;
       rethrow;
     }
   }
-
-  // Future<EventModel> getEventById(int eventId) async {
-  //   try {
-  //     final url = Uri.parse('${Endpoints.eventById}/$eventId');
-  //     final response = await http.get(url, headers: {
-  //       "Accept": "application/json",
-  //     });
-  //     print(response.body);
-  //   } catch (e) {
-  //     print(e);
-  //     rethrow;
-  //   }
-  // }
 }

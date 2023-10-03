@@ -20,14 +20,10 @@ class EventProvider with ChangeNotifier {
       events = await _service.getEvents();
       hasError = _service.hasError;
     } catch (e) {
-      print(e);
+      // print(e);
       hasError = _service.hasError;
       rethrow;
     }
   }
 
-  // getEventById(int id){
-  //   eventImages =
-
-  // }
 }

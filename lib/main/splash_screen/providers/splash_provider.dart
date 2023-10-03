@@ -25,7 +25,7 @@ class SplashProvider with ChangeNotifier {
   }
 
   Widget handleNotification() {
-    print('THIS IS HANDLE NOTIFICATIONSSSSSSSSSSSSSSSSSSSSSSSSS');
+    // print('THIS IS HANDLE NOTIFICATIONSSSSSSSSSSSSSSSSSSSSSSSSS');
     String type = message!.data['type'];
     if (type == 'normal') {
       return NotificationsScreen();

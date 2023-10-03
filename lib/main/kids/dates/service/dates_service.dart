@@ -20,15 +20,15 @@ class DatesService {
       });
       if (response.statusCode < 300) {
         final jsonResponse = jsonDecode(response.body);
-        print('***************jsonResponse***********');
-        print(jsonResponse['data']);
-        print('***************jsonResponse***********');
+        // print('***************jsonResponse***********');
+        // print(jsonResponse['data']);
+        // print('***************jsonResponse***********');
         List<DateModel> dates = (jsonResponse['data'] as List)
             .map(
               (e) => DateModel.fromJson(e),
             )
             .toList();
-          print(dates);
+          // print(dates);
         hasError = false;
         //     print(dates[0]);
         return dates;
@@ -37,9 +37,9 @@ class DatesService {
         throw Exception('error in getting dates');
       }
     } catch (e) {
-      print('***********************DATES SERVICE**********************');
-      print(e);
-      print('***********************DATES SERVICE**********************');
+      // print('***********************DATES SERVICE**********************');
+      // print(e);
+      // print('***********************DATES SERVICE**********************');
       hasError = true;
       rethrow;
     }

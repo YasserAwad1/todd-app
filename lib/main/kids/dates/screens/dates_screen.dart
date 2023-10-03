@@ -70,7 +70,6 @@ class _DatesScreenState extends State<DatesScreen> {
   }
 
   Future<void> _refreshData() async {
-    print('refreshing');
     await Provider.of<ClassProvider>(context, listen: false).getClasses();
     setState(() {});
   }

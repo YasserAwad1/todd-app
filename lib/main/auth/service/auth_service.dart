@@ -32,9 +32,9 @@ class AuthService {
           "device_token": deviceToken
         },
       );
-      print(response.statusCode);
+      // print(response.statusCode);
       final jsonResponse = jsonDecode(response.body);
-      print(jsonResponse);
+      // print(jsonResponse);
       if (response.statusCode >= 500) {
         errorMessage = AppLocalizations.of(context)!.networkError;
         return false;
@@ -55,7 +55,7 @@ class AuthService {
       errorMessage = AppLocalizations.of(context)!.errorOccured;
       return false;
     } catch (e) {
-      print(e);
+      // print(e);
       rethrow;
       // return false;
     }

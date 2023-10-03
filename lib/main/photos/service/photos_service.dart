@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:toddily_preschool/common/constants/end_points.dart';
 import 'package:toddily_preschool/models/latestPhotos/photo_model.dart';
@@ -30,7 +29,7 @@ class PhotosService {
         throw Exception('Error in getting photos');
       }
     } catch (e) {
-      print(e);
+      // print(e);
       hasError = true;
       rethrow;
     }

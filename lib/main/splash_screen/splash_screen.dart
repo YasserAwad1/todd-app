@@ -85,8 +85,8 @@ class _SplashScreenState extends State<SplashScreen> {
           // ignore: use_build_context_synchronously
           _userFuture = await Provider.of<UserProvider>(context, listen: false)
               .getCurrentUser();
-          print(Provider.of<UserProvider>(context, listen: false).currentUser);
-          print('****************GETTING CURRENT USER*******************');
+          // print(Provider.of<UserProvider>(context, listen: false).currentUser);
+          // print('****************GETTING CURRENT USER*******************');
         }
         // ignore: use_build_context_synchronously
         Navigator.pushReplacement(

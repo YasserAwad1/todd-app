@@ -22,7 +22,7 @@ class QAService {
               (e) => QaModel.fromJson(e),
             )
             .toList();
-        print(qas);
+        // print(qas);
         hasError = false;
         return qas;
       } else {
@@ -30,7 +30,7 @@ class QAService {
         throw Exception('Erro in getting FAQs');
       }
     } catch (e) {
-      print(e);
+      // print(e);
       hasError = true;
       rethrow;
     }

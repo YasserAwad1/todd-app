@@ -11,11 +11,11 @@ class LanguageProvider with ChangeNotifier {
 
   getLanguage() async {
     if (await locator.get<LocalRepo>().getLanguage() == null) {
-      print(
-          '*******************************************************************************************');
-      print('GETTING LANGUAGE');
-      print(
-          '*******************************************************************************************');
+      // print(
+      //     '*******************************************************************************************');
+      // print('GETTING LANGUAGE');
+      // print(
+      //     '*******************************************************************************************');
       language = 'en';
       _currentLocale = Locale(language!);
       notifyListeners();

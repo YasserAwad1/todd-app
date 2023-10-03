@@ -5,8 +5,6 @@ import 'package:toddily_preschool/common/drawer/app_drawer.dart';
 import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
 import 'package:toddily_preschool/main/events/providers/event_provider.dart';
 import 'package:toddily_preschool/main/events/widgets/event_image_widget.dart';
-import 'package:toddily_preschool/main/photos/providers/photos_povider.dart';
-import 'package:toddily_preschool/main/photos/widgets/list_grid_buttons.dart';
 import 'package:toddily_preschool/models/events/event_model.dart';
 
 class EventPhotosScreen extends StatefulWidget {

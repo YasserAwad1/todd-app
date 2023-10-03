@@ -44,12 +44,9 @@ class _EventsScreenState extends State<EventsScreen> {
   }
 
   Future<void> _refreshData() async {
-    print('refreshing');
     await Provider.of<EventProvider>(context, listen: false).getEvents();
 
-    setState(() {
-      // Update your data variables
-    });
+    setState(() {});
   }
 
   @override

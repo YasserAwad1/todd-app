@@ -113,7 +113,7 @@ class FirebaseApi {
       sound: true,
     );
     FirebaseMessaging.instance.getInitialMessage().then((message) async {
-      print('THIS IS THE INITIAL MESSAGE ');
+      // print('THIS IS THE INITIAL MESSAGE ');
       await handleBackgroundMessage(message!); // app opened in a notification
     });
     FirebaseMessaging.onMessageOpenedApp
@@ -149,7 +149,7 @@ class FirebaseApi {
     await _firebaseMessaging.requestPermission();
     final fCMToken = await _firebaseMessaging.getToken();
     await locator.get<LocalRepo>().saveDeviceToken(fCMToken!);
-    print('token: $fCMToken');
+    // print('token: $fCMToken');
     initPushNotifications();
     initLocalNotifications();
   }

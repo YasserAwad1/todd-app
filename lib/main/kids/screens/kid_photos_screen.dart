@@ -65,8 +65,7 @@ class _KidPhotosScreenState extends State<KidPhotosScreen> {
     }
   }
 
-  Future<void> refreshKidImagesToCheck() async {
-    print('refreshing');
+  Future<void> refreshKidImagesToCheck() async {;
     await Provider.of<KidImageProvider>(context, listen: false)
         .getKidImagesToCheck(widget.kid!.id!);
 
@@ -74,7 +73,6 @@ class _KidPhotosScreenState extends State<KidPhotosScreen> {
   }
 
   Future<void> refreshKidImagesForParents() async {
-    print('refreshing');
     await Provider.of<KidImageProvider>(context, listen: false)
         .getChildImagesForParents(widget.kid!.id!);
 

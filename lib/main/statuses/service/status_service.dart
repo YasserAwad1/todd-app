@@ -26,28 +26,28 @@ class StatusService {
         "date": date,
       });
 
-      print(response.body);
+      // print(response.body);
 
       if (response.statusCode < 300) {
         final jsonResponse = jsonDecode(response.body);
-        print('****************CHILD status RESPONSE************');
-        print(jsonResponse['status']);
-        print('****************CHILD status RESPONSE************');
+        // print('****************CHILD status RESPONSE************');
+        // print(jsonResponse['status']);
+        // print('****************CHILD status RESPONSE************');
         final statuses = (jsonResponse['status'] as List)
             .map(
               (e) => StatusModel.fromJson(e),
             )
             .toList();
-        print(statuses);
+        // print(statuses);
         hasError = false;
         return statuses;
       } else {
-        print('error');
+        // print('error');
         hasError = true;
         throw Exception('error in getting status by date');
       }
     } catch (e) {
-      print(e);
+      // print(e);
       hasError = true;
       throw Exception('error in getting status by date');
     }
@@ -66,13 +66,13 @@ class StatusService {
 
       if (response.statusCode < 300) {
         final jsonResponse = jsonDecode(response.body);
-        print(jsonResponse['status']);
+        // print(jsonResponse['status']);
         final statuses = (jsonResponse['status'] as List)
             .map(
               (e) => StatusModel.fromJson(e),
             )
             .toList();
-        print(statuses);
+        // print(statuses);
         hasError = false;
         return statuses;
       } else {
@@ -80,7 +80,7 @@ class StatusService {
         throw Exception('error in getting statuses to send');
       }
     } catch (e) {
-      print(e);
+      // print(e);
       hasError = true;
       rethrow;
     }
@@ -102,56 +102,15 @@ class StatusService {
           sendStatus.toJson(),
         ),
       );
-      print(response.statusCode);
-      print(response.body);
+      // print(response.statusCode);
+      // print(response.body);
       if (response.statusCode < 300) {
         return true;
       } else {
         return false;
       }
     } catch (e) {
-      print(e);
-      rethrow;
-    }
-  }
-
-  Future<bool> statusTest() async {
-    try {
-      var token = await locator.get<LocalRepo>().getToken();
-      final url = Uri.parse(Endpoints.sendStatus);
-      final response = await http.post(url,
-          headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-            'Authorization': 'Bearer $token'
-          },
-          body: jsonEncode(
-            {
-              "child_id": 3,
-              "status": [
-                {
-                  "status_id": 3,
-                  "substatus": [
-                    {
-                      "substatus_id": 4,
-                      "description": "status test function",
-                    }
-                  ]
-                }
-              ]
-            },
-          ));
-      print(response.statusCode);
-      print(response.body);
-      if (response.statusCode < 300) {
-        var jsonResponse = jsonDecode(response.body);
-        print(jsonResponse['message']);
-        return true;
-      } else {
-        return false;
-      }
-    } catch (e) {
-      print(e);
+      // print(e);
       rethrow;
     }
   }

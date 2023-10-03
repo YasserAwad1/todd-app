@@ -16,7 +16,7 @@ class NotificationService {
 
       if (response.statusCode < 300) {
         final jsonResponse = jsonDecode(response.body);
-        print(jsonResponse);
+        // print(jsonResponse);
         final notifications = (jsonResponse['notifications'] as List)
             .map(
               (e) => NotificationModel().fromJson(e),
@@ -29,7 +29,7 @@ class NotificationService {
         throw Exception('Error in getting notifications');
       }
     } catch (e) {
-      print(e);
+      // print(e);
       hasError = true;
       rethrow;
     }

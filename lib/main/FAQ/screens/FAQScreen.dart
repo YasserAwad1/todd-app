@@ -36,7 +36,6 @@ class _FAQScreenState extends State<FAQScreen> {
   }
 
   Future<void> _refreshData() async {
-    print('refreshing');
     await Provider.of<QaProvider>(context, listen: false)
         .getQuestionsAndAnswers();
 

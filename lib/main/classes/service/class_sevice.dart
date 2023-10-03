@@ -20,10 +20,10 @@ class ClassService {
       });
 
 
-      print('******************classes***************');
-      print(response.statusCode);
-      print(jsonDecode(response.body));
-      print('******************classes***************');
+      // print('******************classes***************');
+      // print(response.statusCode);
+      // print(jsonDecode(response.body));
+      // print('******************classes***************');
 
       if (response.statusCode < 300) {
         final jsonResponse = jsonDecode(response.body);
@@ -34,7 +34,7 @@ class ClassService {
             )
             .toList();
         hasError = false;
-        print(classes);
+        // print(classes);
 
         return classes;
       } else {
@@ -45,7 +45,7 @@ class ClassService {
     } catch (e) {
       message = 'Something Went wrong, please try again.';
       hasError = true;
-      print(e);
+      // print(e);
       rethrow;
     }
   }
@@ -69,7 +69,7 @@ class ClassService {
         return null;
       }
     } catch (e) {
-      print(e);
+      // print(e);
       rethrow;
     }
   }

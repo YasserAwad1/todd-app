@@ -46,7 +46,6 @@ class KidsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isArabic = Provider.of<LanguageProvider>(context).isArabic();
-    print(kid.image);
 
     return GestureDetector(
       onTap: () {

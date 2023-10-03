@@ -46,7 +46,7 @@ class _EventImageWidgetState extends State<EventImageWidget> {
       });
       return true;
     } else {
-      print('Failed to download image. Status code: ${response.statusCode}');
+      // print('Failed to download image. Status code: ${response.statusCode}');
       setState(() {
         isDownloading = false;
       });

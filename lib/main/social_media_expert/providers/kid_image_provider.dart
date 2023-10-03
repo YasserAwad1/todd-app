@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:toddily_preschool/models/kidImages/kid_image_model.dart';
 import 'package:toddily_preschool/main/social_media_expert/service/kid_images_service.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 class KidImageProvider with ChangeNotifier {
   KidImagesService service = KidImagesService();
@@ -17,17 +17,25 @@ class KidImageProvider with ChangeNotifier {
     int childId,
   ) async {
     try {
-      List<File?> imagesToSend = [];
-      // print(chosenImages[0]);
+      List<XFile?> imagesToSend = [];
       if (chosenImages.isNotEmpty) {
         for (int i = 0; i < chosenImages.length; i++) {
-          imagesToSend.add(File(chosenImages[i]!));
+          final filePath = File(chosenImages[i]!).absolute.path;
+          final lastIndex = filePath.lastIndexOf(new RegExp(r'.jp'));
+          final splitted = filePath.substring(0, (lastIndex));
+          final outPath = "${splitted}_out${filePath.substring(lastIndex)}";
+          var result = await FlutterImageCompress.compressAndGetFile(
+            File(chosenImages[i]!).absolute.path,
+            outPath,
+            quality: 95,
+          );
+          imagesToSend.add(result);
         }
       }
-      print('*****************IMAGES TO SEND********************');
-      print(imagesToSend);
+      // print('*****************IMAGES TO SEND********************');
+      // print(imagesToSend);
 
-      print('*****************IMAGES TO SEND********************');
+      // print('*****************IMAGES TO SEND********************');
       bool success = await service.sendKidImage(childId, imagesToSend);
       if (success) {
         imagesToSend.clear();
@@ -35,7 +43,7 @@ class KidImageProvider with ChangeNotifier {
       }
       return success;
     } catch (e) {
-      print(e);
+      // print(e);
       return false;
     }
   }
@@ -46,7 +54,7 @@ class KidImageProvider with ChangeNotifier {
       hasError = service.hasError;
     } catch (e) {
       hasError = service.hasError;
-      print(e);
+      // print(e);
     }
   }
 
@@ -56,7 +64,7 @@ class KidImageProvider with ChangeNotifier {
       hasError = service.hasError;
     } catch (e) {
       hasError = service.hasError;
-      print(e);
+      // print(e);
     }
   }
 
@@ -65,7 +73,7 @@ class KidImageProvider with ChangeNotifier {
       bool success = await service.checkImage(imageId);
       return success;
     } catch (e) {
-      print(e);
+      // print(e);
     }
   }
 
@@ -74,7 +82,7 @@ class KidImageProvider with ChangeNotifier {
       bool success = await service.deleteImageCopy(imageId);
       return success;
     } catch (e) {
-      print(e);
+      // print(e);
     }
   }
 }

@@ -18,7 +18,7 @@ class ReportProvider with ChangeNotifier {
     } catch (e) {
       isLoading = false;
       hasError = _service.hasError;
-      print('ERROR IN GETTING REPORTS');
+      // print('ERROR IN GETTING REPORTS');
       rethrow;
     }
   }
@@ -28,7 +28,7 @@ class ReportProvider with ChangeNotifier {
       bool success = await _service.sendReport(childId.toString(), description);
       return success;
     } catch (e) {
-      print(e);
+      // print(e);
       return false;
     }
   }
@@ -39,7 +39,7 @@ class ReportProvider with ChangeNotifier {
           await _service.updateReport(childId, reportId, newDescription);
       return success;
     } catch (e) {
-      print(e);
+      // print(e);
     }
   }
 
@@ -48,7 +48,7 @@ class ReportProvider with ChangeNotifier {
       bool success = await _service.deleteReport(reportId);
       return success;
     } catch (e) {
-      print(e);
+      // print(e);
       return false;
     }
   }

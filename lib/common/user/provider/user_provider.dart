@@ -7,16 +7,15 @@ class UserProvider with ChangeNotifier {
   int? roleId;
   int? id;
   UserService _service = UserService();
-  // bool isGuest = false;
 
   getCurrentUser() async {
     try {
       currentUser = await _service.getCurrentUser();
-      print('******************role ID*****************');
-      print(currentUser!.role_id);
-      print('******************role ID*****************');
+      // print('******************role ID*****************');
+      // print(currentUser!.role_id);
+      // print('******************role ID*****************');
     } catch (e) {
-      print(e);
+      // print(e);
       throw Exception('error in get current user');
     }
   }
@@ -32,8 +31,6 @@ class UserProvider with ChangeNotifier {
       role_id: 7,
       username: 'guest',
     );
-    // isGuest = true;
-    // notifyListeners();
   }
 
   deleteGuest() {

@@ -39,13 +39,13 @@ class StatusProvider with ChangeNotifier {
   }
 
   sendStatus(int childId) async {
-    print('sending');
+    // print('sending');
     try {
       var success = await _service.sendStatus(childId, substatusListFromScreen);
       return success;
     } catch (e) {
-      print(e);
-      print('error in sending substatus');
+      // print(e);
+      // print('error in sending substatus');
       return false;
       // throw Exception('ERROR IN SENDING SUBSTATUS');
     }
@@ -60,7 +60,7 @@ class StatusProvider with ChangeNotifier {
       );
       hasError = _service.hasError;
     } catch (e) {
-      print(e);
+      // print(e);
       hasError = _service.hasError;
     }
   }
@@ -70,18 +70,8 @@ class StatusProvider with ChangeNotifier {
       statusesToSendList = await _service.getStatusesToSend(childId);
       hasError = _service.hasError;
     } catch (e) {
-      print(e);
+      // print(e);
       hasError = _service.hasError;
-    }
-  }
-
-  testStatus() async {
-    try {
-      var success = await _service.statusTest();
-      print('STATUS TEST $success');
-    } catch (e) {
-      print(e);
-      throw Exception('error in test status');
     }
   }
 

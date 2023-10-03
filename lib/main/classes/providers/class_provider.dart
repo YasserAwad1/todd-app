@@ -16,7 +16,7 @@ class ClassProvider with ChangeNotifier {
     } catch (e) {
       message = _service.message;
       hasError = _service.hasError;
-      print(e);
+      // print(e);
       rethrow;
     }
   }
@@ -25,7 +25,7 @@ class ClassProvider with ChangeNotifier {
     try {
       return classById = await _service.getClassById(id);
     } catch (e) {
-      print(e);
+      // print(e);
       rethrow;
     }
   }

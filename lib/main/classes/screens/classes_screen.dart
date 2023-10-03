@@ -44,7 +44,6 @@ class _ClassesScreenState extends State<ClassesScreen> {
   }
 
   Future<void> _refreshData() async {
-    print('refreshing');
     setState(() {
       isLoading = true;
     });
@@ -99,8 +98,6 @@ class _ClassesScreenState extends State<ClassesScreen> {
                       } else if (Provider.of<ClassProvider>(context,
                               listen: false)
                           .hasError) {
-                        // print(
-                        //     'a;lsdfjaskjdfhalskdfhaslk jhadskjfh aklsdjfh alsdkjfh aklhj ');
                         return CustomErrorWidget(
                           height: 0,
                         );

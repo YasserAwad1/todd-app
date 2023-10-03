@@ -17,11 +17,11 @@ class AboutService {
 
       if (response.statusCode < 300) {
         final jsonResponse = jsonDecode(response.body);
-        print(
-            '*************************ABOUT IMAGES**************************');
-        print(jsonResponse);
-        print(
-            '*************************ABOUT IMAGES**************************');
+        // print(
+        //     '*************************ABOUT IMAGES**************************');
+        // print(jsonResponse);
+        // print(
+            // '*************************ABOUT IMAGES**************************');
         final photos = (jsonResponse['aboutImages'] as List)
             .map(
               (e) => PhotoModel.fromJson(e),
@@ -34,7 +34,7 @@ class AboutService {
         throw Exception('Error in getting about images');
       }
     } catch (e) {
-      print(e);
+      // print(e);
       hasError = true;
       rethrow;
     }

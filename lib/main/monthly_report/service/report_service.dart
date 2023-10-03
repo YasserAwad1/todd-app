@@ -20,7 +20,7 @@ class ReportService {
       });
       if (response.statusCode < 300) {
         final jsonResponse = jsonDecode(response.body);
-        print(jsonResponse);
+        // print(jsonResponse);
         final reports = (jsonResponse['reports'] as List)
             .map(
               (e) => ReportModel.fromJson(e),
@@ -34,7 +34,7 @@ class ReportService {
       }
     } catch (e) {
       hasError = true;
-      print(e);
+      // print(e);
       rethrow;
     }
   }
@@ -51,15 +51,15 @@ class ReportService {
         "child_id": childId,
         "description": description
       });
-      print(response.body);
+      // print(response.body);
       if (response.statusCode < 300) {
-        print('REPORT SENT');
+        // print('REPORT SENT');
         return true;
       } else {
         return false;
       }
     } catch (e) {
-      print(e);
+      // print(e);
       rethrow;
     }
   }
@@ -80,15 +80,15 @@ class ReportService {
         "child_id": childId.toString(),
         "description": newDescription.toString()
       });
-      print(response.body);
+      // print(response.body);
       if (response.statusCode < 300) {
-        print('REPORT Updated');
+        // print('REPORT Updated');
         return true;
       } else {
         return false;
       }
     } catch (e) {
-      print(e);
+      // print(e);
       rethrow;
     }
   }
@@ -107,15 +107,15 @@ class ReportService {
           'Authorization': 'Bearer $token'
         },
       );
-      print(response.body);
+      // print(response.body);
       if (response.statusCode < 300) {
-        print('REPORT Updated');
+        // print('REPORT Updated');
         return true;
       } else {
         return false;
       }
     } catch (e) {
-      print(e);
+      // print(e);
       rethrow;
     }
   }

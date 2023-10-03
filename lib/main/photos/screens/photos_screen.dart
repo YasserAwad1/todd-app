@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,11 +10,8 @@ import 'package:toddily_preschool/common/widgets/custom_app_bar.dart';
 import 'package:toddily_preschool/common/widgets/error_widget.dart';
 import 'package:toddily_preschool/common/widgets/no_information_widget.dart';
 import 'package:toddily_preschool/common/widgets/ripple.dart';
-import 'package:toddily_preschool/main/events/providers/event_provider.dart';
 import 'package:toddily_preschool/main/photos/providers/photos_povider.dart';
 import 'package:toddily_preschool/main/photos/widgets/image_widget.dart';
-import 'package:toddily_preschool/main/photos/widgets/list_grid_buttons.dart';
-import 'package:toddily_preschool/models/events/event_model.dart';
 import 'package:toddily_preschool/models/latestPhotos/photo_model.dart';
 
 class PhotosScreen extends StatefulWidget {
@@ -61,13 +55,11 @@ class _PhotosScreenState extends State<PhotosScreen>
   }
 
   Future<void> _refreshData() async {
-    print('refreshing');
     await Provider.of<PhotosProvider>(context, listen: false).getPhotos();
 
     setState(() {});
   }
 
-  // final String? title;
   @override
   Widget build(BuildContext context) {
     bool isList = Provider.of<PhotosProvider>(context, listen: false).isList;

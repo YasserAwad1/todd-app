@@ -13,7 +13,7 @@ class AboutProvider with ChangeNotifier {
       hasError = service.hasError;
     } catch (e) {
       hasError = service.hasError;
-      print(e);
+      // print(e);
       rethrow;
     }
   }

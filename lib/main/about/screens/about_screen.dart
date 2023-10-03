@@ -72,7 +72,6 @@ class _AboutScreenState extends State<AboutScreen> {
   @override
   Widget build(BuildContext context) {
     bool isArabic = Provider.of<LanguageProvider>(context).isArabic();
-    print(Provider.of<UserProvider>(context, listen: false).getUserRoleId());
 
     return SafeArea(
       child: Scaffold(
@@ -93,7 +92,7 @@ class _AboutScreenState extends State<AboutScreen> {
           physics: const BouncingScrollPhysics(),
           headerSliverBuilder:
               ((BuildContext context, bool innerBoxIsScrolled) {
-            print(innerBoxIsScrolled);
+            // print(innerBoxIsScrolled);
             return <Widget>[
               AboutTopBar(
                 scaffoldKey: _scaffoldKey,

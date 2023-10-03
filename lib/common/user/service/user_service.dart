@@ -11,20 +11,20 @@ class UserService {
     try {
       final url = Uri.parse(Endpoints.currentUser);
       var token = locator.get<LocalRepo>().token;
-      print(token);
+      // print(token);
       final response = await http.get(url, headers: {
         "Accept": "application/json",
         'Authorization': 'Bearer $token'
       });
       final jsonResponse = jsonDecode(response.body);
-      print(jsonResponse);
+      // print(jsonResponse);
       final user = UserModel.fromJson(jsonResponse['user']);
       if (response.statusCode < 300) {
         return user;
       }
       throw Exception('error in getting user');
     } catch (e) {
-      print(e);
+      // print(e);
       rethrow;
     }
   }
