@@ -60,7 +60,7 @@ class StatusProvider with ChangeNotifier {
       );
       hasError = _service.hasError;
     } catch (e) {
-      // print(e);
+      print(e);
       hasError = _service.hasError;
     }
   }
@@ -70,7 +70,7 @@ class StatusProvider with ChangeNotifier {
       statusesToSendList = await _service.getStatusesToSend(childId);
       hasError = _service.hasError;
     } catch (e) {
-      // print(e);
+      print(e);
       hasError = _service.hasError;
     }
   }

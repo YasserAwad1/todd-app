@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:toddily_preschool/main/notifications/screens/notifications_screen.dart';
 import 'package:toddily_preschool/main/statuses/screens/statuses_screen_for_preview.dart';
 import 'package:toddily_preschool/models/kids/kid_model.dart';
@@ -31,9 +32,17 @@ class SplashProvider with ChangeNotifier {
       return NotificationsScreen();
     } else {
       var decoded = jsonDecode(message!.data['body']);
+      // print('************************NOTIFICATION RESPONSE******************');
+      // print(decoded);
+      // print('************************NOTIFICATION RESPONSE******************');
       var kid = KidModel.fromJson(decoded['child']);
       var sentDate = decoded['date'];
       DateTime date = DateTime.parse(sentDate);
+      String formattedDate = DateFormat('yyyy-MM-dd').format(date);
+      // print('**********************DATE TO STATUSES SCREEN************************');
+      // print(formattedDate);
+      // print(kid.id);
+      // print('**********************DATE TO STATUSES SCREEN************************');
       String day = date.day.toString();
       String month = date.month.toString();
       List<String> monthAbbreviations = [
@@ -53,7 +62,7 @@ class SplashProvider with ChangeNotifier {
       String monthAbbreviation = monthAbbreviations[int.parse(month) - 1];
       return StatusesScreenForPreview(
         childId: kid.id,
-        date: date.toString(),
+        date: formattedDate,
         day: day,
         month: monthAbbreviation,
       );

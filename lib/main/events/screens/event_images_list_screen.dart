@@ -55,7 +55,7 @@ class EventImagesListScreenState extends State<EventImagesListScreen> {
                         if (loadingBuilder == null) {
                           return AppPlaceholder(
                               child: Container(
-                            color: Colors.black,
+                            color: Colors.white,
                             height: 200.h,
                           ));
                         }
@@ -104,7 +104,7 @@ class EventImagesListScreenState extends State<EventImagesListScreen> {
                               if (loadingBuilder == null) {
                                 return AppPlaceholder(
                                     child: Container(
-                                  color: Colors.black,
+                                  color: Colors.white,
                                   height: 200.h,
                                 ));
                               }

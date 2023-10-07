@@ -62,7 +62,7 @@ class _ImageListScreenState extends State<ImageListScreen> {
                         if (loadingBuilder == null) {
                           return AppPlaceholder(
                               child: Container(
-                            color: Colors.black,
+                            color: Colors.white,
                             height: 200.h,
                           ));
                         }
@@ -111,7 +111,7 @@ class _ImageListScreenState extends State<ImageListScreen> {
                               if (loadingBuilder == null) {
                                 return AppPlaceholder(
                                     child: Container(
-                                  color: Colors.black,
+                                  color: Colors.white,
                                   height: 200.h,
                                 ));
                               }

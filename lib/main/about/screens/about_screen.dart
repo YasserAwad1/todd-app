@@ -162,7 +162,7 @@ class _AboutScreenState extends State<AboutScreen> {
                                       if (loadingBuilder == null) {
                                         return AppPlaceholder(
                                             child: Container(
-                                          color: Colors.black,
+                                          color: Colors.white,
                                           height: 200.h,
                                         ));
                                       }

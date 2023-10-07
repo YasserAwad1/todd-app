@@ -55,6 +55,22 @@ class _StatusesScreenForPreviewState extends State<StatusesScreenForPreview> {
   }
 
   @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    _sentStatusesByDateFuture =
+        Provider.of<StatusProvider>(context, listen: false)
+            .getChildStatusByDate(widget.childId!, widget.date!)
+            .then((value) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        setState(() {
+          startAnimation = true;
+        });
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     var statusProvider = Provider.of<StatusProvider>(context, listen: false);
     return SafeArea(

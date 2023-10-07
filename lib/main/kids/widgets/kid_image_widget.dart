@@ -104,7 +104,7 @@ class _KidImageWidgetState extends State<KidImageWidget> {
                     if (loadingBuilder == null) {
                       return AppPlaceholder(
                           child: Container(
-                        color: Colors.black,
+                        color: Colors.white,
                         height: 200.h,
                       ));
                     }

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:toddily_preschool/common/local/local_repo.dart';
 import 'package:toddily_preschool/common/navigators/my_navigator.dart';
@@ -33,6 +34,7 @@ void handleMessage(RemoteMessage? message) {
       var kid = KidModel.fromJson(decoded['child']);
       var sentDate = decoded['date'];
       DateTime date = DateTime.parse(sentDate);
+      String formattedDate = DateFormat('yyyy-MM-dd').format(date);
       String day = date.day.toString();
       String month = date.month.toString();
       List<String> monthAbbreviations = [
@@ -55,7 +57,7 @@ void handleMessage(RemoteMessage? message) {
           MyNavigator(
             screen: StatusesScreenForPreview(
               childId: kid.id,
-              date: date.toString(),
+              date: formattedDate,
               day: day,
               month: monthAbbreviation,
             ),
@@ -75,7 +77,6 @@ class FirebaseApi {
   static final _localnotifications = FlutterLocalNotificationsPlugin();
 
   static Future initLocalNotifications() async {
-    // const iOS = IOSInitializationSettings();
     const android = AndroidInitializationSettings('@drawable/tod_logo');
     var iOS = DarwinInitializationSettings(
         requestAlertPermission: true,

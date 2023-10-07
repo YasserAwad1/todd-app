@@ -62,7 +62,7 @@ class _SubStatusWidgetForPreviewState extends State<SubStatusWidgetForPreview> {
                   if (loadingBuilder == null) {
                     return AppPlaceholder(
                         child: Container(
-                      color: Colors.black,
+                      color: Colors.white,
                       height: 200.h,
                     ));
                   }

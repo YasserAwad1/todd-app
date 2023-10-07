@@ -26,13 +26,13 @@ class StatusService {
         "date": date,
       });
 
-      // print(response.body);
+      print(response.body);
 
       if (response.statusCode < 300) {
         final jsonResponse = jsonDecode(response.body);
-        // print('****************CHILD status RESPONSE************');
-        // print(jsonResponse['status']);
-        // print('****************CHILD status RESPONSE************');
+        print('****************CHILD status RESPONSE************');
+        print(jsonResponse['status']);
+        print('****************CHILD status RESPONSE************');
         final statuses = (jsonResponse['status'] as List)
             .map(
               (e) => StatusModel.fromJson(e),
@@ -47,7 +47,7 @@ class StatusService {
         throw Exception('error in getting status by date');
       }
     } catch (e) {
-      // print(e);
+      print(e);
       hasError = true;
       throw Exception('error in getting status by date');
     }
@@ -102,6 +102,7 @@ class StatusService {
           sendStatus.toJson(),
         ),
       );
+      print(jsonEncode(sendStatus.toJson()));
       // print(response.statusCode);
       // print(response.body);
       if (response.statusCode < 300) {

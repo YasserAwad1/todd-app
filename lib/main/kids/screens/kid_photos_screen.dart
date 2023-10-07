@@ -233,7 +233,7 @@ class _KidPhotosScreenState extends State<KidPhotosScreen> {
                     if (loadingBuilder == null) {
                       return AppPlaceholder(
                           child: Container(
-                        color: Colors.black,
+                        color: Colors.white,
                         height: 200.h,
                       ));
                     }
