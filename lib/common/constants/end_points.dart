@@ -1,5 +1,5 @@
 class Endpoints {
-  static const baseUrl = 'http://207.154.207.148';
+  static const baseUrl = 'https://api.toddily-pre.com';
   static const login = '$baseUrl/api/login';
   static const logout = '$baseUrl/api/logout';
   static const classes = '$baseUrl/api/classroom';
